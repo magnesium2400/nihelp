@@ -4,5 +4,5 @@ if nargin < 1
     scfw(524); 
     return
 end
-set(gcf,'Position',get(gcf,'Position').*[1,1,0,1]+[0,0,x,0])
+set(gcf,'Position',get(gcf,'Position')*[1 0 0 0; 0 1 0 0; 1 0 0 0; 0 0 0 1]+[-x,0 x,0])
 end

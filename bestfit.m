@@ -1,19 +1,28 @@
-%% plot line/curve of best fit in current figure, user to input degree
-function out = bestfit(degree)
+function out = bestfit(varargin)
+%% BESTFIT plots curve of best fit on current axes, user can input degree
 
-if nargin < 1
-    out = bestfit(1);
-    return
-end
+% prelims
+ip = inputParser;
+addOptional(ip, 'degree', 1); 
+addParameter(ip, 'doLegend', false);
+addParameter(ip, 'doPlot', true);
+addParameter(ip, 'axes', gca);
+parse(ip, varargin{:});
 
-obj = findobj(gcf, 'Type', 'Scatter');
+% get data and fit
+obj = findobj(ip.Results.axes, 'Type', 'Scatter');
 xpoints = obj.XData;
 ypoints = obj.YData;
+out = polyfit(xpoints, ypoints, ip.Results.degree);
 
-hold on; 
-out = polyfit(xpoints, ypoints, degree);
-plot(sort(xpoints), polyval(out,sort(xpoints)));
+% plot curve and legend
+if ip.Results.doPlot
+	hold on;
+    plot(sort(xpoints), polyval(out,sort(xpoints)));
+end
 
-legend(string(vpa(poly2sym(out), 4)), 'Location', 'SouthEast');
+if ip.Results.doLegend
+    legend(string(vpa(poly2sym(out), 4)), 'Location', 'SouthEast');
+end
 
 end

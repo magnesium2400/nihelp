@@ -1,5 +1,5 @@
-%% label gcf(ylabel, xlabel, title)
 function label(ylab, xlab, tit)
+%% LABEL apply labels to current axes
 a = gca;
 ylabel(a, ylab);
 if nargin > 1
