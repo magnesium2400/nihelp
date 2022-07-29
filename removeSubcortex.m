@@ -6,6 +6,9 @@ function [out, edgesKept] = removeSubcortex(in)
 %   if in == 220*220, assume Schaefer and remove 101-110 and 211-220
 %   if in == 360*360, assume Glasser and do nothing
 %   if in == 380*380, assume Glasser and remove 181-190 and 351-360
+%   if in == 500*500, assume Schaefer and do nothing
+%   if in == 520*520, assume Schaefer and remove 251-260 and 511-520
+
 
 assert(ismatrix(in), "input must be a matrix"); 
 assert(size(in,1) == size(in,2), "input must be square");

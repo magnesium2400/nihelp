@@ -17,8 +17,8 @@ if nargin < 2
 end
 
 nrois = max(in(:));
-potentialRH(~~potentialRH) = potentialRH(~~potentialRH) + nrois;
-out = [in; potentialRH];
+potentialRH(~~potentialRH) = potentialRH(~~potentialRH) + nrois; % potentialRH = potentialRH + nrois*logical(potentialRH)
+out = [in; potentialRH]; % out = [in; potentialRH + max(in(:))*logical(potentialRH)];
 
 end
 

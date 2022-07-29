@@ -7,6 +7,7 @@ addOptional(ip, 'degree', 1);
 addParameter(ip, 'doLegend', false);
 addParameter(ip, 'doPlot', true);
 addParameter(ip, 'axes', gca);
+addParameter(ip, 'plotOptions', {'r', 'LineWidth', 2});
 parse(ip, varargin{:});
 
 % get data and fit
@@ -17,8 +18,8 @@ out = polyfit(xpoints, ypoints, ip.Results.degree);
 
 % plot curve and legend
 if ip.Results.doPlot
-	hold on;
-    plot(sort(xpoints), polyval(out,sort(xpoints)));
+	hold(ip.Results.axes, 'on');
+    plot((xpoints), polyval(out,(xpoints)), ip.Results.plotOptions{:});
 end
 
 if ip.Results.doLegend

@@ -8,12 +8,12 @@ if nargin < 5
     newFigure = true;
 end
 if nargin < 6
-    colors = parula(100);
+    colors = plasma(100);
 end
 
 if newFigure; figure; end
-plotSurfaceROIBoundary(struct('vertices', verts, 'faces', faces), rois, data, 'faces', colors, 0);
 
+plotSurfaceROIBoundary(struct('vertices', verts, 'faces', faces), rois, data, 'faces', colors, 0, 1.5);
 camlight(80,-10); camlight(-80,-10); view([-90 0]); 
 axis off; axis tight; axis equal; c = colorbar; 
 
