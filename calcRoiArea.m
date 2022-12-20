@@ -1,5 +1,5 @@
-function out = roiArea(verts, faces, rois)
-%% ROIAREA gets area of each face in a surface patch object
+function out = calcRoiArea(verts, faces, rois)
+%% CALCROIAREA gets area of each ROI in a surface patch object
 % ignores verts indexed as zero
 
 % Make a version of faces where instead of indexing the vertex ID, index

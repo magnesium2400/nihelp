@@ -1,5 +1,5 @@
-function out = faceArea(verts, faces)
-%% FACEAREA gets area of each face in a surface patch object
+function out = calcFaceArea(verts, faces)
+%% CALCFACEAREA gets area of each face in a surface patch object
 assert(size(verts, 2) == 3);
 assert(size(faces, 2) == 3);
 assert(max(faces(:)) == length(verts));

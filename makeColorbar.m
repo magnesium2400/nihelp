@@ -2,10 +2,12 @@ loc = 'north';
 
 cbartitle = 'Node Strength';
 
-cbarlabels = {'min', 'max'};
+cbarlabels = {'Min', 'Max'};
 
+% cmap = flipud(make_cmap('orangered',250,30,0));
 cmap = plasma;
-
+% cmap = cmap(a, 250, 30, 0);
+% cmap = multi_cmap(0, 'mediumblue', 2, 'firebrick', 6);
 
 %%
 figure;
