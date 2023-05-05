@@ -4,7 +4,7 @@ function varargout = separatePatches(data, varargin)
 %           - a struct that contains vertices, and potentially faces and
 %           rois; OR
 %           - a v*3 matrix of vertices only; OR
-%           - a v*3 matrix of vertices and an f*3 matrix of faces' OR
+%           - a v*3 matrix of vertices and an f*3 matrix of faces; OR
 %           - a v*3 matrix of vertices, an f*3 matrix of faces, and a v*1
 %           vector of roi allocations
 %           Optionally:

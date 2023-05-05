@@ -8,8 +8,8 @@ function [verts2, faces2, rois2] = surfKeepCortex(verts, faces, rois)
 %
 %   Outputs: corrected and reindexed verts, faces, rois
 % 
-%   based on python package surfdist (Daniel Margulies)
-%   https://github.com/NeuroanatomyAndConnectivity/surfdist
+%   based on python package <a href="https://github.com/NeuroanatomyAndConnectivity/surfdist/blob/master/surfdist/utils.py">surfdist</a> (Daniel Margulies)
+%   
 
 assert(size(verts, 1) == size(rois, 1));
 assert(size(verts, 2) == 3);

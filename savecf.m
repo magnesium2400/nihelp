@@ -1,6 +1,6 @@
 function savecf(title, versions)
 if nargin < 2
-    versions = [".svg", ".png", ".fig"];
+    versions = [".fig", ".svg", ".png"];
 end
 
 currentFolder = pwd;
