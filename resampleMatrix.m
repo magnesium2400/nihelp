@@ -54,4 +54,3 @@ spatialNoise(idx) = sortedNoise; % order the noise according to the spatial patt
 spatialNoise = reshape(spatialNoise, size(template)); % make it the correct shape
 
 end
-
