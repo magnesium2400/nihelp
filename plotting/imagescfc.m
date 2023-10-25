@@ -5,7 +5,7 @@ cmap = bluewhitered_mg(100, 'colors', [0 0 1; 0 0 0.5; 0 0 0 ; 1 0 0 ; 1 1 0], '
 ax = gca; 
 im = imagesc(fcMatrix, varargin{:});
 axis square; colormap(ax, cmap);
-clim(ax, [-0.5 1]);
+caxis(ax, [-0.5 1]);
 if colorbarFlag; colorbar('Location', 'southoutside'); end
 end
 

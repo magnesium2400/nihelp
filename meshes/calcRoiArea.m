@@ -7,7 +7,7 @@ function out = calcRoiArea(verts, faces, rois)
 roi_faces = rois(faces);
 out = nan(max(rois), 1);
 
-% Lopp over each ROI
+% Loop over each ROI
 for i = 1:max(rois) % ignores parcs indexed as zero
 
     % Find the faces which are contained entirely within the ROI i.e., all
