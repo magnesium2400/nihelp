@@ -1,15 +1,18 @@
-function out = eigenstrap(modeData)
+function out = eigenstrap(modeData, mask)
+
+if nargin < 2; mask = true(size(modeData,1), 1); else; mask = logical(mask); end
 
 nModes = size(modeData, 2);
 nGroups = ceil(sqrt(nModes));
 
-out = nan(size(modeData));
-out(:, 1) = modeData(:, 1);
+out = modeData;
+% out = nan(size(modeData));
+out(mask, 1) = modeData(mask, 1);
 
 for ii = 2:(nGroups)
     currIdx = getEigengroupIdx(ii);
-    currIdx = currIdx(currIdx <= nModes);
-    out(:, currIdx) = eigenstrapSubgroup(modeData(:, currIdx));
+    if ii == nGroups; currIdx = currIdx(currIdx <= nModes); end
+    out(mask, currIdx) = eigenstrapSubgroup(modeData(mask, currIdx));
 end
 
 % ii = nGroups;
