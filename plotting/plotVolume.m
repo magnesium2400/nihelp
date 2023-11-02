@@ -1,4 +1,4 @@
-function h = plotVolume(vol, varargin)
+function h = plotVolume(V, varargin)
 %PLOTVOLUME Wrapper for scatter3 to plot a volume
 %   Syntax
 %   ---
@@ -39,7 +39,7 @@ function h = plotVolume(vol, varargin)
 
 %% Prelims
 ip = inputParser;
-addRequired(ip, 'vol');
+addRequired(ip, 'V');
 addOptional(ip, 'validationFunction', @logical);
 
 addParameter(ip, 'doValidation', true);
@@ -51,23 +51,23 @@ addParameter(ip, 'c', []);
 addParameter(ip, 'plotOptions', {'filled'});
 addParameter(ip, 'ax', gca);
 
-parse(ip, vol, varargin{:});
-vol = ip.Results.vol;
+parse(ip, V, varargin{:});
+V = ip.Results.V;
 validationFunction = ip.Results.validationFunction;
 color = ip.Results.c;
 
 
 %% Plotting
-[x,y,z] = ind2sub(size(vol), find(validationFunction(vol)));
-xl = [1, size(vol, 1)];
+[x,y,z] = ind2sub(size(V), find(validationFunction(V)));
+xl = [1, size(V, 1)];
 if ip.Results.zeroMidline
-    x = x - ceil(size(vol, 1)/2); 
-    xl = floor(size(vol, 1)/2) * [-1 1];
+    x = x - ceil(size(V, 1)/2); 
+    xl = floor(size(V, 1)/2) * [-1 1];
 end 
 
 if isempty(color) % if user does not specify a color
     if ip.Results.doValidation  % either (i) compute the colors to use; 
-        color = vol(validationFunction(vol(:)));
+        color = V(validationFunction(V(:)));
     else                        % or (ii) use the default 
         color = [0 0.4470 0.7410];
     end
@@ -80,6 +80,6 @@ axis equal tight;
 
 labels = ip.Results.labels;
 xlabel(labels{1}); ylabel(labels{2}); zlabel(labels{3});
-xlim(xl); ylim([1, size(vol, 2)]); zlim([1, size(vol, 3)]);
+xlim(xl); ylim([1, size(V, 2)]); zlim([1, size(V, 3)]);
 
 end
