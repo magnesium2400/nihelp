@@ -1,5 +1,5 @@
 function modeStrap = eigenstrap(modeData, mask)
-%%EIGENSTRAP applies the eigenstrapping of Koussis & Breakspear to mode data
+%% EIGENSTRAP applies the eigenstrapping of Koussis & Breakspear to mode data
 %% Inputs
 %  modeData - eigenmodes (nPoints x nModes matrix)
 %  mask (optional) - mask to be applied to mode (nPoints x 1 logical vector)
