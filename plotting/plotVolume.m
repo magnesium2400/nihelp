@@ -55,6 +55,7 @@ parse(ip, V, varargin{:});
 V = ip.Results.V;
 validationFunction = ip.Results.validationFunction;
 color = ip.Results.c;
+labels = ip.Results.labels;
 
 
 %% Plotting
@@ -78,7 +79,6 @@ h = scatter3(ip.Results.ax, x, y, z, ip.Results.s, color, ip.Results.plotOptions
 
 axis equal tight;
 
-labels = ip.Results.labels;
 xlabel(labels{1}); ylabel(labels{2}); zlabel(labels{3});
 xlim(xl); ylim([1, size(V, 2)]); zlim([1, size(V, 3)]);
 
