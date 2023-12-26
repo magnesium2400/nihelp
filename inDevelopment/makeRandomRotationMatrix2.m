@@ -7,7 +7,7 @@ function Q = makeRandomRotationMatrix2(d, seed)
 
 if nargin >= 2; rng(seed); end
 
-A = 1/sqrt(2)*(randn(d)+1j*rand(d));
+A = 1/sqrt(2)*(randn(d)+1j*randn(d));
 
 % QR decomposition of normally iid matrix s.t. diag terms of R are positive (see Mezzadri 2006)
 [Q,R] = qr(A); 
