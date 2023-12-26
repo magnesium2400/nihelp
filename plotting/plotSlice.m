@@ -1,7 +1,7 @@
 function out = plotSlice(V, varargin)
 %% PLOTSLICE Plots slices of a volume V
-
-
+% Examples
+% load mri; figure; plotSlice(squeeze(D), 60, 60, [20, 10]); colormap gray;
 
 
 %% Prelims

@@ -18,9 +18,10 @@ catch ME
 
     switch ME.identifier
         case 'stats:squareform:BadInputMatrix'
-            if all(abs(diag(dataIn) - 1) < eps)
+            if all(abs(diag(dataIn) - 1) < 1e-10)
                 out = squareform(dataIn - diag(diag(dataIn)));
             else 
+                disp('Diagonal elements are not ALL equal to 0 or close to 1'); 
                 rethrow(ME);
             end
         otherwise

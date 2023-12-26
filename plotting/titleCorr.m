@@ -9,6 +9,7 @@ function r = titleCorr(varargin)
 ip = inputParser;
 ip.addOptional('corrType', 'Pearson', @(x) isStringScalar(x) || ischar(x));
 ip.addOptional('ax', gca);
+
 ip.parse(varargin{:});
 corrType = ip.Results.corrType;
 ax = ip.Results.ax;

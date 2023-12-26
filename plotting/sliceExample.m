@@ -17,7 +17,7 @@ for ii = 1:nDims
         currentSlice = sliceDim(V, ii, sliceID);
 
         imagescmg(currentSlice); colorbar off;
-        xlabel(sprintf('Slice %i/%i', sliceID, size(V, ii)));
+        subtitle(sprintf('Slice %i/%i', sliceID, size(V, ii)));
 
         if jj == 1; title(sprintf('Dimension %i', ii)); end
 
