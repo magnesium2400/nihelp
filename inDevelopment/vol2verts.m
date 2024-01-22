@@ -46,6 +46,7 @@ else
     % iterate over each ROI
     for ii = 1:nRois
         mask = V_rois == ii;
+        if ~any(mask, 'all'); continue; end
         [x,y,z] = ind2sub(size(V_rois), find(mask));
         verts(ii,:) = mean([x,y,z],1);
 
