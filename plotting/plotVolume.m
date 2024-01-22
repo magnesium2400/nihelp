@@ -70,7 +70,7 @@ if isempty(color) % if user does not specify a color
     if ip.Results.doValidation  % either (i) compute the colors to use; 
         color = V(validationFunction(V(:)));
     else                        % or (ii) use the default 
-        color = [0 0.4470 0.7410];
+        color = lines(1);
     end
 end
 
@@ -80,6 +80,8 @@ h = scatter3(ip.Results.ax, x, y, z, ip.Results.s, color, ip.Results.plotOptions
 axis equal tight;
 
 xlabel(labels{1}); ylabel(labels{2}); zlabel(labels{3});
-xlim(xl); ylim([1, size(V, 2)]); zlim([1, size(V, 3)]);
+if xl(1) ~= xl(2); xlim(xl); end
+if size(V, 2) ~= 1; ylim([1, size(V, 2)]); end 
+if size(V, 3) ~= 1; zlim([1, size(V, 3)]); end 
 
 end

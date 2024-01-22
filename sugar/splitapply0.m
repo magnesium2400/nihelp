@@ -1,6 +1,7 @@
 function out = splitapply0(func, X, G, nGroups)
 %% SPLITAPPLY0 uses splitapply even if groups are indexed 0 or are absent
 % nans in missing values
+% TODO: add support for func to return multiple outputs
 
 if nargin<4; nGroups = max(G); end
 out = nan(nGroups, 1);
