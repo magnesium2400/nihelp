@@ -58,6 +58,16 @@ color = ip.Results.c;
 labels = ip.Results.labels;
 
 
+%% Other options for validationFunction
+if isnumeric(validationFunction)
+    if validationFunction >= 1  
+        validationFunction = @(x) x > validationFunction;
+    else 
+        validationFunction = @(x) x > quantile(V(:), validationFunction);
+    end
+end
+
+
 %% Plotting
 [x,y,z] = ind2sub(size(V), find(validationFunction(V)));
 xl = [1, size(V, 1)];
