@@ -1,6 +1,6 @@
 ---
 layout: default
-title: plotting
+title: assorted
 has_children: true
 ---
 

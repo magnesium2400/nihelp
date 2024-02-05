@@ -1,13 +1,27 @@
 function [vertex,face] = read_vtk(filename, verbose)
+%% READ_VTK Read data from VTK file.
+%% Syntax
+%  [vertex,face] = read_vtk(filename, verbose)
+% 
+% 
+%% Output Arguments
+%  `vertex - 3-column matrix specifying the position of the vertices (numeric
+%  array)`
+% 
+% `face - 3-column matrix specifying the triangulation of the mesh (numeric
+%  array)`
+%  
+%  
+%  
+%% TODO
+% * docs
+% 
+% 
+%% Authors
+% Copyright (c) Mario Richtsfeld
+% 
+% 
 
-% read_vtk - read data from VTK file.
-%
-%   [vertex,face] = read_vtk(filename, verbose);
-%
-%   'vertex' is a 'nb.vert x 3' array specifying the position of the vertices.
-%   'face' is a 'nb.face x 3' array specifying the connectivity of the mesh.
-%
-%   Copyright (c) Mario Richtsfeld
 
 if nargin<2
     verbose = 1;

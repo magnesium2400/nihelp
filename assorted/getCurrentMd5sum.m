@@ -1,4 +1,14 @@
 function [out, filepath, filename] = getCurrentMd5sum(varargin)
+%% GETCURRENTMD5SUM Returns md5sum of file currently running and optionally save a copy
+%% TODO
+% * docs
+% 
+% 
+%% Authors
+% Mehul Gajwani, Monash University, 2024
+% 
+% 
+
 
 ip = inputParser;
 ip.addParameter('filename', []);
