@@ -6,3 +6,9 @@ nav_external_links:
     url: https://github.com/magnesium2400/nihelp/tree/main
     hide_icon: false 
     opens_in_new_tab: true
+
+aux_links:
+  "magnesium2400 homepage":
+    - "https://magnesium2400.github.io/"
+
+    
