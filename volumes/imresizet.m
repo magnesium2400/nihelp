@@ -1,5 +1,18 @@
 function out = imresizet(V, scale, varargin)
-%% IMRESIZE resizes all but the last (time) dimension of a 3D or 4D matrix
+%% IMRESIZE Resize all but the last (time) dimension of a 3D or 4D matrix
+%% Examples
+%   figure; nexttile; plotVolume(loadmri); nexttile; plotVolume(imresizet(loadmri, 2));
+% 
+% 
+%% TODO
+% * docs
+% 
+% 
+%% Authors
+% Mehul Gajwani, Monash University, 2024
+% 
+% 
+
 
 
 
