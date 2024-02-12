@@ -1,4 +1,21 @@
 function [vol, M, mr_parms, volsz] = MG_load_mgh(fname,slices,frames,headeronly)
+%% MG_LOAD_MGH Load mgh file
+%% Syntax
+%  [vol, M, mr_parms, volsz] = load_mgh(fname,<slices>,<frames>,<headeronly>) 
+% 
+% 
+%% TODO
+% * docs
+% 
+% 
+%% Authors
+% Bruce Fischl, Copyright © The General Hospital Corporation (Boston, MA) "MGH",
+% 2011
+% 
+% 
+
+
+
 % [vol, M, mr_parms, volsz] = load_mgh(fname,<slices>,<frames>,<headeronly>)
 %
 % fname - path of the mgh file

@@ -27,12 +27,12 @@ if ~iud('nnz')
             'The supplied matrix has fewer than the desired number of elements');
         return;
     end
-    if nnz(inp) == nn; return; end
     if nnz(inp) < nn
         warning('nihelp:thresholdMatrix:insufficientNonzeroElements', ...
             'The supplied matrix has fewer than the desired number of nonzero elements');
         return;
     end
+    if nnz(inp) == nn; return; end
 
 
     temp = sort(inp(:), 'descend');
