@@ -4,9 +4,9 @@ function [out] = isContiguous(volumetricRegion, thr)
 %   isContiguous(magic(4)>4)
 %   isContiguous(magic(4)>5)
 %   isContiguous(magic(4)>5, sqrt(2))
-%   isContiguous(cat(3, magic(2)==1, magic(2)==2))
-%   isContiguous(cat(3, magic(2)==1, magic(2)==2), sqrt(2))
-%   isContiguous(cat(3, magic(2)==1, magic(2)==2), sqrt(3))
+%   isContiguous(cat(3, pascal(3)<3, pascal(3)>3))
+%   isContiguous(cat(3, pascal(3)<3, pascal(3)>3), sqrt(2))
+%   isContiguous(cat(3, pascal(3)<3, pascal(3)>3), sqrt(3))
 % 
 % 
 %% TODO
