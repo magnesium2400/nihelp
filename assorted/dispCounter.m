@@ -19,7 +19,7 @@ function counter = dispCounter(frequency, name)
 if nargin < 1; frequency = 100; end
 if nargin < 2; name = 'ii'; end
 
-counter = evalin('base', name);
+counter = evalin('caller', name);
 if mod(counter, frequency) == 1; fprintf("%f\n", counter); end
 
 end
