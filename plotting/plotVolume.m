@@ -49,7 +49,7 @@ addParameter(ip, 'labels', {'x', 'y', 'z'});
 addParameter(ip, 's', 20);
 addParameter(ip, 'c', []);
 addParameter(ip, 'plotOptions', {'filled'});
-addParameter(ip, 'ax', gca);
+addParameter(ip, 'Parent', gca);
 
 parse(ip, V, varargin{:});
 V = ip.Results.V;
@@ -85,7 +85,7 @@ if isempty(color) % if user does not specify a color
 end
 
 
-h = scatter3(ip.Results.ax, x, y, z, ip.Results.s, color, ip.Results.plotOptions{:});
+h = scatter3(ip.Results.Parent, x, y, z, ip.Results.s, color, ip.Results.plotOptions{:});
 
 axis equal tight;
 
