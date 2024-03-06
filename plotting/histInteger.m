@@ -1,4 +1,4 @@
-function h = histNatural(varargin)
+function h = histInteger(varargin)
 [ax, args, ~] = axescheck(varargin{:});
 if isempty(ax); ax = gca; end
 data = args{1};
