@@ -1,5 +1,18 @@
 function out = calcResiduals(x, y, degree)
-%CALCRESIDUALS calculate residuals of y wrt x
+%% CALCRESIDUALS Calculate residuals of y wrt x
+%% Examples
+%   x = 1:10; y = x.^2; figure; scatter(x, y); lsline; calcResiduals(x, y)
+% 
+% 
+%% TODO
+% * docs
+% 
+% 
+%% Authors
+% Mehul Gajwani, Monash University, 2024
+% 
+% 
+
 
 if nargin < 3; degree = 1; end
 

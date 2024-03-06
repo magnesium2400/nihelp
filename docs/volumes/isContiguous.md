@@ -1,7 +1,7 @@
 ---
 layout: default
 title: isContiguous
-checksum: ccf19c5e09ab43fe0b2a99a48af2d5b6
+checksum: 71c039259b0513c8dcd82d127e1f9872
 parent: volumes
 ---
 
@@ -14,9 +14,9 @@ parent: volumes
 isContiguous(magic(4)>4)
 isContiguous(magic(4)>5)
 isContiguous(magic(4)>5, sqrt(2))
-isContiguous(cat(3, magic(2)==1, magic(2)==2))
-isContiguous(cat(3, magic(2)==1, magic(2)==2), sqrt(2))
-isContiguous(cat(3, magic(2)==1, magic(2)==2), sqrt(3))
+isContiguous(cat(3, pascal(3)<3, pascal(3)>3))
+isContiguous(cat(3, pascal(3)<3, pascal(3)>3), sqrt(2))
+isContiguous(cat(3, pascal(3)<3, pascal(3)>3), sqrt(3))
 ```
  
 # TODO
