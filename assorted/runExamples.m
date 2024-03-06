@@ -41,7 +41,7 @@ if isempty(examplesEnd); examplesEnd = length(docstringText); end
 
 examples = docstringText(examplesStart+1:examplesEnd);
 % ensure there are 3 spaces (2 spaces are pseudocode) 
-validExamples = find( removeEmpty( regexp(examples, "^%   \w") ) ).';
+validExamples = find( removeEmpty( regexpi(examples, "^%   [^\s\%]") ) ).';
 
 if verbosity > 0
     fprintf('%i lines of "%% Examples" text found\n', length(examples));
