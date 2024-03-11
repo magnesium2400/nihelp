@@ -52,9 +52,10 @@ end
 
 %% Run examples
 for ii = validExamples
+    s = extractAfter(examples{ii}, 4);
     if verbosity == 1; fprintf('.'); 
-    elseif verbosity >= 2; fprintf('\n  >> %s', extractAfter(examples{ii}, 4)); end
-    eval( extractAfter(examples{ii}, 4) ); 
+    elseif verbosity >= 2; fprintf('\n  >> %s', s); end
+    eval( s ); 
 end
 
 
