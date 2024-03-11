@@ -3,7 +3,8 @@ function out = calcFaceArea(verts, faces)
 %% Examples
 %   [x,y]=meshgrid(1:10); z=repmat(1:10,10,1)*sqrt(3); v=[x(:),y(:),z(:)]; f=delaunay(x,y); a=calcFaceArea(v,f); figure; patch('Vertices', v, 'Faces', f, 'FaceColor', 'flat', 'FaceVertexCData', a);
 %   [x,y]=meshgrid((1:10).^2); z=x+y; v=[x(:),y(:),z(:)]; f=delaunay(x,y); a=calcFaceArea(v,f); figure; patch('Vertices', v, 'Faces', f, 'FaceColor', 'flat', 'FaceVertexCData', a);
-%   [x,y] = meshgrid(1:20); z=peaks(20); v=[x(:),y(:),z(:)]; f=delaunay(x,y); a=calcFaceArea(v,f); figure; patch('Vertices', v, 'Faces', f, 'FaceColor', 'flat', 'FaceVertexCData', a);
+%   [x,y]=meshgrid(1:20); z=peaks(20); v=[x(:),y(:),z(:)]; f=delaunay(x,y); a=calcFaceArea(v,f); figure; patch('Vertices', v, 'Faces', f, 'FaceColor', 'flat', 'FaceVertexCData', a);
+%   if ~isempty(which('getFaceArea')); [x,y]=meshgrid(1:20); z=peaks(20); v=[x(:),y(:),z(:)]; f=delaunay(x,y); a=calcFaceArea(v,f); b=arrayfun(@(ii)getFaceArea(struct('vertices',v),f,ii),1:length(f)).'; figure; scatter(a,b); title(string(all(isclose(a,b)))); end
 % 
 % 
 %% TODO
@@ -18,19 +19,19 @@ function out = calcFaceArea(verts, faces)
 
 assert(size(verts, 2) == 3);
 assert(size(faces, 2) == 3);
-assert(max(faces(:)) == length(verts));
+assert(max(faces,[],'all') >= size(verts,1));
 
-
-temp = zeros( length(faces), 3, 3 );
-
-for ii = 1:length(faces)
-    temp(ii,:,:) = verts(faces(ii,:),:)';
-end
+temp = permute(reshape( verts(faces(:),:),[],3,3 ) , [1 3 2]);
 temp2 = cross(temp(:,:,2) - temp(:,:,1), temp(:,:,3) - temp(:,:,1));
-
 out = 0.5 * sqrt(sum(temp2.*temp2, 2));
 
 end
+
+
+
+
+
+
 
 %% More Examples: 
 % [x,y] = meshgrid(1:20); f=delaunay(x,y); z=peaks(20); a=calcFaceArea([x(:),y(:),z(:)],f);
@@ -48,3 +49,9 @@ end
 % figure; nexttile; patch('Vertices', [x(:),y(:),z(:)], 'Faces', f, 'FaceColor', 'flat', 'FaceVertexCData', a);
 % axis equal; colorbar; view([30 15]);
 % nexttile; scatter(sqrt((1-z3).^2+2),2*a);
+
+%% Old way:
+% temp = zeros( length(faces), 3, 3 );
+% for ii = 1:length(faces)
+%     temp(ii,:,:) = verts(faces(ii,:),:)';
+% end
