@@ -7,14 +7,18 @@ function limitation(varargin)
 if isempty(ax); ax = gca; end
 
 ip = inputParser;
-addOptional(ip, 'lims', [], @(x) isa(x, 'double') && (numel(x) == 0 || numel(x) == 2) );
+addOptional(ip, 'lims', [], @(x) (isnumeric(x) && (numel(x) == 0 || numel(x) == 2)) || strcmp('sym', x) );
 addParameter(ip, 'func', [], @(f) isequal(f, @xlim) || isequal(f, @ylim) || isequal(f, @zlim) ...
     || isequal(f, @clim) || isequal(f, @caxis)); %#ok<CAXIS> 
-addParameter(ip, 'max', [], @(x) isa(x, 'double') && (numel(x) == 0 || numel(x) == 1) );
-addParameter(ip, 'min', [], @(x) isa(x, 'double') && (numel(x) == 0 || numel(x) == 1) );
+addParameter(ip, 'max', [], @(x) isnumeric(x) && (numel(x) == 0 || numel(x) == 1) );
+addParameter(ip, 'min', [], @(x) isnumeric(x) && (numel(x) == 0 || numel(x) == 1) );
 
 parse(ip, args{:});
-f = ip.Results.func; 
+lims                    = ip.Results.lims; 
+f                       = ip.Results.func; 
+iprmin                  = ip.Results.min;
+iprmax                  = ip.Results.max;
+
 if isempty(f) 
     error('This is a private helper function. Use xlimitation, ylimitation, zlimitation, or climitation.'); 
 end
@@ -22,12 +26,14 @@ end
 
 %% See what limits user has specified
 % Either as a pair [min max], or min/max individually
-iprmin = ip.Results.min;
-iprmax = ip.Results.max;
-
-if ~isempty(ip.Results.lims)
-    iprmin = ip.Results.lims(1);
-    iprmax = ip.Results.lims(2);
+if ~isempty(lims)
+    if isnumeric(lims)
+        iprmin = lims(1);
+        iprmax = lims(2);
+    elseif strcmp('sym',lims)
+        f( ax , max(abs(f(ax))) * [-1,1] );
+        return;
+    end
 end
 
 

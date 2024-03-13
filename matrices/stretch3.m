@@ -1,11 +1,17 @@
 function output = stretch3(inp)
-%STRETCH3 Summary of this function goes here
-%   Detailed explanation goes here
-output = nan( size(inp,1)*size(inp,2)*size(inp,3) , size(inp,4) );
-for ii = 1:size(inp,4)
-    temp = inp(:,:,:,ii);
-    output(:,ii) = temp(:);
-end
+%% STRETCH3 Converts 4-d volumetric time series data to 2-d vectorised time series
+%% Examples
+%   V = magic(3)+permute([0 0 0],[1 3 2])+permute(1:10,[1 4 3 2]); out = stretch3(V);
+% 
+% 
+%% TODO
+% * docs
+% 
+% 
+%% Authors
+% Mehul Gajwani, Monash University, 2024
+% 
+% 
 
+output = reshape(inp,[],size(inp,4));
 end
-
