@@ -1,13 +1,36 @@
 function out = calcVertexArea(verts, faces)
 %% CALCVERTEXAREA distribute face area to the surrounding vertices
+%% Examples
+%   [x,y]=meshgrid(1:10); z=zeros(size(x)); v=[x(:),y(:),z(:)]; f=delaunay(x,y); a=calcVertexArea(v,f); figure; patch('Vertices', v, 'Faces', f, 'FaceColor', 'flat', 'FaceVertexCData', a);
+%   [x,y]=meshgrid((1:10).^2); z=x+y; v=[x(:),y(:),z(:)]; f=delaunay(x,y); a=calcVertexArea(v,f); figure; patch('Vertices', v, 'Faces', f, 'FaceColor', 'interp', 'FaceVertexCData', a);
+%   [x,y]=meshgrid(1:20); z=peaks(20); v=[x(:),y(:),z(:)]; f=delaunay(x,y); a=calcVertexArea(v,f); figure; patch('Vertices', v, 'Faces', f, 'FaceColor', 'interp', 'FaceVertexCData', a);
+%   [v,f] = sphereMesh; a = calcVertexArea(v,f); figure; patch('Vertices',v,'Faces',f,'FaceColor','interp','FaceVertexCData',a); colorbar;  
+% 
+% 
+%% TODO
+% * docs
+% 
+% 
+%% Authors
+% Mehul Gajwani, Monash University, 2024
+% 
+% 
 
-nVertsPerFace = size(faces, 2);
-out = nan(length(verts), 1);
 
-faceAreas = calcFaceArea(verts, faces);
-
-for ii = 1:length(verts)
-    out(ii) = sum(faceAreas(any(faces == ii, 2)))/nVertsPerFace;
+fa = calcFaceArea(verts, faces);
+out = arrayfun( @(ii) sum(fa(any(faces==ii,2))) , ...
+    (1:max(faces, [], "all")).' ) / 3;
 end
+%% Examples
+%   
+% 
+% 
+%% TODO
+% * docs
+% 
+% 
+%% Authors
+% Mehul Gajwani, Monash University, 2024
+% 
+% 
 
-end

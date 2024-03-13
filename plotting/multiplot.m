@@ -26,12 +26,12 @@ function tl = multiplot(data, varargin)
 %
 %% Examples
 %   figure; multiplot(rand(20, 5)); 
-%   figure; multiplot(rand(20, 5), @plot, {@title}); 
-%   figure; multiplot(rand(20, 5), @plot, {@title}, 'dim', 1, 'n', 2:3:20); 
-%   figure; multiplot(rand(20, 5), @(x) scatter(2:2:40, x, [], x, 'filled'), {@title, @(x) axis('off'), @(x) colorbar}); 
+%   figure; multiplot(rand(20, 5), @plot, {@(x) title(x)}); 
+%   figure; multiplot(rand(20, 5), @plot, {@(x) title(x)}, 'dim', 1, 'n', 2:3:20); 
+%   figure; multiplot(rand(20, 5), @(x) scatter(2:2:40, x, [], x, 'filled'), {@(x) title(x), @() axis('off'), @colorbar}); 
 %   figure; multiplot(rand(20, 20, 5), @imagesc); 
 %   figure; multiplot(rand(20, 20, 5), @(x) imagesc(x, [-2 2])); 
-%   figure; multiplot(loadmri, @(x) imagesc(flipud(x.')), {@(x) axis('tight'), @(x) colormap(gray), @(x) title("y="+x)}, 'dim', 2, 'n', 20:20:120, 'tiledlayoutOptions', {3,2}); 
+%   figure; multiplot(loadmri, @(x) imagesc(flipud(x.')), {@() axis('tight'), @() colormap(gray), @(x) title("y="+x)}, 'dim', 2, 'n', 20:20:120, 'tiledlayoutOptions', {3,2}); 
 %   figure; multiplot(randn(4, 4, 4, 4), @plotVolume); 
 % 
 % 
@@ -49,8 +49,9 @@ function tl = multiplot(data, varargin)
 % `otherFuncs - other functions to be applied to each tile (cell array of
 % function handles)` Each function in this cell array will be applied to each
 % tile, after plotting is completed. Each function in this array should take in
-% the tile number as input (whether or not it is used). Some examples might be
-% `@title` or `@(ii) axis('tight')` or `@(x) ylim([-x,x])` - see examples above.
+% 0 or 1 inputs. If it takes in 1 input, the tile number will be supplied as
+% input. Some examples might be `@title` or `@() axis('tight')` or `@(x)
+% ylim([-x,x])` - see examples above.
 % 
 % 
 %% %% Name-Value Arguments 
@@ -86,29 +87,46 @@ function tl = multiplot(data, varargin)
 
 %% Prelims
 ip = inputParser;
-ip.addRequired('data', @isnumeric);
+ip.addRequired('data', @(x) isnumeric(x) || iscell(x));
 ip.addOptional('func', @plot, @(x) isa(x, 'function_handle'));
 ip.addOptional('otherFuncs', {}, @(x) all(cellfun(@(y) isa(y, 'function_handle'), x)));
 
 ip.addParameter('tiledlayoutOptions', {'flow'}, @iscell);
 ip.addParameter('dim', ndims(data)); 
-ip.addParameter('n', 1:size(data, ndims(data))); 
+ip.addParameter('n', []); 
 ip.addParameter('Parent', gcf); 
 
 ip.parse(data, varargin{:});
 data                = ip.Results.data;
 func                = ip.Results.func;
 otherFuncs          = ip.Results.otherFuncs;
+dim                 = ip.Results.dim;
+n                   = ip.Results.n;
+
+if isempty(n)
+    if iscell(data);    n = 1:numel(data); 
+    else;               n = 1:size(data, dim); end
+end
 
 
 %% Plotting
 
 tl = tiledlayout(ip.Results.Parent, ip.Results.tiledlayoutOptions{:}); 
 
-for ii = ip.Results.n
+for ii = n
     nexttile(tl); 
-    func( sliceDim(data, ip.Results.dim, ii) );
-    for jj = 1:length(otherFuncs); otherFuncs{jj}(ii); end
+
+    if iscell(data);    currentData = data{ii};
+    else;               currentData = sliceDim(data, dim, ii); 
+    end
+    func( currentData );
+
+    for jj = 1:length(otherFuncs)
+        otherFunc = otherFuncs{jj};
+        if nargin(otherFunc) == 0 || nargin(otherFunc) == -1;   otherFunc(); 
+        elseif nargin(otherFunc) == 1;                          otherFunc(ii); 
+        end
+    end
 end
 
 end

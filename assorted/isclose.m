@@ -2,6 +2,7 @@ function out = isclose(a, b, tol)
 %% ISCLOSE Checks whether two values are close to each other, or not
 %% Examples
 %   isclose(1e-9, 1e-10)
+%   isclose((1:10)*1e-10, -(1:10)*1e-10)
 %   isclose(1e-9, -1e-10)
 %   isclose(1e-9, -1e-10, 2e-9)
 % 
