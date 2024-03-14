@@ -1,5 +1,19 @@
 function varargout = joinPatches(verts1, faces1, rois1, verts2, faces2, rois2)
-%JOINPATCHES Join 2 sets of verts and faces (and rois) combined into 1 model
+%% JOINPATCHES Join 2 sets of verts and faces (and rois) combined into 1 model
+%% Examples
+%   [v1,f1] = sphereMesh; [v2,f2] = torusMesh; [v,f]=joinPatches(v1/2,f1,v2,f2); figure; patch('Vertices',v,'Faces',f); 
+% 
+% 
+%% TODO
+% * docs
+% 
+% 
+%% Authors
+% Mehul Gajwani, Monash University, 2024
+% 
+% 
+
+
 %   Inputs: any of:
 %           - two structs: each must contain vertices and faces, and may
 %           contain rois; OR
