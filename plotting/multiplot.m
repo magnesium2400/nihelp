@@ -27,12 +27,18 @@ function tl = multiplot(data, varargin)
 %% Examples
 %   figure; multiplot(rand(20, 5)); 
 %   figure; multiplot(rand(20, 5), @plot, {@(x) title(x)}); 
-%   figure; multiplot(rand(20, 5), @plot, {@(x) title(x)}, 'dim', 1, 'n', 2:3:20); 
+%   figure; multiplot(rand(20, 5), @plot, {@(x) title(x)}, 'dim', 1, 'n', find(rand(20,1)>0.5)'); 
 %   figure; multiplot(rand(20, 5), @(x) scatter(2:2:40, x, [], x, 'filled'), {@(x) title(x), @() axis('off'), @colorbar}); 
 %   figure; multiplot(rand(20, 20, 5), @imagesc); 
 %   figure; multiplot(rand(20, 20, 5), @(x) imagesc(x, [-2 2])); 
 %   figure; multiplot(loadmri, @(x) imagesc(flipud(x.')), {@() axis('tight'), @() colormap(gray), @(x) title("y="+x)}, 'dim', 2, 'n', 20:20:120, 'tiledlayoutOptions', {3,2}); 
 %   figure; multiplot(randn(4, 4, 4, 4), @plotVolume); 
+%   
+%   figure; multiplot(5:5:20, @(x)imagesc(magic(x)), @title);
+%   figure; multiplot(1:20, @(x)imagesc(magic(x)), @title, 'n', 5:5:20);
+%   figure; multiplot(@magic, @imagesc, @title, 'n', 5:5:20);
+%   figure; multiplot(arrayfun(@magic,5:5:20,'Uniform',0), @imagesc, @title);
+%   figure; multiplot(5:5:20, @(x)imagesc(magic(x)), {@title,@labelPanel});
 % 
 % 
 %% Input Arguments
@@ -87,9 +93,9 @@ function tl = multiplot(data, varargin)
 
 %% Prelims
 ip = inputParser;
-ip.addRequired('data', @(x) isnumeric(x) || iscell(x));
+ip.addRequired('data', @(x) isnumeric(x) || iscell(x) || isa(x, "function_handle"));
 ip.addOptional('func', @plot, @(x) isa(x, 'function_handle'));
-ip.addOptional('otherFuncs', {}, @(x) all(cellfun(@(y) isa(y, 'function_handle'), x)));
+ip.addOptional('otherFuncs', {}, @(x) isa(x, 'function_handle') || all(cellfun(@(y) isa(y, 'function_handle'), x)));
 
 ip.addParameter('tiledlayoutOptions', {'flow'}, @iscell);
 ip.addParameter('dim', ndims(data)); 
@@ -103,6 +109,8 @@ otherFuncs          = ip.Results.otherFuncs;
 dim                 = ip.Results.dim;
 n                   = ip.Results.n;
 
+if isa(otherFuncs, 'function_handle'); otherFuncs = {otherFuncs}; end
+
 if isempty(n)
     if iscell(data);    n = 1:numel(data); 
     else;               n = 1:size(data, dim); end
@@ -114,19 +122,23 @@ end
 tl = tiledlayout(ip.Results.Parent, ip.Results.tiledlayoutOptions{:}); 
 
 for ii = n
+
     nexttile(tl); 
 
-    if iscell(data);    currentData = data{ii};
-    else;               currentData = sliceDim(data, dim, ii); 
+    if      iscell(data);                   currentData = data{ii};
+    elseif  isa(data, 'function_handle');   currentData = data(ii);
+    else;                                   currentData = sliceDim(data, dim, ii); 
     end
     func( currentData );
 
     for jj = 1:length(otherFuncs)
-        otherFunc = otherFuncs{jj};
-        if nargin(otherFunc) == 0 || nargin(otherFunc) == -1;   otherFunc(); 
-        elseif nargin(otherFunc) == 1;                          otherFunc(ii); 
+        currFunc = otherFuncs{jj};
+        if     nargin(currFunc) == 0;   currFunc(); 
+        elseif nargin(currFunc) == 1;   currFunc(ii); 
+        elseif nargin(currFunc) == -1;  try currFunc(ii); catch; currFunc(); end
         end
     end
+
 end
 
 end
