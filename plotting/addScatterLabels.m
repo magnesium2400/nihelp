@@ -1,6 +1,6 @@
 function addScatterLabels(s, labels, labelName)
 
-if nargin < 1 || isempty(s);            s = gca().Children; end
+if nargin < 1 || isempty(s);            s = findobj(gca,'Type','Scatter'); end
 if nargin < 2 || isempty(labels);       labels = (1:length(s.XData)); end
 if nargin < 3 || isempty(labelName);    labelName = 'Node ID'; end
 

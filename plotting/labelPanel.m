@@ -1,20 +1,34 @@
 function labelPanel(varargin)
+%% Examples
+%   figure; for ii = 10:18; nexttile; imagesc(magic(ii)); labelPanel; end;
+%   figure; for ii = 10:18; nexttile; imagesc(magic(ii)); title("Magic " + ii); labelPanel; end;
+%   figure; for ii = 10:18; nexttile; imagesc(magic(ii)); title("Magic " + ii); labelPanel(char(67+ii)); end;
+% 
+% 
+%% TODO
+% * docs
+% 
+% 
+%% Authors
+% Mehul Gajwani, Monash University, 2024
+% 
+% 
+
 
 [ax, args] = axescheck(varargin{:});
 if isempty(ax); ax = gca; end
 
-fig = gcf;
-if isprop(fig, 'LabelPanelCounter')
-    set(fig, 'LabelPanelCounter', fig.LabelPanelCounter+1);
+p = ax.Parent;
+if isprop(p, 'LabelPanelCounter')
+    set(p, 'LabelPanelCounter', p.LabelPanelCounter+1);
 else
-    addprop(fig, 'LabelPanelCounter');
-    fig.LabelPanelCounter = 1;
+    addprop(p, 'LabelPanelCounter');
+    p.LabelPanelCounter = 1;
 end
 
 
-
 if isempty(args) % label not supplied
-    panelLabel =  char(64+fig.LabelPanelCounter);
+    panelLabel =  char(64+p.LabelPanelCounter);
 else % label supplied
     panelLabel = args{1};
 end
