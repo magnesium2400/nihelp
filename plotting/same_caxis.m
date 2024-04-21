@@ -21,7 +21,14 @@ function new_caxis = same_caxis(axesArray)
 %
 %       same_caxis(h1,h2);
 
-new_caxis = caxis(axesArray(1));
+if nargin < 1 || isempty(axesArray); axesArray = gcf; end
+
+if ~strcmp(get(axesArray, 'type'), 'axes')
+    axesArray = findobj(axesArray, 'Type', 'Axes');
+end
+
+
+new_caxis = caxis(axesArray(1)); %#ok<*CAXIS>
 
 for jj = 2:length(axesArray)
     t = caxis(axesArray(jj));

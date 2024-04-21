@@ -202,25 +202,25 @@ switch upper(dataType)
         end
         n_elements = numel(x);
         fprintf(fid, 'DATASET POLYDATA\n');
-        if mod(n_elements,3)==1
-            x(n_elements+1:n_elements+2,1)=[0;0];
-            y(n_elements+1:n_elements+2,1)=[0;0];
-            z(n_elements+1:n_elements+2,1)=[0;0];
-        elseif mod(n_elements,3)==2
-            x(n_elements+1,1)=0;
-            y(n_elements+1,1)=0;
-            z(n_elements+1,1)=0;
-        end
+        % if mod(n_elements,3)==1
+        %     x(n_elements+1:n_elements+2,1)=[0;0];
+        %     y(n_elements+1:n_elements+2,1)=[0;0];
+        %     z(n_elements+1:n_elements+2,1)=[0;0];
+        % elseif mod(n_elements,3)==2
+        %     x(n_elements+1,1)=0;
+        %     y(n_elements+1,1)=0;
+        %     z(n_elements+1,1)=0;
+        % end
         nbpoint = numel(x);
         fprintf(fid, ['POINTS ' num2str(nbpoint) ' float\n']);
         
-        spec = [repmat(['%0.', precision, 'f '], 1, 9), '\n'];
+        spec = [repmat(['%0.', precision, 'f '], 1, 3), '\n'];
         
-        output = [x(1:3:end-2), y(1:3:end-2), z(1:3:end-2),...
-                  x(2:3:end-1), y(2:3:end-1), z(2:3:end-1),...
-                  x(3:3:end), y(3:3:end), z(3:3:end)]';
+        % output = [x(1:3:end-2), y(1:3:end-2), z(1:3:end-2),...
+        %           x(2:3:end-1), y(2:3:end-1), z(2:3:end-1),...
+        %           x(3:3:end), y(3:3:end), z(3:3:end)]';
               
-        fprintf(fid, spec, output);
+        fprintf(fid, spec, [x, y, z]');
         
         switch upper(varargin{1})
             case 'LINES'
