@@ -46,7 +46,7 @@ addParameter(ip, 'doValidation', true);
 addParameter(ip, 'zeroMidline', false);
 addParameter(ip, 'labels', {'x', 'y', 'z'});
 
-addParameter(ip, 's', 20);
+addParameter(ip, 's', []);
 addParameter(ip, 'c', []);
 addParameter(ip, 'plotOptions', {'filled'});
 addParameter(ip, 'Parent', gca);

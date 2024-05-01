@@ -11,24 +11,29 @@ function V = rotateVolume(V, srcOrientation, tgtOrientation)
 % 
 %% Examples 
 %   D = squeeze(load('mri').D); E = rotateVolume(D, 'prs', 'ras'); 
-%   V = (1:10).'+(1:5)+permute(1:20,[1,3,2])-2; W = rotateVolume(V, 'als', 'pir'); 
-%   D = squeeze(load('mri').D); E = rotateVolume(D, 'prs', 'ras'); figure; nexttile; plotVolume(D); nexttile; plotVolume(E);  
+%   D = squeeze(load('mri').D); E = rotateVolume(D, 'prs', 'spr'); assert(isequal(D,permute(E,[2,3,1]))); 
+%   D = squeeze(load('mri').D); E = rotateVolume(D, 'prs', 'als'); assert(isequal(D,flip(flip(E,1),2))); 
+%   D = squeeze(load('mri').D); assert(isequal(D, rotateVolume(rotateVolume(D,'prs','ail'),'ail','prs'))); 
+%   
+%   D = squeeze(load('mri').D); E = rotateVolume(D, 'prs', 'ras'); figure; nexttile; plotVolume(D); nexttile; plotVolume(E); 
 %   D = (loadmri+(1:128).').*logical(loadmri); figure; nexttile; plotVolume(D); nexttile; plotVolume(rotateVolume(D, 'ras', 'ipl')); 
 % 
 % 
 %% Input Arguments 
-%  V - Volume to be rotated (3-D array)
+%  `V - Volume to be rotated (3-D matrix)`
 %  
-%  srcOrientation - Direction of positive x,y,z coordinates in original space (string scalar | character vector) 
-%  A string or character vector with three letters, where each letter represents
-%  the direction of the positive x/y/z axis respectively. Use the letters
-%  p,a,i,s,r,l to denote posterior, anterior, inferior, superior, right, and
-%  left. For example, the data given by `squeeze(load('mri').D)` would have
-%  srcOrientation 'prs'; radiological and neurological volumes would have
-%  srcOrientation 'las' and 'ras'.
+%  `srcOrientation - Direction of positive x,y,z coordinates in original
+%  space (string scalar | character vector)` A string or character vector
+%  with three letters, where each letter represents the direction of the
+%  positive x/y/z axis respectively. Use the letters p,a,i,s,r,l to denote
+%  posterior, anterior, inferior, superior, right, and left. For example,
+%  the data given by `squeeze(load('mri').D)` would have srcOrientation
+%  'prs'; radiological and neurological volumes would have srcOrientation
+%  'las' and 'ras'.
 % 
 % 
-%  tgtOrientation - Direction of positive x,y,z coordinates in target space (string scalar | character vector) 
+%  `tgtOrientation - Direction of positive x,y,z coordinates in target
+%  space (string scalar | character vector)`
 %  
 % 
 %% Output Arguments 
@@ -36,14 +41,14 @@ function V = rotateVolume(V, srcOrientation, tgtOrientation)
 % 
 % 
 %% See also 
-%  PERMUTE, FLIP, PLOTVOLUME, VOLSHOW
+%  PERMUTE, FLIP, VOLSHOW, PLOTVOLUME, ROTATEVOLUMETRIC
 %  Imaging conventions: https://nipy.org/nibabel/neuro_radio_conventions.html
+% 
 % 
 %% Authors 
 % Mehul Gajwani, Monash University, 2024
 % 
 % 
-%% ENDPUBLISH
 
 srcOrientation = convertStringsToChars(lower(srcOrientation));
 tgtOrientation = convertStringsToChars(lower(tgtOrientation));
@@ -68,4 +73,6 @@ pFlips = mod(sum(f), 2); % parity of number of flips
 
 if xor(pFlips, pSwaps) % if total parity of flips and swaps is odd
     warning('nihelp:rotateVolumeOdd', 'Odd number of swaps/flips'); 
+end
+
 end

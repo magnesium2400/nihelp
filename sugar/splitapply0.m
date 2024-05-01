@@ -22,10 +22,11 @@ function out = splitapply0(func, X, G, nGroups, fillVal)
 if isempty(func); func = @(x) mean(x,1); end
 if nargin<4 || isempty(nGroups); nGroups = max(G); end
 if nargin<5 || isempty(fillVal); fillVal = nan; end
-out = ones(nGroups, 1)*fillVal;
+
 
 [G2, Gid] = findgroups(G);
 temp = splitapply(func, X, G2);
-out(Gid(logical(Gid))) = temp(logical(Gid));
+out = ones(nGroups, size(temp,2))*fillVal;
+out(Gid(logical(Gid)),:) = temp(logical(Gid),:);
 
 end
