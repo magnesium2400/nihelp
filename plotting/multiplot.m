@@ -37,6 +37,8 @@ function tl = multiplot(data, varargin)
 %   figure; multiplot(5:5:20, @(x)imagesc(magic(x)), @title);
 %   figure; multiplot(1:20, @(x)imagesc(magic(x)), @title, 'n', 5:5:20);
 %   figure; multiplot(@magic, @imagesc, @title, 'n', 5:5:20);
+%   figure; multiplot(@(x) magic(x), @imagesc, @title, 'n', 5:5:20);
+%   figure; multiplot(@(x) magic(5*x), @imagesc, @title, 'n', 1:4);
 %   figure; multiplot(arrayfun(@magic,5:5:20,'Uniform',0), @imagesc, @title);
 %   figure; multiplot(5:5:20, @(x)imagesc(magic(x)), {@title,@labelPanel});
 % 

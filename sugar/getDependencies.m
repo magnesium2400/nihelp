@@ -1,7 +1,7 @@
-function out = findDependencies(filename)
-%% FINDDEPENDENCIES Finds dependencies for specified function, file, or folder
+function out = getDependencies(filename)
+%% GETDEPENDENCIES Finds dependencies for specified function, file, or folder
 %% Examples
-%   findDependencies('findDependencies')
+%   getDependencies('getDependencies')
 % 
 % 
 %% TODO
