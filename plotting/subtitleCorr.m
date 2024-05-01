@@ -1,4 +1,4 @@
-function r = titleCorr(varargin)
+function r = subtitleCorr(varargin)
 %% 
 % inputs: corrtype (string) optional, axis handle (optional)
 % adds correlation coefficient of sscatterplot to subtitle
@@ -25,14 +25,14 @@ assert(isa(scatterPlot, 'matlab.graphics.chart.primitive.Scatter'));
 
 r = corr(scatterPlot.XData(:), scatterPlot.YData(:), 'type', corrType);
 
-addTitle(ax, sprintf("%s correlation = %.4f", corrType, r))
+addSubtitle(ax, sprintf("%s correlation = %.4f", corrType, r))
 
 end
 
-function addTitle(ax, str)
-subt = ax.Title.String;
-if isempty(subt); title(ax, str); %#ok<ALIGN> 
-elseif iscell(subt); title(ax, [subt(:)', {str}]);
-else; title(ax, {subt, str}); end
+function addSubtitle(ax, str)
+subt = ax.Subtitle.String;
+if isempty(subt); subtitle(ax, str); %#ok<ALIGN> 
+elseif iscell(subt); subtitle(ax, [subt(:)', {str}]);
+else; subtitle(ax, {subt, str}); end
 
 end

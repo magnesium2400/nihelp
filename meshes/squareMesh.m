@@ -23,11 +23,11 @@ try % if seed is specified/is appropriate, generate irregular mesh
     t = (1:(n-1)).'; z = ones(size(t)); o = ones(size(t))*n;
     x = [t;o;o-t+1;z]; y = [z;t;o;o-t+1];
     verts = [ x,y ; rand((n-2)^2,2)*(n-1)+1 ];
-    faces = delaunay(verts(:,1),verts(:,2));
 catch % otherwise (or by default), generate regular mesh
     [x,y] = meshgrid(1:n); 
     verts = [x(:), y(:)];
-    faces = delaunay(x(:),y(:)); 
 end
+
+faces = delaunay(verts(:,1),verts(:,2));
 
 end

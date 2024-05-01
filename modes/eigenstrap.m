@@ -12,7 +12,7 @@ function modeStrap = eigenstrap(modeData, mask)
 %
 %
 %% See also
-% eigenstrapSubgroup, makeRandomRotationMatrix
+% eigenstrapSubgroup, sorthogonal
 %
 %
 %% Authors

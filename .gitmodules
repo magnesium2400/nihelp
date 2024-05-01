@@ -1,6 +1,3 @@
 [submodule "md5sum"]
 	path = md5sum
 	url = https://github.com/bimac/md5sum
-[submodule "HELPERS/md5sum"]
-	path = HELPERS/md5sum
-	url = https://github.com/bimac/md5sum

@@ -1,4 +1,4 @@
-function out = argout(f, n)
+function out = argout(f, n, m)
 %% ARGOUT Return n-th output from a function
 %% Input Arguments
 % `f - function to get argument from (function handle)` Should not have any
@@ -7,10 +7,14 @@ function out = argout(f, n)
 %
 % `n - argument position to return (positive integer)`
 %
+% `m - number of outputs to request when calling f (positive integer)`
+% default is `n`.
+%
 %
 %% Examples
 %   argout(@() max(magic(3)), 2)
 %   argout(@() unique(magic(3)), 3)
+%   argout(@() eig(magic(3)), 1, 2)
 % 
 % 
 %% Authors
@@ -18,7 +22,9 @@ function out = argout(f, n)
 %
 %
 
-tmp = cell(1, max(n));
+if nargin < 3 || isempty(m); m = max(n); end
+
+tmp = cell(1, m);
 [tmp{1:end}] = f(); % evaluate function
 out = tmp{n};
 
