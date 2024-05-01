@@ -21,16 +21,4 @@ fa = calcFaceArea(verts, faces);
 out = arrayfun( @(ii) sum(fa(any(faces==ii,2))) , ...
     (1:max(faces, [], "all")).' ) / 3;
 end
-%% Examples
-%   
-% 
-% 
-%% TODO
-% * docs
-% 
-% 
-%% Authors
-% Mehul Gajwani, Monash University, 2024
-% 
-% 
 
