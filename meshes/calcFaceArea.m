@@ -1,6 +1,8 @@
 function out = calcFaceArea(verts, faces)
 %% CALCFACEAREA gets area of each face in a surface patch object
 %% Examples
+%   rng(10); v=rand(100,2); f=delaunay(v(:,1),v(:,2)); a=calcFaceArea(v,f); figure; patch('Vertices', v, 'Faces', f, 'FaceColor', 'flat', 'FaceVertexCData', a);
+%   [x,y]=meshgrid(1:10); v=[x(:),y(:)]; f=delaunay(v(:,1),v(:,2)); a=calcFaceArea(v,f); figure; patch('Vertices', v, 'Faces', f, 'FaceColor', 'flat', 'FaceVertexCData', a);
 %   [x,y]=meshgrid(1:10); z=repmat(1:10,10,1)*sqrt(3); v=[x(:),y(:),z(:)]; f=delaunay(x,y); a=calcFaceArea(v,f); figure; patch('Vertices', v, 'Faces', f, 'FaceColor', 'flat', 'FaceVertexCData', a);
 %   [x,y]=meshgrid((1:10).^2); z=x+y; v=[x(:),y(:),z(:)]; f=delaunay(x,y); a=calcFaceArea(v,f); figure; patch('Vertices', v, 'Faces', f, 'FaceColor', 'flat', 'FaceVertexCData', a);
 %   [x,y]=meshgrid(1:20); z=peaks(20); v=[x(:),y(:),z(:)]; f=delaunay(x,y); a=calcFaceArea(v,f); figure; patch('Vertices', v, 'Faces', f, 'FaceColor', 'flat', 'FaceVertexCData', a);
@@ -17,13 +19,14 @@ function out = calcFaceArea(verts, faces)
 % 
 
 
-assert(size(verts, 2) == 3);
+if      size(verts,2) == 2; verts(:,3) = 0; 
+elseif  size(verts,2) ~= 3; error('Vertices should be 2 or 3 dimensional'); end
 assert(size(faces, 2) == 3);
 assert(max(faces,[],'all') >= size(verts,1));
 
 temp = permute(reshape( verts(faces(:),:),[],3,3 ) , [1 3 2]);
 temp2 = cross(temp(:,:,2) - temp(:,:,1), temp(:,:,3) - temp(:,:,1));
-out = 0.5 * sqrt(sum(temp2.*temp2, 2));
+out = vecnorm(temp2,2,2)/2;
 
 end
 
