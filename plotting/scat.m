@@ -1,5 +1,5 @@
-function scat(xyData,varargin)
+function s = scat(xyData,varargin)
 %% SCAT wrapper to simplify plotting
-scatter(xyData(:,1), xyData(:,2), varargin{:});
+s = scatter(xyData(:,1), xyData(:,2), varargin{:});
 end
 
