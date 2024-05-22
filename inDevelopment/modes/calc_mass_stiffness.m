@@ -102,7 +102,7 @@ e5 = v4 - v2;
 e6 = v4 - v3;
 
 cr = cross(e1, e3);
-vol = 2 * sqrt(sum(e4 .* cr, 2));
+vol = abs(sum(e4 .* cr, 2));
 % vol(vol < eps) = mean(vol)/10000;
 
 ii = [t1; t2; t2; t3; t3; t1; t1; t4; t2; t4; t3; t4; t1; t2; t3; t4];
