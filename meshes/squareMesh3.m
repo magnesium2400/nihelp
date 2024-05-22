@@ -18,7 +18,7 @@ function [verts, faces] = squareMesh3(n, seed, zfunc)
 
 if nargin < 1 || isempty(n);    n = 20;     end
 if nargin < 2 || isempty(seed); seed = -1;  end % regular mesh by default (incorrect seed specified)
-if nargin < 3 || isempty(zfunc);zfunc = @(x,y) ones(size(x)); end
+if nargin < 3 || isempty(zfunc);zfunc = @(x,y) zeros(size(x)); end
 
 [verts, faces] = squareMesh(n, seed); 
 verts(:,3) = zfunc(verts(:, 1), verts(:, 2)); 

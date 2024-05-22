@@ -1,7 +1,7 @@
 ---
 layout: default
 title: argout
-checksum: 7216c552635d97d14d66b993fd3c555d
+checksum: 24e386cb62f6503f995c3fe2466a7c3b
 parent: sugar
 ---
 
@@ -16,11 +16,15 @@ parent: sugar
 
 `n - argument position to return (positive integer)`
 
+
+`m - number of outputs to request when calling f (positive integer)` default is `n`.
+
  
 # Examples
 ```matlab
 argout(@() max(magic(3)), 2)
 argout(@() unique(magic(3)), 3)
+argout(@() eig(magic(3)), 1, 2)
 ```
  
 # Authors
