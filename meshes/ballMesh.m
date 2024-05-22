@@ -1,4 +1,19 @@
 function [v,f] = ballMesh(a,b,c)
+%% BALLMESH Generate faces and vertices of volumetric ball mesh
+%% Examples
+%   [v,f] = ballMesh; 
+%   [v,f] = ballMesh(3,4,5); figure; tetramesh(f,v); axis equal;   
+% 
+% 
+%% TODO
+% * docs
+% 
+% 
+%% Authors
+% Mehul Gajwani, Monash University, 2024
+% 
+% 
+
 
 if nargin < 1 || isempty(a); a = 5; end
 if nargin < 2 || isempty(b); b = a;  end

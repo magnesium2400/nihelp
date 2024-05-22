@@ -1,4 +1,18 @@
 function [v,f] = solidTorusMesh(R, r, H)
+%% SOLIDTORUSMESH Generate faces and vertices of solid torus mesh
+%% Examples
+%   [v,f] = solidTorusMesh; 
+%   [v,f] = solidTorusMesh(4,2,1.9); figure; tetramesh(f,v);  
+% 
+% 
+%% TODO
+% * docs
+% 
+% 
+%% Authors
+% Mehul Gajwani, Monash University, 2024
+% 
+% 
 
 if nargin<1; R = 8; end
 if nargin<2; r = R/2; end
@@ -20,22 +34,7 @@ v = v(m,:);
 
 if nargout < 2; return; end
 
-
-%% get faces in parameter space
-% generate two tori with diffent angles to get faces near boundary (due to
-% periodicity)
-
-nverts = height(v); 
-t = atan2(v(:,2),v(:,1)); 
-r = vecnorm(v(:,1:2),2,2); 
-
-vn = [v;v]; 
-rn = [r;r];
-tn = [t; t+2*pi-4*pi*(t>0)];   % loop tori around
-
-f = delaunay(tn, rn, vn(:,3)); % get faces
-f(all(f>nverts,2),:) = [];     % remove faces connected to extraneous verts
-f = mod(f-1,nverts)+1;         % reindex
+f = cuboidDelaunay(xyz2vol(v-min(v)+1,[],0)); 
 
 end
 
