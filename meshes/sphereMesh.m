@@ -50,7 +50,7 @@ f = [f; [n*ones(n,1), [2:n,1]', (1:n)']*(n-1)+[1,0,0] ];    % top
 
 % add top and bottom vertices, and correspondingly re-index faces
 v = [0,0,-1; v; 0,0,1];
-f = f + 1;
+f = f(:, [1 3 2]) + 1;
 
 
 end

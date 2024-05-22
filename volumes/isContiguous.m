@@ -1,4 +1,4 @@
-function [out] = isContiguous(volumetricRegion, thr)
+function [f,n,g,d,v] = isContiguous(volumetricRegion, thr)
 %% ISCONTIGUOUS Compute whether all points in a volumetric region are connected
 %% Examples
 %   isContiguous(magic(4)>4)
@@ -23,10 +23,10 @@ if nargin < 2; thr = 1; end
 
 [x,y,z] = ind2sub(size(volumetricRegion), find(volumetricRegion(:)));
 v = [x,y,z];
-d = pdist2(v,v); % faster than squareform(pdist(v))
-d(1:length(d)+1:end) = Inf;
-g = graph(d <= thr);
-out = all(conncomp(g) == 1); % check there is only one component
+d = pdist2(v,v); % d(1:length(d)+1:end) = Inf; % faster than squareform(pdist(v))
+g = graph(d <= thr, 'omitselfloops');
+n = conncomp(g); 
+f = all(n == 1); % check there is only one component
 % [dists, idx] = min(d);
 % out = all(dists<=thr);
 
