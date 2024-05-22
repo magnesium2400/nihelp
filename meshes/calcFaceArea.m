@@ -22,7 +22,7 @@ function out = calcFaceArea(verts, faces)
 if      size(verts,2) == 2; verts(:,3) = 0; 
 elseif  size(verts,2) ~= 3; error('Vertices should be 2 or 3 dimensional'); end
 assert(size(faces, 2) == 3);
-assert(max(faces,[],'all') >= size(verts,1));
+assert(max(faces,[],'all') <= size(verts,1));
 
 temp = permute(reshape( verts(faces(:),:),[],3,3 ) , [1 3 2]);
 temp2 = cross(temp(:,:,2) - temp(:,:,1), temp(:,:,3) - temp(:,:,1));

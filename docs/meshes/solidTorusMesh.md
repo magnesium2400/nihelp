@@ -1,13 +1,26 @@
 ---
 layout: default
 title: solidTorusMesh
-checksum: 1c7c5b8a1e61e8ed380652bba995d9f6
+checksum: 1ad1b875ba0dfdac013617b55524066c
 parent: meshes
 ---
 
 
- 
-# get faces in parameter space
 
-generate two tori with diffent angles to get faces near boundary (due to periodicity)
+
+# SOLIDTORUSMESH Generate faces and vertices of solid torus mesh
+ 
+# Examples
+```matlab
+[v,f] = solidTorusMesh;
+[v,f] = solidTorusMesh(4,2,1.9); figure; tetramesh(f,v);
+```
+ 
+# TODO
+-  docs 
+ 
+# Authors
+
+Mehul Gajwani, Monash University, 2024
+
 
