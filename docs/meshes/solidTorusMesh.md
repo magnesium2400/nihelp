@@ -6,7 +6,8 @@ parent: meshes
 ---
 
 
- 
+
+
 # SOLIDTORUSMESH Generate faces and vertices of solid torus mesh
  
 # Examples
@@ -21,4 +22,5 @@ parent: meshes
 # Authors
 
 Mehul Gajwani, Monash University, 2024
+
 

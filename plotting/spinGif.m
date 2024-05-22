@@ -1,6 +1,6 @@
 function spinGif(f, outfile, nFrames, nRevs, delayTime)
 
-if nargin<3; nFrames = 20;     end
+if nargin<3; nFrames = 100;    end
 if nargin<4; nRevs = 1;        end
 if nargin<5; delayTime = 0.04; end
 

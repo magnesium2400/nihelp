@@ -40,7 +40,8 @@ function h = plotVolume(V, varargin)
 %% Prelims
 ip = inputParser;
 addRequired(ip, 'V');
-addOptional(ip, 'validationFunction', @logical);
+addOptional(ip, 'validationFunction', @logical, @(x) isa(x, 'function_handle') || isnumeric(x));
+addParameter(ip, 'rois', [], @isnumeric);
 
 addParameter(ip, 'doValidation', true);
 addParameter(ip, 'zeroMidline', false);
@@ -53,12 +54,17 @@ addParameter(ip, 'Parent', gca);
 
 parse(ip, V, varargin{:});
 V = ip.Results.V;
+rois = ip.Results.rois;
 validationFunction = ip.Results.validationFunction;
 color = ip.Results.c;
 labels = ip.Results.labels;
 
 
 %% Other options for validationFunction
+if ~isempty(ip.Results.rois)
+    V = V.*(+ismember(V, rois));
+end
+
 if isnumeric(validationFunction)
     if validationFunction >= 1  
         validationFunction = @(x) x > validationFunction;

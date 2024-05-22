@@ -67,14 +67,34 @@ end
 if(info == 'P')
     
     nface = sscanf(str,'%*s %d %*s', 1);
+    npoint = sscanf(str,'%*s %*s %d', 2);
 
-    [A,cnt] = fscanf(fid,'%d %d %d %d\n', 4*nface);
-    if cnt~=4*nface
+    [A,cnt] = fscanf(fid, '%d ', npoint);
+    ndim = A(1);
+    if cnt~=npoint
         warning('Problem in reading faces.');
     end
 
-    A = reshape(A, 4, cnt/4);
-    face = A(2:4,:)+1;
+    if all(A(1:(ndim+1):end) == ndim)
+        A = reshape(A, ndim+1, []);
+        face = A(2:end,:)+1;
+    else
+        B = {};
+        while ~isempty(A)
+            B{end+1} = A(2:(A(1)+1))+1;
+            A(1:(A(1)+1)) = [];
+        end
+        face = B;
+    end
+
+
+    % [A,cnt] = fscanf(fid,'%d %d %d %d\n', 4*nface);
+    % if cnt~=4*nface
+    %     warning('Problem in reading faces.');
+    % end
+    % 
+    % A = reshape(A, 4, cnt/4);
+    % face = A(2:4,:)+1;
 end
 
 if(info ~= 'P')
