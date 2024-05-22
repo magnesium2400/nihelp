@@ -1,7 +1,7 @@
 ---
 layout: default
 title: sphereMesh
-checksum: 89e87acbece72c9c5ba41510b784399f
+checksum: f4e34172e6e908346700feb3ad9a4a23
 parent: meshes
 ---
 
@@ -13,6 +13,7 @@ parent: meshes
 ```matlab
 v = sphereMesh; figure; scatter3(v(:,1),v(:,2),v(:,3));
 [v,f] = sphereMesh(10); figure; patch('Vertices', v, 'Faces', f, 'FaceColor', 'none');
+[v,f] = sphereMesh(99); figure; patch('Vertices', v, 'Faces', f, 'FaceColor', 'flat', 'FaceVertexCData', (1:height(v)).', 'EdgeColor', 'none'); axis equal off; colormap(hsv); view(3);
 [v,f] = sphereMesh(45); figure; patch('Vertices', v, 'Faces', f, 'FaceColor', 'flat', 'FaceVertexCData', calcFaceArea(v,f)); axis equal; colorbar;
 ```
  

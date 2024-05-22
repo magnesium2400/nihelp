@@ -1,7 +1,7 @@
 ---
 layout: default
 title: isclose
-checksum: 3e3197c97f1c842d6a049b405309bd62
+checksum: 21526a237d5028d3dcdecd228186a4b2
 parent: assorted
 ---
 
@@ -12,6 +12,7 @@ parent: assorted
 # Examples
 ```matlab
 isclose(1e-9, 1e-10)
+isclose((1:10)*1e-10, -(1:10)*1e-10)
 isclose(1e-9, -1e-10)
 isclose(1e-9, -1e-10, 2e-9)
 ```

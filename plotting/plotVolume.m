@@ -62,7 +62,7 @@ labels = ip.Results.labels;
 
 %% Other options for validationFunction
 if ~isempty(ip.Results.rois)
-    V = V.*(ismember(V, rois));
+    V = V.*(+ismember(V, rois));
 end
 
 if isnumeric(validationFunction)

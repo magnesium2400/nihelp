@@ -69,7 +69,7 @@ if isempty(X)
     else;           X = (1:height(Y))'; end
 end
 
-if isempty(C)
+if nargin < 3 || isempty(C)
     if isvector(Y); C = (1:numel(Y))';
     else;           C = (1:height(Y))'; end
 end
