@@ -29,9 +29,11 @@ if nargin < 2 || isempty(k);        k = 10;         end
 if nargin < 3 || isempty(sigma);    sigma = -0.01;  end
 if nargin < 4 || isempty(lump);     lump = false;   end
 
-
 if ~isfield(surface, 'mass') || ~isfield(surface, 'stiffness')
     [surface, M, S] = calc_mass_stiffness(surface, lump); 
+else
+    M = surface.mass;
+    S = surface.stiffness;
 end
 
 [V, D] = eigs(surface.stiffness, surface.mass, k, sigma);

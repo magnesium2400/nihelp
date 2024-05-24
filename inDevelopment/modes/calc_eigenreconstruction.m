@@ -14,7 +14,7 @@ function [corrCoeffs,recon,betaCoeffs,fcCorr,fcRecon] = ...
 %         modesq       : modes to query to get reconstruction [1xQ]
 %                        Q = number of sample points (1:N by default)
 %         params       : further data required for decomposition
-%                        for the 'orthogonal' method, this should be the mass matrix (M) 
+%                        for the 'orthogonal' method, this should be the mass matrix (M) or a struct with a field 'mass'  
 % Output: corrCoeffs   : correlation coefficient values [QxP]
 %         recon        : reconstructions using 1..N modes [MxQxP]
 %         betaCoeffs   : coefficient values {Qx1}
