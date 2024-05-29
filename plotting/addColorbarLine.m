@@ -25,6 +25,7 @@ if nargin < 3 || isempty(linestyle); linestyle = {}; end
 ax = axes('Position', cb.Position, 'Units', cb.Units);
 axis(ax, 'off'); 
 ylim(ax, cb.Limits); 
+
 yline(ax, yval, linestyle{:}); 
 
 end
