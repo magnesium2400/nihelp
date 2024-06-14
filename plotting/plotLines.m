@@ -1,4 +1,5 @@
 function p = plotLines(sources,targets,varargin)
+%% PLOTLINES Plots lines from sources to targets
 %% Examples
 %   figure; plotLines(rand(10,2), rand(10,2)+1);
 %   figure; plotLines(rand(10,3), rand(10,3)+1);

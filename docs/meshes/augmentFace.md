@@ -1,13 +1,18 @@
 ---
 layout: default
 title: augmentFace
-checksum: 0858a10873478c641787d70751ffd012
+checksum: 4fad7c5f94597ad5558899640949c164
 parent: meshes
 ---
 
 
  
 # AUGMENTFACE Replaces face in surface mesh with tetrahedron
+ 
+# Usage Notes
+
+Old faces are removed from their location in the `faces` matrix, and new faces are all added to the end
+
  
 # Examples
 ```matlab
