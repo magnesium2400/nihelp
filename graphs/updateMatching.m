@@ -65,15 +65,14 @@ if nargin < 6
     assert(isequal(a', double(logical(a)))); % check that a is symmetric and the correct type
     n = 2*a*a; 
     n(1:(length(a)+1):end) = 0;
-    temp = sum(a,1); 
-    d = temp + temp' - 2*a;
+    d = sum(a,1) + sum(a,1).' - 2*a;
     m = n ./ (d + ~n);
     return
 end
 
 % Suggest uncommenting this line when profiling
 % As >80% of the runtime is just in allocating new memeory for output matrices
-[a,m,n,d] = deal(a+1-1,m+1-1,n+1-1,d+1-1);
+% [a,m,n,d] = deal(a+1-1,m+1-1,n+1-1,d+1-1);
 
 a(ii, jj) = 1;
 a(jj, ii) = 1;
