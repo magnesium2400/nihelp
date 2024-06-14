@@ -26,6 +26,7 @@ verts = [1 1 s; -1 1 s; -1 -1 s; 1 -1 s; s 1 1; 1 s 1; -1 s 1; -s 1 1; -s -1 1; 
 if nargin >= 1 && strcmp(flag, 'pseudo') % rotate lower copula
     t = 1/sqrt(2); 
     verts = [verts; verts([5:12,1:4],:)*[t t 0; -t t 0; 0 0 -1]];
+    faces(15:30,:) = [13 14 7; 7 14 8; 14 15 8; 8 15 9; 9 15 16; 9 16 10; 16 17 10; 10 17 11; 17 18 11; 11 18 12; 18 19 12; 12 19 5; 19 20 5; 5 20 6; 20 13 6; 6 13 7];
 else % duplicate vertices with z-coordinate negated
     verts = [verts; verts([5:12,1:4],:)*[1 0 0;  0 1 0; 0 0 -1]];
 end
