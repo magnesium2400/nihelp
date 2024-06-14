@@ -20,8 +20,13 @@ if nargin < 2 || isempty(lump); lump = false; end
 
 if     size(surface.faces, 2) == 3; [M,S] = cms3(surface, lump);
 elseif size(surface.faces, 2) == 4; [M,S] = cms4(surface, lump); 
-else;  error('Incorrect verts and/or faces specified'); 
+else;  error('Incorrect faces specified'); 
 end
+
+% If matrices are not symmetric (which they should be) 
+% eigenvectors are not normalised
+if ~issymmetric(M); assert(allclose(M, M')); M = (M+M')/2; end
+if ~issymmetric(S); assert(allclose(S, S')); S = (S+S')/2; end
 
 surface.mass = M; surface.stiffness = S;
 
@@ -46,7 +51,7 @@ v1mv3 = v1 - v3;
 
 cr = cross(v3mv2, v1mv3);
 vol = 2 * vecnorm(cr, 2, 2); % vol = 2*sqrt(sum(cr .* cr, 2));
-% vol(vol < eps) = mean(vol)/10000;
+vol(vol < eps) = mean(vol)/10000;
 
 ii = [t1; t2; t2; t3; t3; t1; t1; t2; t3];
 jj = [t2; t1; t3; t2; t1; t3; t1; t2; t3];
@@ -73,7 +78,8 @@ if ~lump
 else
     b_ii = vol / 12;
     local_b = repmat(b_ii,3,1);
-    M = sparse([t1; t2; t3], [t1; t2; t3],double(local_b));
+    ii = [t1; t2; t3];
+    M = sparse(ii,ii,double(local_b));
 end
 
 end
@@ -102,10 +108,7 @@ e6 = v4 - v3;
 
 cr = cross(e1, e3);
 vol = abs(sum(e4 .* cr, 2));
-% vol(vol < eps) = mean(vol)/10000;
-
-ii = [t1; t2; t2; t3; t3; t1; t1; t4; t2; t4; t3; t4; t1; t2; t3; t4];
-jj = [t2; t1; t3; t2; t1; t3; t4; t1; t4; t2; t4; t3; t1; t2; t3; t4];
+vol(vol < eps) = mean(vol)/10000;
 
 % Calculate stiffness matrix (S)
 e11 = sum(e1 .* e1, 2);
@@ -138,6 +141,9 @@ a44 = -a14 - a24 - a34;
 
 local_a = [a12; a12; a23; a23; a13; a13; a14; a14; a24; a24; a34; a34; a11; a22; a33; a44]/6;
 
+ii = [t1; t2; t2; t3; t3; t1; t1; t4; t2; t4; t3; t4; t1; t2; t3; t4];
+jj = [t2; t1; t3; t2; t1; t3; t4; t1; t4; t2; t4; t3; t1; t2; t3; t4];
+
 S = sparse(ii,jj,double(local_a));
 
 % Calculate mass matrix (M)
@@ -149,7 +155,8 @@ if ~lump
 else
     b_ii = vol / 24;
     local_b = repmat(b_ii,4,1);
-    M = sparse([t1; t2; t3; t4], [t1; t2; t3; t4], double(local_b));
+    ii = [t1; t2; t3; t4];
+    M = sparse(ii, ii, double(local_b));
 end
 
 end
