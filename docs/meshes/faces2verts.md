@@ -1,7 +1,7 @@
 ---
 layout: default
 title: faces2verts
-checksum: fae3d3ef0af473077659a567970634ef
+checksum: 5b3415cb798ce80f0af323a3f4664813
 parent: meshes
 ---
 
@@ -32,6 +32,7 @@ This function implements the first method.
 faces2verts([1 3 4; 1 4 2; 2 4 5], [300;600;900])
 assert(isequal(faces2verts([1 3 4; 1 4 2; 2 4 5], [300;600;900]), [300;500;100;600;300]))
 faces = [1 2 3; 2 3 4; 3 4 6]; faceData = 1:3; faces2verts(faces, faceData)
+faces = [1 2 3; 2 3 4; 3 4 6]; faceData = 1:3; faces2verts(faces, faceData, 7)
 ```
  
 # TODO
