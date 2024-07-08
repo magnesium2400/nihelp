@@ -23,8 +23,8 @@ elseif size(surface.faces, 2) == 4; [M,S] = cms4(surface, lump);
 else;  error('Incorrect faces specified'); 
 end
 
-% If matrices are not symmetric (which they should be) 
-% eigenvectors are not normalised
+% If matrices are not symmetric (due to machine error) - which they should
+% be - eigenvectors will not be normalised
 if ~issymmetric(M); assert(allclose(M, M')); M = (M+M')/2; end
 if ~issymmetric(S); assert(allclose(S, S')); S = (S+S')/2; end
 

@@ -43,9 +43,8 @@ else
 end
 
 %% Calculate modes
-at = @(x) x; %(x+x.')/2; % add transpose
-[V, D] = eigs(at(surface.stiffness), at(surface.mass), k, sigma);
-D = diag(D);
+m = any(logical(M),2); % mask
+[V, D] = eigs(S(m,m), M(m,m), k, sigma);
 
 if mod(standardize,10) >= 1
 	V = V.*arrayfun(@(ii) sign(V(find(V(:,ii),1),ii)), 1:width(V)); 
@@ -53,6 +52,9 @@ end
 if mod(standardize,100) >= 10
 	V(:,1) = 1/sqrt(sum(M,'all')); 
 end
+
+V = unmask(m, V, NaN); 
+D = diag(D);
 
 surface.evecs = V; 
 surface.evals = D; 
