@@ -18,7 +18,7 @@ function out = meshEuler(faces, nverts)
 
 if nargin<2; nverts = max(faces, [], 'all'); end
 nfaces = height(faces); 
-nedges = height(unique(sort(faces2edgelist(faces),2),'rows')); 
+nedges = height(unique(sort(triangulation2edges(faces),2),'rows')); 
 out = nverts - nedges + nfaces; 
 end
 

@@ -23,7 +23,12 @@ else
 end
 assert(isa(scatterPlot, 'matlab.graphics.chart.primitive.Scatter'));
 
-r = corr(scatterPlot.XData(:), scatterPlot.YData(:), 'type', corrType);
+m = ~isinf(scatterPlot.XData(:)) & ~isinf(scatterPlot.YData(:));
+
+r = corr( ...
+    reshape(scatterPlot.XData(m),[],1), ...
+    reshape(scatterPlot.YData(m),[],1), ...
+    'type', corrType, 'Rows', 'pairwise');
 
 addTitle(ax, sprintf("%s correlation = %.4f", corrType, r))
 

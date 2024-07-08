@@ -17,7 +17,7 @@ s = 'Unexpected tform and nifti flag detected. Are the parameters input correctl
 if isNiftiTform && any(tform(13:15));       warning(s);
 elseif ~isNiftiTform && any(tform(4:4:12)); warning(s);     end
 
-if isNiftiTform;    out = verts*tform; 
+if isNiftiTform;    out = verts*tform;     % equivalent to (tform'*verts')'
 else;               out = verts*tform';     end
 
 out = out(:,1:w); 

@@ -12,13 +12,26 @@ end
 
 currentFolder = pwd;
 
-for ii = 1:length(versions)
-    str = "" + currentFolder + filesep +  title + versions(ii);
+for ii = versions(:)'
+    
+    str = "" + currentFolder + filesep +  title + (ii);
+    
+    if strcmp(ii, '.fig')
+        savefig(gcf, str, 'compact');
+        continue; 
+    end
+
+    if strcmp(ii, '.svg')
+        print(gcf, '-vector', '-dsvg', str)
+        continue;
+    end
+
     try
         exportgraphics(gcf, str, 'Resolution', resolution);
     catch
         saveas(gcf, str);
     end
+
 end
 
 end
