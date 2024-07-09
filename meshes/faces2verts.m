@@ -1,4 +1,4 @@
-function out = faces2verts(faces, faceData)
+function out = faces2verts(faces, faceData, nVerts)
 %% FACES2VERTS Averages data from each face over each of its vertices
 %% Usage Notes
 % Consider the mesh given by the below: 
@@ -24,6 +24,7 @@ function out = faces2verts(faces, faceData)
 %   faces2verts([1 3 4; 1 4 2; 2 4 5], [300;600;900])
 %   assert(isequal(faces2verts([1 3 4; 1 4 2; 2 4 5], [300;600;900]), [300;500;100;600;300])) 
 %   faces = [1 2 3; 2 3 4; 3 4 6]; faceData = 1:3; faces2verts(faces, faceData)
+%   faces = [1 2 3; 2 3 4; 3 4 6]; faceData = 1:3; faces2verts(faces, faceData, 7)
 %
 %
 %% TODO
@@ -40,9 +41,11 @@ function out = faces2verts(faces, faceData)
 %     (1:max(faces, [], "all")).' );
 % out = splitapply0(@mean, repmat(faceData, width(faces), 1), faces(:));
 
+if nargin < 3 || isempty(nVerts); nVerts = max(faces(:)); end
 w = size(faces, 2); 
+
 faceData = reshape(faceData,size(faces,1),[]);
-out = splitapply0(@sum, repmat(faceData, w, 1), faces(:))/w;
+out = splitapply0(@sum, repmat(faceData, w, 1), faces(:), nVerts)/w;
 
 
 end
