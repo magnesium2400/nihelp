@@ -37,7 +37,7 @@ for ii = 1:max(rois) % ignores parcs indexed as zero
     a = verts(faces(current, 2), :) - verts(faces(current, 1), :);
     b = verts(faces(current, 3), :) - verts(faces(current, 1), :);
     c = cross(a, b, 2);
-    areaTri = 1/2 * (sqrt(sum(c.^2, 2)));
+    areaTri = 1/2 * vecnorm(c,2,2); %(sqrt(sum(c.^2, 2)));
 
     out(ii) = sum(areaTri.*weights(current)); % weight according to number of vertices on each face 
 

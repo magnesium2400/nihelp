@@ -1,7 +1,7 @@
 ---
 layout: default
 title: rco
-checksum: c4f42439b53150b514c5a361f0baacba
+checksum: c8d577a860e81d1e7b95782b44013aac
 parent: meshes
 ---
 
@@ -11,10 +11,14 @@ parent: meshes
  
 # Examples
 ```matlab
+v = rco;
+v = rco;           figure; scatter3(v(:,1),v(:,2),v(:,3),[],(1:24)','filled'); axis equal;
+v = rco('pseudo'); figure; scatter3(v(:,1),v(:,2),v(:,3),[],(1:24)','filled'); axis equal;
+```
+```matlab
 [v,f] = rco; figure; trimesh(f,v(:,1),v(:,2),v(:,3)); axis equal;
 [v,f] = rco('pseudo'); figure; trimesh(f,v(:,1),v(:,2),v(:,3)); axis equal;
-[v,f] = rco; [v,f] = augmentFace(v,f); figure; trimesh(f,v(:,1),v(:,2),v(:,3)); axis equal;
-[v,f] = rco('pseudo'); [v,f] = augmentFace(v,f); figure; trimesh(f,v(:,1),v(:,2),v(:,3)); axis equal;
+[v,f] = rco(0.5); figure; trimesh(f,v(:,1),v(:,2),v(:,3)); axis equal;
 ```
  
 # TODO
