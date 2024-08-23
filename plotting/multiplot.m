@@ -102,6 +102,8 @@ ip.addOptional('otherFuncs', {}, @(x) isa(x, 'function_handle') || all(cellfun(@
 ip.addParameter('tiledlayoutOptions', {'flow'}, @iscell);
 ip.addParameter('dim', ndims(data)); 
 ip.addParameter('n', []); 
+ip.addParameter('nPlots', []); 
+ip.addParameter('spacing', []); 
 ip.addParameter('Parent', gcf); 
 
 ip.parse(data, varargin{:});
@@ -110,12 +112,19 @@ func                = ip.Results.func;
 otherFuncs          = ip.Results.otherFuncs;
 dim                 = ip.Results.dim;
 n                   = ip.Results.n;
+nPlots              = ip.Results.nPlots;
+spacing             = ip.Results.spacing;
 
 if isa(otherFuncs, 'function_handle'); otherFuncs = {otherFuncs}; end
 
 if isempty(n)
-    if iscell(data);    n = 1:numel(data); 
-    else;               n = 1:size(data, dim); end
+    s = sz(data,dim); 
+    if ~isempty(nPlots);        n = round(linspace(1, s, nPlots)); 
+    elseif ~isempty(spacing);   n = 1:spacing:s; 
+    else                        n = 1:s; 
+    end
+    % if iscell(data);    n = 1:numel(data); 
+    % else;               n = 1:size(data, dim); end
 end
 
 
@@ -144,3 +153,12 @@ for ii = n
 end
 
 end
+
+
+
+function out = sz(data,dim)
+    if iscell(data);    out = numel(data); 
+    else;               out = size(data, dim); end
+end
+
+
