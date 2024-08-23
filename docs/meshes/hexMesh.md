@@ -1,7 +1,7 @@
 ---
 layout: default
 title: hexMesh
-checksum: 3beb84782edfd1baa8a7b982034fc6e8
+checksum: ab35cb22db1a76a1b40264a48b152364
 parent: meshes
 ---
 
@@ -11,8 +11,10 @@ parent: meshes
  
 # Examples
 ```matlab
+v = hexMesh;
 [v,f] = hexMesh;
-[v,f] = hexMesh(10); figure; trimesh(f, v(:,1), v(:,2)); axis equal tight;
+[v,f] = hexMesh(9); figure; trimesh(f, v(:,1), v(:,2)); axis equal tight;
+[v,f] = hexMesh(10,10); figure; trimesh(f, v(:,1), v(:,2)); axis equal tight;
 ```
  
 # TODO

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: onesz
-checksum: 368121425ab5f1de44470f414c34152e
+checksum: 4c1e98e9e99305f3a5c6dbe54019fc67
 parent: sugar
 ---
 
@@ -11,5 +11,5 @@ parent: sugar
  
 # Examples
 ```matlab
-a = onesz(loadmri);
+a = onesz(rand(5,6,7));
 ```

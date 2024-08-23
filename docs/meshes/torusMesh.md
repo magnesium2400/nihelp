@@ -1,7 +1,7 @@
 ---
 layout: default
 title: torusMesh
-checksum: c056de1880fc3b075cfded557774f3cc
+checksum: 722f0ac704ad2a3033c2efe5f562144b
 parent: meshes
 ---
 
@@ -12,8 +12,8 @@ parent: meshes
 # Examples
 ```matlab
 v = torusMesh; figure; scatter3(v(:,1), v(:,2), v(:,3));
-[v,f] = torusMesh(10); figure; patch('Vertices', v, 'Faces', f, 'FaceColor', 'none'); axis equal; view(3);
-[v,f] = torusMesh(99,10,3,7); figure; patch('Vertices', v, 'Faces', f, 'FaceColor', 'flat', 'FaceVertexCData',(1:height(v)).', 'EdgeColor', 'none'); axis equal; view(3); colormap(hsv);
+[v,f] = torusMesh(21); figure; patch('Vertices', v, 'Faces', f, 'FaceColor', 'none'); axis equal; view(3);
+[v,f] = torusMesh(98,10,3,7); figure; patch('Vertices', v, 'Faces', f, 'FaceColor', 'flat', 'FaceVertexCData',(1:height(v)).', 'EdgeColor', 'none'); axis equal; view(3); colormap([hsv;hsv]);
 ```
  
 # TODO
