@@ -3,6 +3,7 @@ function out  = invsort(X)
 %% Examples
 %   invsort([5 1 3 4 2])
 %   a = [5 1 3 4 2]; a(invsort(a))
+%   invsort([50 10 30 40 20])
 %   a = [50 10 30 40 20]; a(invsort(a))
 %   a = magic(3), b = [2 3 1]; c = a(:,b), c(:, invsort(b))
 % 
@@ -18,5 +19,6 @@ function out  = invsort(X)
 
 
 [~,out] = sort(X(:)); 
+out = reshape(out, size(X)); 
 % out(idx) = 1:numel(X); 
 end

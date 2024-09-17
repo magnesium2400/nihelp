@@ -13,6 +13,6 @@ for ii = 1:size(V,dim)
 end
 
 % paren = @(a,b) a(b); 
-% out = arrayfun2mat( @(ii) paren(sliceDim(V,dim,ii),idx) , 1:size(V,dim) ); 
+% out = arrayfun2mat( @(ii) paren(sliceDim(V,dim,ii),mask) , 1:size(V,dim) ); 
 
 end

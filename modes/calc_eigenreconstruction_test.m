@@ -40,11 +40,11 @@ assert(all( diff(corrCoeffs(2:end,:)) >= 0, 'all' ))
 % check size/shape of outputs
 assert(all( size(corrCoeffs) == [nModes, nData]            ))
 assert(all( size(recon)      == [nVerts, nModes, nData]    ))
-assert(all( size(betaCoeffs) == [nModes, nData]            ))
+assert(all( size(betaCoeffs) == [nModes, 1]                ))
 
 % check correlation ends at 1 and weights are correctly calculated
 assert(allclose( corrCoeffs(end,:), 1 ))
-assert(allclose( betaCoeffs , w ))
+assert(allclose( betaCoeffs{end} , w ))
 
 % figure; plot(corrCoeffs); 
 
@@ -66,9 +66,9 @@ modesq = [1:10, 20:10:(nModes-1), nModes];
 
 assert(all( size(corrCoeffs) == [length(modesq), nData]         ))
 assert(all( size(recon)      == [nVerts, length(modesq), nData] ))
-assert(all( size(betaCoeffs) == [max(modesq), nData]            ))
+assert(all( size(betaCoeffs) == [length(modesq), 1]             ))
 
-assert(allclose( betaCoeffs, w(1:max(modesq),:) ))
+assert(allclose( betaCoeffs{end}, w(1:max(modesq),:) ))
 
 % figure; plot(modesq, corrCoeffs); xticks(modesq); 
 
@@ -95,18 +95,10 @@ assert(allclose( fcRecon(:,:,end) , fcEmpirical  ))
 assert(allclose( ts, squeeze(recon(:,end,:)) ))
 
 %%% visualisations
-figure; imagescmg(ts); 
-    title(sprintf('Timeseries data across %i timepoints', nData));
 figuremax; tl = multiplot(1:length(modesq), @(x) imagescmg(squeeze(recon(:,x,:))), @(x) title("n="+modesq(x))); 
-    title(tl, 'Reconstructions at each timepoint with n Modes'); 
-figure; imagescfc(fcEmpirical); 
-    title('Empirical FC'); 
+    nexttile; imagescmg(ts); title(sprintf('Target: Timeseries data across %i timepoints', nData));
+    title(tl, 'Reconstructions at each timepoint with n Modes');  
 figuremax; tl = multiplot(fcRecon, @imagescfc, 'dim', 3); tlfunc(tl, @(ax,ii) title(ax, "n="+modesq(ii)), 'axindex')
+    nexttile; imagescfc(fcEmpirical); title('Target: Empirical FC');    
     title(tl, 'Reconstructions of FC using n modes'); 
-
-
-
-
-
-
 
