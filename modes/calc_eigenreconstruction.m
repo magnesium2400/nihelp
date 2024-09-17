@@ -48,18 +48,17 @@ end
 
 %% Calculations
 if strcmp(method, 'orthogonal') % can get coeffs together if using ortho method
-    betaCoeffs = calc_eigendecomposition(data, eigenvectors(:,1:max(modesq)), method, params);
+    tmp = calc_eigendecomposition(data, eigenvectors(:,1:max(modesq(:))), method, params);
+    betaCoeffs = arrayfun(@(mq) tmp(1:mq,:), modesq(:), 'Uni', 0); 
 end
 
 for n = 1:nq
 
     % get recons
-    if strcmp(method, 'orthogonal')
-        recon(:,n,:) = eigenvectors(:,1:modesq(n))*betaCoeffs(1:modesq(n),:);
-    else
-        betaCoeffs{n} = calc_eigendecomposition(data, eigenvectors(:,1:modesq(n)), method, params);
-        recon(:,n,:) = eigenvectors(:,1:modesq(n))*betaCoeffs{n};
+    if ~strcmp(method, 'orthogonal')
+        betaCoeffs{n} = calc_eigendecomposition(data, eigenvectors(:,1:modesq(n)), method, params);       
     end
+    recon(:,n,:) = eigenvectors(:,1:modesq(n))*betaCoeffs{n};
 
     % get correlations
     corrCoeffs(n,:) = arrayfun(@(ii) corr( data(:,ii), recon(:,n,ii)) ,1:size(data,2));
