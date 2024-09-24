@@ -1,7 +1,7 @@
 ---
 layout: default
 title: read_vtk
-checksum: fdc21ec44af8b48300596e2b9a952a68
+checksum: d2d6fa02e9d3754ed3e3af3892820b31
 parent: fileIO
 ---
 
@@ -15,10 +15,9 @@ parent: fileIO
 ```
  
 # Output Arguments
-```matlab
-`vertex - 3-column matrix specifying the position of the vertices (numeric
-array)`
-```
+
+`vertex - 3-column matrix specifying the position of the vertices (numeric array)`
+
 
 `face - 3-column matrix specifying the triangulation of the mesh (numeric array)`
 

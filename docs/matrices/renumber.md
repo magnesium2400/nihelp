@@ -1,7 +1,7 @@
 ---
 layout: default
 title: renumber
-checksum: b5a2cc48c12158ab3c550ed6b22b0057
+checksum: c95216fbd4b4e29d4a0983deb7a4174f
 parent: matrices
 ---
 
@@ -12,7 +12,9 @@ parent: matrices
 # Examples
 ```matlab
 renumber(eye(3), 2)
+renumber(eye(3), 2, 0)
 renumber(eye(3), 2, 1)
+renumber(eye(3), 2, [0 1])
 renumber(magic(3), 10, 1)
 renumber(magic(3), 10:20:90, 1:2:9)
 renumber(magic(4), 10*(1:16), 1:16)

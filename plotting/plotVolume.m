@@ -41,6 +41,7 @@ function h = plotVolume(V, varargin)
 ip = inputParser;
 addRequired(ip, 'V');
 addOptional(ip, 'validationFunction', @logical, @(x) isa(x, 'function_handle') || isnumeric(x));
+% Consider using @(x) x~=0 & ~isnan(x) also/instead
 addParameter(ip, 'rois', [], @isnumeric);
 
 addParameter(ip, 'doValidation', true);

@@ -5,11 +5,11 @@ function [vertex,face] = read_vtk(filename, verbose)
 % 
 % 
 %% Output Arguments
-%  `vertex - 3-column matrix specifying the position of the vertices (numeric
-%  array)`
+% `vertex - 3-column matrix specifying the position of the vertices (numeric
+% array)`
 % 
 % `face - 3-column matrix specifying the triangulation of the mesh (numeric
-%  array)`
+% array)`
 %  
 %  
 %  

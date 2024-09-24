@@ -1,7 +1,7 @@
 ---
 layout: default
 title: scaffoldSort
-checksum: 080970aca861c9b0fd1c457967efd730
+checksum: 14499584b896fee290e2d2218e00dc0a
 parent: matrices
 ---
 
@@ -14,6 +14,7 @@ parent: matrices
 scaffoldSort([10 50 30 20], [6 8 7 9])
 scaffoldSort([10 50 30 20], [4 3 2 1])
 scaffoldSort([4 3 2 1], [10 50 30 20])
+x = rand(99,1); y = rand(numel(x), 1); figure; scatter(x,scaffoldSort(y,x),[],(1:numel(x))');
 ```
  
 # TODO
