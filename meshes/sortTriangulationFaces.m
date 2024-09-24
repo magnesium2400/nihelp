@@ -11,6 +11,10 @@ function [out, id] = sortTriangulationFaces(faces)
 % * docs
 % 
 % 
+%% See Also
+% sortTriangulation, ismemberTriangulation, isequalTriangulation
+%
+%
 %% Authors
 % Mehul Gajwani, Monash University, 2024
 % 

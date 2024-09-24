@@ -29,10 +29,14 @@ a = varargin;
 
 if nargin < 3 || isempty(cdata)
     a = [{'FaceColor', 'none', 'EdgeColor', 'k'}, a{:}];
-elseif height(cdata) == height(verts)
-    a = [{'FaceColor', 'interp', 'FaceVertexCData', double(cdata), 'EdgeColor', 'none'}, a{:}];
-elseif height(cdata) == height(faces)
-    a = [{'FaceColor', 'flat', 'FaceVertexCData', double(cdata), 'EdgeColor', 'none'}, a{:}];
+elseif strcmpi(cdata, 'area')
+    a = [{'FaceColor', 'flat', 'FaceVertexCData', calcFaceArea(verts,faces), 'EdgeColor', 'none'}, a{:}];
+elseif numel(cdata) == height(verts)
+    a = [{'FaceColor', 'interp', 'FaceVertexCData', double(cdata(:)), 'EdgeColor', 'none'}, a{:}];
+elseif numel(cdata) == height(faces)
+    a = [{'FaceColor', 'flat', 'FaceVertexCData', double(cdata(:)), 'EdgeColor', 'none'}, a{:}];
+elseif isStringScalar(cdata) || ischar(cdata)
+    a = [{'FaceColor', cdata}, a{:}]; 
 end
 
 p = patch('Vertices', verts, 'Faces', faces, a{:});

@@ -25,6 +25,10 @@ function out = ismemberTriangulation(sample, template)
 % * docs
 % 
 % 
+%% See Also
+% sortTriangulation, isequalTriangulation, sortTriangulationFaces
+%
+%
 %% Authors
 % Mehul Gajwani, Monash University, 2024
 % 

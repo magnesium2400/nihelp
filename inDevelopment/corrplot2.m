@@ -16,8 +16,10 @@ function tl = corrplot2(A, B)
 % 
 
 tl = colplot2(A,B,@(x,y) scatter(x,y,[],(1:numel(x))','.')); 
-tlfunc(tl, @(r,c) tern(r~=1, @() yticks([]), 1)  , 'subscript'); 
-tlfunc(tl, @(r,c) tern(c~=width(A), @() xticks([]), 1)  , 'subscript'); 
+if exist('tern', 'file')
+    tlfunc(tl, @(r,c) tern(r~=1,        @() yticks([]), 1)  , 'subscript');
+    tlfunc(tl, @(r,c) tern(c~=width(A), @() xticks([]), 1)  , 'subscript');
+end
 
 % % % % % assert(height(A) == height(B)); 
 % % % % % 

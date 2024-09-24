@@ -1,7 +1,7 @@
 ---
 layout: default
 title: ismemberTriangulation
-checksum: db7e5f3d642b9db84ca0a473e9c4ee06
+checksum: a6da3ba5076650c50a413bf0125c63be
 parent: meshes
 ---
 
@@ -33,6 +33,11 @@ rng(1); f=delaunay(rand(9,2)); x=ismemberTriangulation(f(:,[1,3,2]),sortTriangul
  
 # TODO
 -  docs 
+ 
+# See Also
+
+sortTriangulation, isequalTriangulation, sortTriangulationFaces
+
  
 # Authors
 
