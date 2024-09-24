@@ -1,5 +1,5 @@
 function [verts, faces] = hexMesh3(n, seed, zfunc)
-%% HEXMESH Generates 3 dimensional mesh with z a function of x and y
+%% HEXMESH3 Generates 3 dimensional hexagonal mesh with z a function of x and y
 %% Examples
 %   v = hexMesh3;
 %   v = hexMesh3; figure; scatter3(v(:,1), v(:,2), v(:,3), '.'); 

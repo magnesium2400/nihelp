@@ -1,13 +1,13 @@
 ---
 layout: default
 title: hexMesh3
-checksum: 5b691372ae9218fee459a7cfcf91ea4c
+checksum: 6faaad75bc302e684bda997c2d8dec8d
 parent: meshes
 ---
 
 
  
-# HEXMESH Generates 3 dimensional mesh with z a function of x and y
+# HEXMESH3 Generates 3 dimensional hexagonal mesh with z a function of x and y
  
 # Examples
 ```matlab

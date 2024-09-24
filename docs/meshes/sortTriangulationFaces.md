@@ -1,7 +1,7 @@
 ---
 layout: default
 title: sortTriangulationFaces
-checksum: b85d5843bff5251a452255886f42727a
+checksum: 92abb861103d64d5312c3c3456ac8373
 parent: meshes
 ---
 
@@ -19,6 +19,11 @@ rng(1); v = rand(10,2); f = delaunay(v); sortTriangulationFaces(f)
  
 # TODO
 -  docs 
+ 
+# See Also
+
+sortTriangulation, ismemberTriangulation, isequalTriangulation
+
  
 # Authors
 
