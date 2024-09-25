@@ -20,11 +20,14 @@ function [vn, fn] = increasePatch(v,f,r)
 % * docs
 % 
 % 
+%% See also
+% `decreaseRegularPatch`, `equilateralMesh`
+%
+%
 %% Authors
 % Mehul Gajwani, Monash University, 2024
 % 
 % 
-
 
 
 %% Prelims
