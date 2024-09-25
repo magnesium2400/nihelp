@@ -1,7 +1,7 @@
 ---
 layout: default
 title: increasePatch
-checksum: dd69997855e7d8c02c78741d5487bd77
+checksum: 9d94fcb6617e3280f1f24994c5df3fe9
 parent: meshes
 ---
 
@@ -29,6 +29,11 @@ See `increasePatch_test.m` for examples
  
 # TODO
 -  docs 
+ 
+# See also
+
+`decreaseRegularPatch`, `equilateralMesh`
+
  
 # Authors
 

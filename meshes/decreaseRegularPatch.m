@@ -5,12 +5,15 @@ function [totalMask, fn, vn] = decreaseRegularPatch(f, stepSize, stepIter, v)
 % (equilateral) triangular mesh (see `decreaseRegularPatch_test.m` for some
 % examples). This will reverse that upsampling. 
 % * The algorithm used in this function performs an exact
-% subsampling/downsampling of the original surface. In particular, XXXXXXXXXX.
-% Note that the initial seed points are the vertices which are not connected to
-% exactly six neighbours. Therefore, this function is well-suited to recovering
-% icosahedral/octahedral meshes (5/4 triangles meeting at each vertex), but not
-% meshes derived from a cube or gyroelongated triangular bipyramid (as there are
-% still six triangles meeting at each vertex).
+% subsampling/downsampling of the original surface. In particular, it starts
+% with a set of seed points, and then moves exactly `stepSize` steps away, and
+% adds those points to the downsampled surface. It will do this recursively, up
+% to `stepIter` times, or until no new points are added to the downsampled
+% surface. Note that the initial seed points are the vertices which are not
+% connected to exactly six neighbours. Therefore, this function is well-suited
+% to recovering icosahedral/octahedral meshes (5/4 triangles meeting at each
+% vertex), but not meshes derived from a cube or gyroelongated triangular
+% bipyramid (as there are still six triangles meeting at each vertex).
 % * For example, the fsLR_32k surface is derived from an icosahedral mesh where
 % each faces is split into 57^2=3249 faces (hence why it has 64980 faces). This
 % function can convert it back to an icosahedron (e.g. `[v2,f2] =
@@ -24,7 +27,9 @@ function [totalMask, fn, vn] = decreaseRegularPatch(f, stepSize, stepIter, v)
 % `stepSize` in this function. 
 %
 %
-%% Timings for downsampling to icosahedron (* faces --> 20 faces)
+%% Timings for downsampling to icosahedron 
+% (* faces --> 20 faces)
+%
 %  | Factor | Vertices | Faces  | Time (s) | 
 %  | :----: | :------: | :----: | :------: |
 %  | 2      | 42       | 80     | 0.0028   |
@@ -46,10 +51,15 @@ function [totalMask, fn, vn] = decreaseRegularPatch(f, stepSize, stepIter, v)
 % * add ability to choose original seed points?
 % 
 % 
+%% See also
+% `increasePatch`, `equilateralMesh`
+%
+%
 %% Authors
 % Mehul Gajwani, Monash University, 2024
 % 
 % 
+
 
 %% Prelims
 if nargin < 3 || isempty(stepIter)
@@ -93,6 +103,7 @@ for ii = 1:stepIter
     else
         break;
     end
+
 end
 
 
