@@ -1,11 +1,10 @@
 function im = imagescfc(fcMatrix, colorbarFlag, varargin)
-if nargin < 2; colorbarFlag = true; end;
-% cmap = multi_cmap(-0.5, 'darkblue', 0.25, 'orangered', 1, 'darkCentre', 1, 'firstCut', {0 50}, 'secondCut', {0 10});
-cmap = bluewhitered_mg(100, 'colors', [0 0 1; 0 0 0.5; 0 0 0 ; 1 0 0 ; 1 1 0], 'clims', [-0.5 1]);
-ax = gca; 
+if nargin < 2; colorbarFlag = true; end
+if any(abs(fcMatrix) > 1, 'all'); warning('FC matrix has large values'); end
 im = imagesc(fcMatrix, varargin{:});
-axis square; colormap(ax, cmap);
-caxis(ax, [-0.5 1]);
-if colorbarFlag; colorbar('Location', 'southoutside'); end
+axis image; 
+clim([-1, 1]);
+colormap(gca, bluewhitered_mg); 
+if colorbarFlag; colorbar; end
 end
 
