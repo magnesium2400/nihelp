@@ -152,7 +152,7 @@ end
 %% Eigenstrapping
 %%% Calculate reconstruction and beta weights of map
 [~,recon,beta] = calc_eigenreconstruction(map, s.evecs, ipr.method, ipr.nModes, s); 
-errs = map - recon; 
+errs = recon - map; 
 
 %%% Calculate rotation matrices
 %%%%% Probably could be sped up by doing group-wise multiplication instead of

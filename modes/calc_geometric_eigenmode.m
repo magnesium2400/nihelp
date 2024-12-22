@@ -35,7 +35,7 @@ if nargin < 2 || isempty(k);            k = 10;
 elseif     strcmp(k, 'all');            k = size(surface.vertices,1);   end
 if nargin < 3 || isempty(sigma);        sigma = -0.01;                  end
 if nargin < 4 || isempty(lump);         lump = false;                   end
-if nargin < 5 || isempty(standardize);  standardize = 11;               end
+if nargin < 5 || isempty(standardize);  standardize = 00;               end
 
 if ~isfield(surface, 'mass') || ~isfield(surface, 'stiffness')
     [surface, M, S] = calc_mass_stiffness(surface, lump); 

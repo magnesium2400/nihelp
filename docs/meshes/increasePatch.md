@@ -1,7 +1,7 @@
 ---
 layout: default
 title: increasePatch
-checksum: 9d94fcb6617e3280f1f24994c5df3fe9
+checksum: e173509d624481f9b5d0e773c50acf53
 parent: meshes
 ---
 
@@ -9,7 +9,10 @@ parent: meshes
  
 # INCREASEPATCH Increases patch resolution (subdivides triangles) by any factor
  
-# Timings for upsampling icosahedron (20 faces --> * faces)
+# Timings for upsampling icosahedron
+
+(20 faces --> * faces)
+
 ```matlab
 | Factor | Vertices | Faces  | Time (s) |
 | :----: | :------: | :----: | :------: |

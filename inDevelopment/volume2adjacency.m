@@ -28,12 +28,13 @@ function [A, V] = volume2adjacency(V, nNeighbors_or_kernel)
 %
 % `nNeighbors - flag to specify inbuilt kernel types (6 | 18 | 26)` If set to 6,
 % the kernel will connect voxels to the 6 voxels that can be reached in 1 direct
-% step in any of the 6 directions (up/down/left/right/forward/backward), akin to
-% the centres of each face of a Rubik's cube from the core. If set to 18, the
-% kernel will connect voxels to the 18 voxels that can be reached in 1 or 2
-% direct steps in any of the 6 directions, akin to the centres and edges of each
-% face of a Rubik's cube. If set to 26, the kernel will connect voxels to the 26
-% voxels that surround a given voxel.
+% orthogonal step in any of the 6 directions
+% (up/down/left/right/forward/backward), akin to the centres of each face of a
+% Rubik's cube from the core. If set to 18, the kernel will connect voxels to
+% the 18 voxels that can be reached in 1 or 2 direct steps in any of the 6
+% directions, akin to the centres and edges of each face of a Rubik's cube. If
+% set to 26, the kernel will connect voxels to the 26 voxels that surround a
+% given voxel.
 %
 % `kernel - kernel that defines adjancency between voxels (3D matrix)` This
 % should be a 3D matrix where each dimension is of odd size and the centre of
@@ -42,8 +43,11 @@ function [A, V] = volume2adjacency(V, nNeighbors_or_kernel)
 %
 %
 %% Output Arguments
-% `A - adjacency matrix (2D logical matrix)` Here, the voxels are indexed in
-% order of appear in `V`. This is the same as the values in `Vidx`.
+% `A - adjacency matrix (sparse matrix)` Here, the voxels are indexed in order
+% of appear in `V`. This is the same as the values in `Vidx`. The values in the
+% adjacency matrix are the squared Euclidean distances between voxels (i.e. 1
+% for orthogonally adjacent voxels, 2 for square-diagonally-adjacent, and 3 for
+% cube-diagonally-adjacent). 
 %
 % `Vidx - mask of voxel indices (3D matrix)` This matrix will be the same size
 % and V and will have non-zero values in the same locations. Here, the non-zero
@@ -64,6 +68,7 @@ function [A, V] = volume2adjacency(V, nNeighbors_or_kernel)
 assert(ndims(V) <= 3 && ndims(nNeighbors_or_kernel) <= 3, ...
     "Only 3d matrices are supported at present");
 
+V = +logical(V); 
 V(logical(V)) = 1:nnz(V);
 
 if isscalar(nNeighbors_or_kernel);  k = getKernel(nNeighbors_or_kernel);
@@ -71,7 +76,7 @@ else;                               k = nNeighbors_or_kernel; end
 
 
 %% Prelims
-A = false(nnz(V),nnz(V));
+A = sparse(nnz(V),nnz(V));
 
 nd = 3; % nd = max(ndims(V), ndims(k)); % only for 3d data at present
 sz = size(V,1:nd);
@@ -86,13 +91,14 @@ V2((1:sz(1))+kd(1), (1:sz(2))+kd(2), (1:sz(3))+kd(3)) = V;
 % Find the non-zeros in the kernel, relative to the centre
 [x,y,z] = ind2sub(size(k), find(k));
 d = [x,y,z] - kd - 1;
+l = sum(d.*d,2); % vecnorm has floating point inaccuracy
 
 % For each non-zero value in the kernel, shift the volume and see where it
 % overlaps with the original
 for ii = 1:nnz(k)
     V3 = V2((1:sz(1))+kd(1)-d(ii,1), (1:sz(2))+kd(2)-d(ii,2), (1:sz(3))+kd(3)-d(ii,3));
     V4 = V & V3;
-    A(sub2ind(size(A), V(V4), V3(V4))) = true;
+    A(sub2ind(size(A), V(V4), V3(V4))) = l(ii);
 end
 
 
@@ -112,8 +118,4 @@ switch n
 end
 k = reshape(full(sparse(idx,1,1,27,1)),3,3,3);
 end
-
-
-
-
 

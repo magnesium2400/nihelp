@@ -40,10 +40,10 @@ switch nargin
     case 6 % this is the bulk of the computation
         assert(size(verts1, 2) == 3);
         assert(size(faces1, 2) == 3);
-        assert(max(faces1(:)) == size(verts1, 1));
+        assert(max(faces1(:)) <= size(verts1, 1));
         assert(size(verts2, 2) == 3);
         assert(size(faces2, 2) == 3);
-        assert(max(faces2(:)) == size(verts2, 1));
+        assert(max(faces2(:)) <= size(verts2, 1));
 
         outputSurface.vertices = [verts1; verts2];
         outputSurface.faces = [faces1; faces2+size(verts1, 1)];

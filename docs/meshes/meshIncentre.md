@@ -1,13 +1,13 @@
 ---
 layout: default
 title: meshIncentre
-checksum: bc644f5a424d3b4942c89e9916e20aad
+checksum: 01bdf0649cda3c85035c4f32bb5903f1
 parent: meshes
 ---
 
 
  
-# MESHINCENTRE Find the point least close to anywhere on the boundary
+# MESHINCENTRE Find the point with the greatest minimal distance from mesh boundary
  
 # Examples
 ```matlab
