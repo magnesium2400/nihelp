@@ -1,5 +1,5 @@
 function [incentre, inradius] = meshIncentre(verts, faces)
-%% MESHINCENTRE Find the point least close to anywhere on the boundary
+%% MESHINCENTRE Find the point with the greatest minimal distance from mesh boundary
 %% Examples
 %   [v,f] = hexMesh; meshIncentre(v,f)
 %   [v,f] = hexMesh; c = meshIncentre(v,f); figure; patchvfc(v,f); hold on; scatter(v(c,1),v(c,2)); 

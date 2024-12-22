@@ -1,6 +1,8 @@
 function [vn, fn] = increasePatch(v,f,r)
 %% INCREASEPATCH Increases patch resolution (subdivides triangles) by any factor
-%% Timings for upsampling icosahedron (20 faces --> * faces)
+%% Timings for upsampling icosahedron 
+% (20 faces --> * faces)
+% 
 %  | Factor | Vertices | Faces  | Time (s) | 
 %  | :----: | :------: | :----: | :------: |
 %  | 2      | 42       | 80     | 0.0047   |

@@ -33,6 +33,7 @@ dec = @(idx) (2.^(7:-1:0))*idx;
 
 %% Prelims
 mask = logical(V);
+V = +mask; 
 V(mask) = 1:nnz(V);                                  % set value of each vertex to its ID
 verts = vol2xyz(V, mask);                            % get xyz-coordinates of each vertex
 

@@ -15,7 +15,7 @@ function [centre, dists, weights] = meshFrechet(verts, faces)
 % 
 % 
 
-dists = meshEdgeGeodesicDistances(verts, faces); 
+dists = meshEdgeGeodesicDistances(verts, faces).^2; 
 weights = faces2verts(faces, calcFaceArea(verts, faces), size(verts,1)); 
 % weights(end+1:length(dists)) = NaN; 
 
