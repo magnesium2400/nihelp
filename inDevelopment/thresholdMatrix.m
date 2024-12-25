@@ -7,6 +7,7 @@ addRequired(ip, 'inp', @isnumeric);
 addParameter(ip, 'max', [], @isnumeric);
 addParameter(ip, 'min', [], @isnumeric);
 addParameter(ip, 'nnz', [], @isnumeric);
+addParameter(ip, 'density', [], @isnumeric);
 
 addParameter(ip, 'inclusive', true, @islogical);
 addParameter(ip, 'newValue', nan);
@@ -20,6 +21,12 @@ iud = @(x) any(contains(ip.UsingDefaults, x)); %isUsingDefault
 
 
 %% Thresholding
+if ~iud('density')
+    inp = thresholdMatrix(inp, 'nnz', round(ip.Results.density * numel(inp)), ...
+        'inclusive', inc, 'newValue', nv); 
+    return; 
+end
+
 if ~iud('nnz')
     nn = ip.Results.nnz;
     if numel(inp) < nn

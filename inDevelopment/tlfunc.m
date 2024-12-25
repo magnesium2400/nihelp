@@ -1,4 +1,4 @@
-function tlfunc(tl, func, flag)
+function tl = tlfunc(tl, func, flag)
 %% TLFUNC Apply function throughout tiledlayout
 %% Examples
 %   figure; arrayfun(@nexttile,1:20); tlfunc([],@(x) plot(1:10));

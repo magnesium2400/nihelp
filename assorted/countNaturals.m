@@ -1,4 +1,4 @@
-function out = countNaturals(x)
+function out = countNaturals(x, nmax)
 %% COUNTNATURALS Count occurences of natural numbers (positive integers) 
 %% Examples
 %   N = countNaturals(1:5)
@@ -15,7 +15,8 @@ function out = countNaturals(x)
 % Mehul Gajwani, Monash University, 2024
 % 
 % 
-
+if nargin < 2 || isempty(nmax); nmax = max(x, [], 'all'); end
 assert(all(x == round(x), 'all'), 'Data are not whole numbered');
-out = histcounts( x , (0:max(x, [], 'all'))+0.5 );
+out = histcounts( x , (0:nmax)+0.5 );
 end
+
