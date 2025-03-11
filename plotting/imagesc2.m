@@ -2,6 +2,7 @@ function [s1,s2] = imagesc2(C1, C2, offset)
 %% IMAGESC2 Plots two matrices similar to IMAGESC (upper and lower triangles)
 %% Examples
 %   figure; imagesc2(1./pascal(5), hilb(5)        ); 
+%   figure; imagesc2(1./pascal(5), hilb(5),  1    ); 
 %   figure; imagesc2(1./pascal(5), hilb(5),  2    ); 
 %   figure; imagesc2(1./pascal(5), hilb(5), [2 0] ); 
 %   figure; imagesc2(1./pascal(5), hilb(5), [2 -1]); 

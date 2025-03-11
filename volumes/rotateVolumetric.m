@@ -46,7 +46,7 @@ pFlips = mod(sum(f), 2); % parity of number of flips
 
 
 if xor(pFlips, pSwaps) % if total parity of flips and swaps is odd
-    warning('nihelp:rotateVolumeOdd', 'Odd number of swaps/flips'); 
+    warning('nihelp:rotateVolumetric:OddChanges', 'Odd number of swaps/flips'); 
 end
 
 end

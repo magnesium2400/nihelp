@@ -46,7 +46,7 @@ if ~isParcellation; a = +logical(a); end
 for ii = nonzeros(unique(a))'
     % vertices in current ROI
     b = a==ii;
-    v = affineVerts(vol2xyz(b,b), ainfo.Transform.T, 1);
+    v = affineVerts(vol2xyz(b,b)-1, ainfo.Transform.T, 1); % shift by 1 as niftis are 0-indexed
 
     % alpha shape
     c = alphaShape(v);

@@ -1,7 +1,7 @@
 function N = ndims1(A)
 %% NDIMS1 Number of array dimensions, with possibly 0 or 1 dimensions
 %% Syntax
-%  N = dims1(A)
+%  N = ndims1(A)
 %
 %
 %% Description

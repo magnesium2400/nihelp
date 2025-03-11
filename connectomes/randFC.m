@@ -1,5 +1,5 @@
 function out = randFC(n,mu,sigma,seed)
-%% RANDFC Generates random FC matrix with specified size, mean, and stnadard deviation
+%% RANDFC Generates random FC matrix with specified size, mean, and standard deviation
 %% Examples
 %   randFC(5)
 %   randFC(6,0.5)

@@ -1,13 +1,13 @@
 ---
 layout: default
 title: randFC
-checksum: 55371197b8ff7f813f251dd87c107a8d
+checksum: 48977f657b47a61de2ff82cb7d399eea
 parent: connectomes
 ---
 
 
  
-# RANDFC Generates random FC matrix with specified size, mean, and stnadard deviation
+# RANDFC Generates random FC matrix with specified size, mean, and standard deviation
  
 # Examples
 ```matlab

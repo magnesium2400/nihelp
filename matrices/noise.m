@@ -2,8 +2,19 @@ function out = noise(type, opts)
 %% NOISE Generates procedural noise
 %% Examples
 %   n = noise('powerlaw', struct('sz', 20, 'alpha', 1));
-%   k=40; n=noise('powerlaw', struct('sz', k, 'alpha', 3)); figure; imagesc(n); hold on; imagesc(k+1,1,n); imagesc(1,k+1,n); xlim('tight'); ylim('tight');
+%   k=40; n=noise('powerlaw1', struct('sz', k, 'alpha', 4)); figure; imagesc(n); hold on; imagesc(k+1,1,n);                   xlim('tight'); ylim('tight');
+%   k=40; n=noise('powerlaw2', struct('sz', k, 'alpha', 3)); figure; imagesc(n); hold on; imagesc(k+1,1,n); imagesc(1,k+1,n); xlim('tight'); ylim('tight');
 %
+% 
+%% TODO
+% * docs
+% 
+% 
+%% Authors
+% Mehul Gajwani, Monash University, 2024
+% 
+% 
+
 
 switch type
     case 'powerlaw1'
