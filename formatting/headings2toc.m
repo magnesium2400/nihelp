@@ -1,7 +1,8 @@
 function out = headings2toc(mfile, addToFile)
-%%
+%% HEADINGS2TOC Takes first-level headings and generates table of contents, optionally adding to file
 %% Examples
-%   
+%   h = headings2toc('headings2toc.m')
+%   h = headings2toc('headings2toc.m', false)
 % 
 % 
 %% TODO

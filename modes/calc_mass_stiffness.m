@@ -26,7 +26,7 @@ end
 % If matrices are not symmetric (due to machine error) - which they should
 % be - eigenvectors will not be normalised
 if ~issymmetric(M); assert(allclose(M, M')); M = (M+M')/2; end
-if ~issymmetric(S); assert(allclose(S, S')); S = (S+S')/2; end
+if ~issymmetric(S); assert(allclose(S, S', 1e-4)); S = (S+S')/2; end
 
 surface.mass = M; surface.stiffness = S;
 

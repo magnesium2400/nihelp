@@ -1,7 +1,7 @@
 function [fileout, json, s] = makeFunctionSignaturesJSON(varargin)
-%% 
+%% MAKEFUNCTIONSIGNATURESJSON Takes tsv file of function information and converts to MATLAB-suitable JSON
 %% Examples
-%   
+%   f = fileparts(which('makeFunctionSignaturesJSON')); makeFunctionSignaturesJSON(fullfile(f,'functionSignatures.tsv'),'outputDir',f);     
 % 
 % 
 %% TODO
