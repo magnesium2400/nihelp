@@ -1,0 +1,8 @@
+functionName	name	kind	type	repeating	purpose
+read_vtk	filename	required	file=*.vtk	FALSE	
+fetch_atlas	atlas	required	string,char,choices={'fsaverage','fsLR'}	FALSE	
+	density	required	string,char,choices={'3k','4k','8k','10k','32k','41k','164k'}	FALSE	
+	hemi	required	string,char,choices={'L','R'}	FALSE	
+	key	required	string,char,choices={'inflated','midthickness','pial','white','sphere','veryinflated'}	FALSE	
+	desc	namevalue	string,char,choices={'vaavg','sulc','nomedialwall'}	FALSE	
+	space	namevalue	string,char,choices={'fsaverage'}	FALSE	

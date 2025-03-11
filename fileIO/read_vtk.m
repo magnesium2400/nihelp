@@ -1,7 +1,7 @@
-function [vertex,face] = read_vtk(filename, verbose)
+function [vertex,face] = read_vtk(filename)
 %% READ_VTK Read data from VTK file.
 %% Syntax
-%  [vertex,face] = read_vtk(filename, verbose)
+%  [vertex,face] = read_vtk(filename)
 % 
 % 
 %% Output Arguments
@@ -23,14 +23,10 @@ function [vertex,face] = read_vtk(filename, verbose)
 % 
 
 
-if nargin<2
-    verbose = 1;
-end
 
 fid = fopen(filename,'r');
 if( fid==-1 )
     error('Can''t open the file.');
-    return;
 end
 
 str = fgets(fid);   % -1 if eof
@@ -39,9 +35,9 @@ if ~strcmp(str(3:5), 'vtk')
 end
 
 %%% read header %%%
-str = fgets(fid);
-str = fgets(fid);
-str = fgets(fid);
+str = fgets(fid); %#ok<NASGU>
+str = fgets(fid); %#ok<NASGU>
+str = fgets(fid); %#ok<NASGU>
 str = fgets(fid);
 nvert = sscanf(str,'%*s %d %*s', 1);
 
@@ -54,8 +50,8 @@ A = reshape(A, 3, cnt/3);
 vertex = A;
 
 % read polygons
-str = fgets(fid);
-str = fgets(fid);
+str = fgets(fid); %#ok<NASGU>
+str = fgets(fid); 
 
 info = sscanf(str,'%c %*s %*s', 1);
 
@@ -66,7 +62,7 @@ end
 
 if(info == 'P')
     
-    nface = sscanf(str,'%*s %d %*s', 1);
+    nface = sscanf(str,'%*s %d %*s', 1); %#ok<NASGU>
     npoint = sscanf(str,'%*s %*s %d', 2);
 
     [A,cnt] = fscanf(fid, '%d ', npoint);
@@ -81,7 +77,7 @@ if(info == 'P')
     else
         B = {};
         while ~isempty(A)
-            B{end+1} = A(2:(A(1)+1))+1;
+            B{end+1} = A(2:(A(1)+1))+1; %#ok<AGROW>
             A(1:(A(1)+1)) = [];
         end
         face = B;
