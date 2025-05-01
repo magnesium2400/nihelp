@@ -40,7 +40,7 @@ function h = plotVolume(V, varargin)
 %% Prelims
 ip = inputParser;
 addRequired(ip, 'V');
-addOptional(ip, 'validationFunction', @logical, @(x) isa(x, 'function_handle') || isnumeric(x));
+addOptional(ip, 'validationFunction', @(x) logical(nan2zero(x)), @(x) isa(x, 'function_handle') || isnumeric(x));
 % Consider using @(x) x~=0 & ~isnan(x) also/instead
 addParameter(ip, 'rois', [], @isnumeric);
 

@@ -3,7 +3,7 @@ function filepath = fetch_atlas(atlas, density, hemi, key, varargin)
 
 %% This function requires NEUROMAPS_DATA environment variable to be set
 neuromapsPath = getenv('NEUROMAPS_DATA');
-if isempty(neuromapsPath); error('Please load $NEUROMAPS_DATA using `loadenv`'); end
+if isempty(neuromapsPath); error('Please set $NEUROMAPS_DATA using `setenv`'); end
 
 
 %% Parse inputs

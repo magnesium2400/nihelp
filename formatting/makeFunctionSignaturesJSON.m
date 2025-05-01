@@ -67,14 +67,12 @@ end
 json = jsonencode(s,'PrettyPrint',true);
 json = erase(json, regexpPattern(',\s*?"([^"]+)": ""'));
 
-% Fix any functions with exactly one input add [] for list formatting)
+% Fix any functions with exactly one input (add [] for list formatting)
 openPos = flip(regexp(json, '"inputs": {')+10);
 for o = openPos(:)'
     c = closingBracePos(json,o,1); 
     json = [json(1:o-1), '[', newline, '      {', json(o+1:c-1), '  }', newline, '    ]', json(c+1:end)]; 
 end
-
-% Use cu
 
 % Output to file and validate
 writelines(json, fileout); 
@@ -84,19 +82,26 @@ validateFunctionSignaturesJSON(fileout);
 end
 
 
-function n = closingBracePos(str, openingBracePos, braceCount)
+function j = closingBracePos(str, openingBracePos, braceCount)
 for j = openingBracePos+1:length(str)
-    if str(j) == '{'
-        braceCount = braceCount + 1;
-    elseif str(j) == '}'
-        braceCount = braceCount - 1;
-    end
-    if braceCount == 0
-        n = j;
-        return;
-    end
+    braceCount = braceCount + (strcmp(str(j), '{')) - (strcmp(str(j), '}'));
+    if braceCount==0; return; end
 end
 end
+% 
+% function n = closingBracePos(str, openingBracePos, braceCount)
+% for j = openingBracePos+1:length(str)
+%     if str(j) == '{'
+%         braceCount = braceCount + 1;
+%     elseif str(j) == '}'
+%         braceCount = braceCount - 1;
+%     end
+%     if braceCount == 0
+%         n = j;
+%         return;
+%     end
+% end
+% end
 
 
 

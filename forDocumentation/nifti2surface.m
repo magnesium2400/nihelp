@@ -40,6 +40,7 @@ ainfo = niftiinfo(filename);
 
 if nargin < 2 || isempty(isParcellation); isParcellation = true; end
 if ~isParcellation; a = +logical(a); end
+if ndims(a) == 4;   a = a(:,:,:,1);  end
 
 
 %% alphaShape and surface for each ROI

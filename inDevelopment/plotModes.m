@@ -7,6 +7,7 @@ ip.addParameter('verticesName', 'vertices', @(x) ischar(x) || isStringScalar(x))
 ip.addParameter('facesName', 'faces', @(x) ischar(x) || isStringScalar(x)); 
 ip.addParameter('evecsName', 'evecs', @(x) ischar(x) || isStringScalar(x)); 
 ip.addParameter('evalsName', 'evals', @(x) ischar(x) || isStringScalar(x)); 
+ip.addParameter('Parent', []); 
 ip.parse(varargin{:});
 
 verts = s.(ip.Results.verticesName);   
@@ -21,9 +22,9 @@ elseif isscalar(modesq) && (modesq<0); modesq = round(linspace(1, width(evecs), 
 
 %% Plot
 if width(faces) == 3
-    [~,~,tl] = plotBrain(verts, faces, [], evecs(:,modesq), 'colorbarOn', 1, 'colormap', @bluewhitered_mg);
+    [~,~,tl] = plotBrain(verts, faces, [], evecs(:,modesq), 'colorbarOn', 1, 'colormap', @bluewhitered_mg, 'Parent', ip.Results.Parent);
 elseif width(faces) == 4
-    tl = multiplot(evecs(:, modesq), @(x) scat3(verts, [], x, 'filled'), @() axis('equal', 'tight', 'off')); 
+    tl = multiplot(evecs(:, modesq), @(x) scat3(verts, [], x, 'filled'), @() axis('equal', 'tight', 'off'), 'Parent', ip.Results.Parent); 
     tlfunc(tl, @(ax) colormap(ax, bluewhitered_mg()), 'axnone'); 
 end
 

@@ -1,11 +1,13 @@
-function b = boxchart_MG(xgroupdata, ydata, linesOn)
+function [b,p] = boxchart_MG(xgroupdata, ydata, linesOn)
 
+if isempty(xgroupdata); xgroupdata = reshape(repmat(1:width(ydata),height(ydata),1),[],1); end
 if nargin < 3; linesOn = true; end
 
 %% separate
 [groupIds, groupNames] = findgroups(xgroupdata);
 
 %% draw lines between adjacent sets of data
+p = []; 
 if ( (linesOn) && (max(groupIds) > 1) )
     try % if data are not matched, continue without trying to plot lines
         splitData = [];
@@ -13,14 +15,18 @@ if ( (linesOn) && (max(groupIds) > 1) )
             splitData = [splitData, ydata(groupIds == ii)]; %#ok<AGROW>
         end
         hold on;
-        plot(splitData', 'Color', [0.85 0.85 0.85]);
+        p = plot(splitData', 'Color', [0.85 0.85 0.85]);
     catch
     end
 end
 
 
 %% plot boxchart
-b = boxchart(groupIds, ydata);
+for ii = 1:max(groupIds)
+    b(ii) = boxchart(ii*ones(height(ydata),1), ydata(groupIds==ii), 'BoxFaceColor', int2color(ii)); 
+end
+
+% b = boxchart(groupIds, ydata(:));
 
 %% format x labels
 % xticklabels(groupNames);
