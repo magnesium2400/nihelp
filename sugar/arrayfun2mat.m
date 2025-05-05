@@ -1,4 +1,4 @@
-function out = arrayfun2mat(func, C)
+function out = arrayfun2mat(func, varargin)
 %% ARRAYFUN2MAT Returns output from arrayfun as a matrix
 %% TODO
 % * docs
@@ -10,5 +10,5 @@ function out = arrayfun2mat(func, C)
 % 
 
 
-out = cell2mat(arrayfun(func,C, 'UniformOutput', false));
+out = cell2mat(arrayfun(func, varargin{:}, 'UniformOutput', false));
 end
