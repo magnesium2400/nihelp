@@ -1,4 +1,4 @@
-function out = sliceDim(V, d, n)
+function out = sliceDim(V, d, n, permuteNew)
 %% SLICEDIM extract the n-th slice from the d-th dimension of volume V
 %% Examples
 %   sliceDim(magic(3),1,1)
@@ -15,10 +15,12 @@ function out = sliceDim(V, d, n)
 % 
 % 
 
+if nargin < 4 || isempty(permuteNew); permuteNew = 1; end
 
 colons = repmat({':'}, 1, ndims(V));
 colons{d} = n;
 out = V(colons{:});
-out = permute(out, [setdiff(1:ndims(V), d), d]);
+
+if permuteNew; out = permute(out, [setdiff(1:ndims(V), d), d]); end
 
 end

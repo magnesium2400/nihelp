@@ -43,7 +43,7 @@ if ~isempty(edges)
 elseif ~isempty(ctrs)
     hist3([X(:), Y(:)], 'Ctrs', ctrs);
 elseif ~isempty(nbins)
-    hist3([X(:), Y(:)], 'Nbins', nbins);
+    hist3([X(:), Y(:)], 'Nbins', [nbins(1), nbins(end)]);
 else
     error('Specify bins for heat3');
 end
