@@ -48,8 +48,8 @@ if isempty(ax); ax = gca(); end
 ip = inputParser(); 
 ip.addRequired('CData', @(C) isnumeric(C) || islogical(C)); 
 
-ip.addParameter('XData', 1, @(X) isnumeric(X) && numel(X)<3);
-ip.addParameter('YData', 1, @(Y) isnumeric(Y) && numel(Y)<3);
+ip.addParameter('XData', 1, @(X) isnumeric(X));
+ip.addParameter('YData', 1, @(Y) isnumeric(Y));
 ip.addParameter('ZData', @(x,y) zeros(size(x)), @(Z) isnumeric(Z) || isa(Z, 'function_handle'));
 
 ip.addParameter('c', []); 
@@ -59,29 +59,45 @@ ip.addParameter('mask', @(x) true(size(x)), @(x) islogical(x) || isnumeric(x) ||
 ip.addParameter('surfOptions', {'EdgeColor', 'none'});
 
 ip.parse(args{:}); 
-
-
-%% Prelims
-C = ip.Results.CData; 
+C = ip.Results.CData;   % data for plotting 
 [h,w] = size(C,1:2); 
+c = ip.Results.c;       % colors for plotting
+
+
+
+%% Reformat x y z data
 
 X = ip.Results.XData; 
 Y = ip.Results.YData; 
 Z = ip.Results.ZData; 
+
+% if x/y have 1 or 2 elements, remap them 
 if numel(X) == 1; X = X + [0, w-1]; end; dx = diff(X)/(w-1)/2;
 if numel(Y) == 1; Y = Y + [0, h-1]; end; dy = diff(Y)/(h-1)/2;
-[x,y] = meshgrid(linspace(X(1)-dx,X(2)+dx,w+1), ...
-                 linspace(Y(1)-dy,Y(2)+dy,h+1));
+
+if numel(X) == 2 && numel(Y) == 2
+    [x,y] = meshgrid(linspace(X(1)-dx,X(2)+dx,w+1), ...
+                     linspace(Y(1)-dy,Y(2)+dy,h+1));
+elseif numel(X) == 2
+    x = repmat(linspace(X(1)-dx,X(2)+dx,w+1), h+1, 1) ; 
+elseif numel(Y) == 2
+    y = repmat(linspace(Y(1)-dy,Y(2)+dy,h+1), w+1, 1)'; 
+else 
+    x = X; y = Y; 
+end
+
+
+% calculate z
 if isnumeric(Z); z = Z; 
 else; z = ip.Results.ZData(x,y); end
 assert(all( size(z)==size(x) )); 
 clear X Y Z dx dy
 
+% calculate mask
 mask = ip.Results.mask; 
 if isa(mask, 'function_handle'); mask = mask(C); 
 elseif isnumeric(mask);          mask = logical(mask); end
 
-c = ip.Results.c; 
 
 
 %% Create color matrix (true or scaled) and plot
@@ -95,9 +111,9 @@ else
     cToPlot = reshape(cToPlot, height(C), width(C), width(c));
 end
 
-newplot(ax); 
+% newplot(ax); 
 s = surf(ax, x, y, z, +cToPlot, ip.Results.surfOptions{:});
-set(ax, 'YDir', 'reverse', 'View', [0 90], 'Layer', 'bottom'); 
+% set(ax, 'YDir', 'reverse', 'View', [0 90], 'Layer', 'bottom'); 
 
 
 end

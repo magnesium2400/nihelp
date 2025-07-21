@@ -43,6 +43,8 @@ switch type
         filt(isinf(filt))=1; 
         ff = mf .* filt;
         out = rescale(ifft2(ifftshift(ff)), -1, 1);
+    otherwise
+        error('Please ensure noise type is correct'); 
 end
 
 

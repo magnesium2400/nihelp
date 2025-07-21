@@ -19,7 +19,7 @@ classdef finiteDifference_test < matlab.unittest.TestCase
             x = 1:4;
             y = x.^2;
             actual = finiteDifference(x, y, 'method', 'central', 'includeEndpoints', true);
-            expected = [3, 4, 6, 7]; % approx central differences
+            expected = [3 4 6 7]; % approx central differences
             testCase.verifyEqual(actual, expected, 'AbsTol', 1e-10);
         end
 
@@ -50,14 +50,14 @@ classdef finiteDifference_test < matlab.unittest.TestCase
             y = [1 4 9 16; 1 8 27 64];
             dim = 2;
             actual = finiteDifference([], y, dim);
-            expected = diff(y, 1, dim);
+            expected = [4 6; 13 28];
             testCase.verifyEqual(actual, expected);
         end
 
         function testAutoDimDetection(testCase)
-            x = [1; 2; 3];
-            y = [2; 4; 6];
-            expected = [2; 2];
+            x = 1:4;
+            y = (x.^2)';
+            expected = [4;6];
             actual = finiteDifference(x, y);
             testCase.verifyEqual(actual, expected);
         end

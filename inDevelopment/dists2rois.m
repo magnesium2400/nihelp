@@ -4,6 +4,7 @@ function [out, idx] = dists2rois(varargin)
 ip = inputParser;
 ip.addRequired('dists', @isnumeric);
 ip.addRequired('npts_or_pts');
+ip.addParameter('isPoint', false);
 ip.addParameter('seed', []);
 
 ip.addParameter('distance', []);
@@ -24,7 +25,7 @@ s   = ipr.seed;
 if strcmp(nr, 'all')
     idx = 1:width(d); 
     nr = length(idx); 
-elseif isscalar(nr)
+elseif isscalar(nr) && ~ip.Results.isPoint
     if ~isempty(s); rng(s); end
     idx = randsample(nv, nr)';
 elseif isvector(nr)

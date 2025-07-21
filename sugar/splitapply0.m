@@ -1,10 +1,10 @@
 function out = splitapply0(func, X, G, nGroups, fillVal)
 %% SPLITAPPLY0 Uses splitapply even if groups are indexed 0 or are absent
 %% Examples
-%   splitapply0(@(x) x, (1:3), (1:3))
-%   splitapply0(@(x) x, (1:3), (1:3).^2)
-%   splitapply0(@(x) x, (1:4), (0:3))
-%   splitapply0(@(x) x, (1:3), (1:3), 6)
+%   splitapply0(@(x) x, (1:3)', (1:3)')
+%   splitapply0(@(x) x, (1:3)', (1:3)'.^2)
+%   splitapply0(@(x) x, (1:4)', (0:3)')
+%   splitapply0(@(x) x, (1:3)', (1:3)', 6)
 % 
 % 
 %% TODO

@@ -1,12 +1,11 @@
 %%% Shared variables
-doPlot = 0; %#ok<*UNRCH>
+doPlot = 1; %#ok<*UNRCH>
 
 
 %% Test 1: Simple tests with 1D kernels in each dimension
 % User input
 V = ones(2,3,4);
-
-v = vol2xyz(V);
+v = vol2xyz(V, logical(V)); %#ok<LOGL>
 
 k = [0;0;1];
 out = full(logical(volume2adjacency(V,k)));
@@ -30,15 +29,15 @@ if doPlot; figure; plotVolume(V, 'c', sum(out)); colorbar; end
 %% Test 2: Test ball mesh and compare to pdist neighborhood distance
 % User inputs
 r = 2;
-neighbors = randsample([6,18,26],1); % can also choose 1 from 6, 18 or 26
+k = randsample([6,18,26],1); % can also choose 1 from 6, 18 or 26
 
 % volume2adjacency
 v = ballMesh(r)+r+1;
 V = xyz2vol(v, [], 0);
-out = full(logical(volume2adjacency(V,neighbors)));
+out = full(logical(volume2adjacency(V,k)));
 
 % check with pdist
-searchRadius = sqrt(floor((neighbors+4)/10)); % 6->1,18->2,26->3
+searchRadius = sqrt(floor((k+4)/10)); % 6->1,18->2,26->3
 comp = squareform(pdist(vol2xyz(V,logical(V)))<=searchRadius);
 
 % compare
@@ -48,11 +47,11 @@ assert(isequal(comp, out))
 %% Test 3a: Plot - show vertex degree in high N mesh
 % User inputs
 r = 7;
-neighbors = 26; 
+k = 26; 
 
 v = ballMesh(r);
 V = xyz2vol(v+r+1, [], 0);
-a = logical(volume2adjacency(V, neighbors));
+a = logical(volume2adjacency(V, k));
 [s,t] = find(a);
 
 if doPlot
@@ -64,11 +63,14 @@ end
 
 %% Test 3b: Plot - show connections between vertices in low N mesh
 % User input
-r = 2;
+% r = 4; k = 6; 
+r = 3; k = 18; 
+r = 3; k = 26; 
 
 v = ballMesh(r);
 V = xyz2vol(v+r+1, [], 0);
-a = full(volume2adjacency(V, 26));
+a = full(volume2adjacency(V, k));
+
 [s1,t1] = find(a==1);
 [s2,t2] = find(a==2);
 [s3,t3] = find(a==3);

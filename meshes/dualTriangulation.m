@@ -46,6 +46,7 @@ e = sortrows(e);
 d = diff(e,[],1); 
 facesIdx = all(~d(:,1:2), 2); %d(:,1) == 0 & d(:,2) == 0;
 a2 = sparse(e(find(facesIdx),3), e(find(facesIdx)+1,3), true, height(f), height(f)); %#ok<FNDSB> 
+a2 = a2 | a2.'; 
 
 
 %% New faces

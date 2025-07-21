@@ -1,4 +1,4 @@
-function fd = finiteDifference(varargin)
+function [fd,xi] = finiteDifference(varargin)
 %% Syntax
 %  fd = finiteDifference(y); 
 %  fd = finiteDifference(x,y); 
@@ -15,7 +15,7 @@ ip = inputParser;
 ip.addRequired('x'); 
 ip.addOptional('y', []); 
 
-ip.addOptional('dim', 1, @isPositiveIntegerValuedNumeric); 
+ip.addOptional('dim', 1, @(x) isscalar(x) & (x>0) & (~mod(x,1))); 
 ip.addParameter('method', 'central', @(x) ismember(x, ["central", "forward", "backward"])); 
 ip.addParameter('includeEndpoints', false, @islogical); 
 ip.parse(varargin{:}); 
@@ -61,7 +61,7 @@ if ipiud(ip, 'dim')
         else
             assert(areCompatible(x,y)); 
             [x,y] = impex(x,y); 
-            dim = firstdim(x); 
+            dim = firstdim(y); 
         end
 
     else % either x or y unspecified
@@ -81,46 +81,39 @@ end
 
 %% Calculations
 
-diffs = diff(y,1,dim)./diff(x,1,dim); 
-dfirst = sliceDim(diffs, dim, 1, 0); 
-dlast = sliceDim(diffs, dim, size(diffs, dim), 0); 
+fd = diff(y,1,dim)./diff(x,1,dim); 
+dfirst = sliceDim(fd, dim, 1, 0); 
+dlast  = sliceDim(fd, dim, size(fd, dim), 0); 
 
-ny = size(y, dim); 
 nx = size(x, dim); 
+ny = size(y, dim); 
 
-
-
-% first = (y(2)-y(1)./x(2)-x(1)); 
-% last = (y(end)-y(end-1))./(x(end)-x(end-1)); 
-
+% Central points
 switch method
+    case 'forward'
+        xi = sliceDim(x, dim, 1:nx-1, 0); 
+    case 'backward'
+        xi = sliceDim(x, dim, 2:nx,   0); 
     case 'central'
+        xi = sliceDim(x, dim, 2:nx-1, 0);
         ya = sliceDim(y, dim, 1:ny-2, 0);
         yb = sliceDim(y, dim, 3:ny,   0);
         xa = sliceDim(x, dim, 1:nx-2, 0);
         xb = sliceDim(x, dim, 3:nx  , 0);
         fd = (yb-ya)./(xb-xa); 
-        if includeEndpoints; fd = cat(dim, dfirst, fd, dlast); end
-        % out = (y(3:end)-y(1:end-2))./(x(3:end)-x(1:end-2)); 
-        % if includeEndpoints; out = [first, out, last]; end
-    otherwise
-        ya = sliceDim(y, dim, 1:ny-1, 0);
-        yb = sliceDim(y, dim, 2:ny,   0);
-        xa = sliceDim(x, dim, 1:nx-1, 0);
-        xb = sliceDim(x, dim, 2:nx  , 0);
-        fd = (yb-ya)./(xb-xa); 
-        if includeEndpoints & strcmp(method, 'forward')
-            fd = cat(dim, fd, dlast);
-        else
-            fd = cat(dim, dfirst, fd);
-        end
+end
 
-    % case 'forward'
-    %     out = (y(2:end)-y(1:end-1))./(x(2:end)-x(1:end-1));
-    %     if includeEndpoints; out = [first, out]; end
-    % case 'backward'
-    %     out = (y(2:end)-y(1:end-1))./(x(2:end)-x(1:end-1));
-    %     if includeEndpoints; out = [out, last]; end
+% Add endpoints if needed
+if includeEndpoints
+    xi = x;
+    switch method
+        case 'forward'
+            fd = cat(dim, fd, dlast);
+        case 'backward'
+            fd = cat(dim, dfirst, fd);
+        case 'central'
+            fd = cat(dim, dfirst, fd, dlast);
+    end
 end
 
 end

@@ -22,7 +22,7 @@ elseif isscalar(modesq) && (modesq<0); modesq = round(linspace(1, width(evecs), 
 
 %% Plot
 if width(faces) == 3
-    [~,~,tl] = plotBrain(verts, faces, [], evecs(:,modesq), 'colorbarOn', 1, 'colormap', @bluewhitered_mg, 'Parent', ip.Results.Parent);
+    [~,~,tl] = plotBrain(verts, faces, [], evecs(:,modesq), 'colorbarOn', 1, 'colormap', @bluewhitered_mg, 'Parent', ip.Results.Parent, 'forceTiledLayout', true);
 elseif width(faces) == 4
     tl = multiplot(evecs(:, modesq), @(x) scat3(verts, [], x, 'filled'), @() axis('equal', 'tight', 'off'), 'Parent', ip.Results.Parent); 
     tlfunc(tl, @(ax) colormap(ax, bluewhitered_mg()), 'axnone'); 

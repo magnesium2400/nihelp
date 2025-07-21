@@ -4,6 +4,8 @@ function [vertices, label, ct] = make_annotation(rois, varargin)
 %   [vertices, label, ct] = make_annotation(randi(10,100,1)-1);
 %   [vertices, label, ct] = make_annotation(randi(10,100,1), 'cmap', @(x) jet(x)*255);
 %   [vertices, label, ct] = make_annotation(randi(10,100,1), 'orig_tab', 'cool_rois');
+%
+%
 %% TODO
 % * docs
 % 
