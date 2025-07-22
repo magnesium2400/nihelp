@@ -25,7 +25,13 @@ function p = patchvfc(verts, faces, cdata, varargin)
 % 
 % 
 
-a = varargin;  
+[ax, args, ~] = axescheck(verts, faces, cdata, varargin{:}); 
+if isempty(ax); ax = gca; end
+verts = args{1}; 
+faces = args{2}; 
+try cdata = args{3}; a = args(4:end); catch; end
+
+% a = varargin;  
 
 if nargin < 3 || isempty(cdata)
     a = [{'FaceColor', 'none', 'EdgeColor', 'k'}, a{:}];
@@ -39,6 +45,6 @@ elseif isStringScalar(cdata) || ischar(cdata)
     a = [{'FaceColor', cdata}, a{:}]; 
 end
 
-p = patch('Vertices', verts, 'Faces', faces, a{:});
+p = patch(ax, 'Vertices', verts, 'Faces', faces, a{:});
 
 end

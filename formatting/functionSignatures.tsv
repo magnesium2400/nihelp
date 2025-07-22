@@ -1,0 +1,5 @@
+functionName	name	kind	type	repeating	purpose
+headings2toc	mfile	required	file=*.m	FALSE	
+	addToFile	ordered	logical	FALSE	
+makeFunctionSignaturesJSON	filename	ordered	file	FALSE	
+	outputDir	namevalue	folder	FALSE	

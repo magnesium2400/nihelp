@@ -14,7 +14,7 @@ function out = unmask(mask, data, fillVal)
 % 
 % 
 
-assert((numel(mask)==length(mask)) && (nnz(mask) == size(data, 1))); 
+assert((nnz(mask) == size(data, 1))); 
 if nargin < 3 || isempty(fillVal); fillVal = nan; end
 
 out = ones(numel(mask), size(data, 2)) * fillVal; 

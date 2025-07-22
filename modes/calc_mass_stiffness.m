@@ -26,7 +26,7 @@ end
 % If matrices are not symmetric (due to machine error) - which they should
 % be - eigenvectors will not be normalised
 if ~issymmetric(M); assert(allclose(M, M')); M = (M+M')/2; end
-if ~issymmetric(S); assert(allclose(S, S')); S = (S+S')/2; end
+if ~issymmetric(S); assert(allclose(S, S', 1e-4)); S = (S+S')/2; end
 
 surface.mass = M; surface.stiffness = S;
 
@@ -51,7 +51,7 @@ v1mv3 = v1 - v3;
 
 cr = cross(v3mv2, v1mv3);
 vol = 2 * vecnorm(cr, 2, 2); % vol = 2*sqrt(sum(cr .* cr, 2));
-% vol(vol < eps) = mean(vol)/10000;
+vol(vol < eps) = mean(vol)/10000;
 
 ii = [t1; t2; t2; t3; t3; t1; t1; t2; t3];
 jj = [t2; t1; t3; t2; t1; t3; t1; t2; t3];
@@ -108,7 +108,7 @@ e6 = v4 - v3;
 
 cr = cross(e1, e3);
 vol = abs(sum(e4 .* cr, 2));
-% vol(vol < eps) = mean(vol)/10000;
+vol(vol < eps) = mean(vol)/10000;
 
 % Calculate stiffness matrix (S)
 e11 = sum(e1 .* e1, 2);

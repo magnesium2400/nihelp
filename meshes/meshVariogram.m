@@ -1,47 +1,56 @@
-function [eb, dists, diffs, x, y, e]  = meshVariogram(verts, faces, data, distMax)
+function [y, e, x, diffs, dists]  = meshVariogram(verts, faces, data, dists_or_distMax, useSemivariogram)
 %% MESHVARIOGRAM Calculates and plots variogram of a map on a triangular mesh
 %% Examples
-% See `meshVariogram_test.m` for examples.  
-% 
-% 
+% See `meshVariogram_test.m` for examples.
+%
+%
 %% TODO
 % * docs
-% 
-% 
+%
+%
 %% Authors
 % Mehul Gajwani, Monash University, 2024
-% 
-% 
+%
+%
+
+
+%% Prelims
+% Distance between each pair of points
+if nargin < 4 || isempty(dists_or_distMax)  % no input
+    dists = meshEdgeGeodesicDistances(verts, faces);
+elseif isscalar(dists_or_distMax)           % distMax
+    dists = meshEdgeGeodesicDistances(verts, faces, [], [], dists_or_distMax);
+elseif ismatrix(dists_or_distMax)           % dists
+    dists = dists_or_distMax;
+else
+    error("Incorrect distances specified");
+end
+
+if nargin < 5 || isempty(useSemivariogram)
+    useSemivariogram = false;
+end
+
+% Difference between each pair of points
+diffs = (data - data.').^2 ./ (1+useSemivariogram);
 
 
 %% Main
-% Difference between each pair of points
-diffs = (data - data.').^2; 
-
-% Distance between each pair of points
-if nargin < 4 || isempty(distMax)
-    dists = meshEdgeGeodesicDistances(verts, faces); 
-else
-    dists = meshEdgeGeodesicDistances(verts, faces, [], [], distMax);
-end
-
 % Discretise distance i.e. put into bins
-[~,distsEdges,distsBinned] = histcounts(dists); 
-[G2, Gid] = findgroups(distsBinned(:));
+[~,~,distsBinned] = histcounts(dists);
+nanmask = ~isnan(dists(:));
+[G, Gid] = findgroups(distsBinned(nanmask)); % Gid := unique(distsBinned);
 
-% Mean and std of `diffs` within each bin
-temp = splitapply(@(x) [mean(x), std(x)], diffs(:), G2);
-[diffsMean, diffsStd] = deal(nan(max(Gid), 1)); 
-diffsMean(idx2mask(nonzeros(Gid))) = temp(logical(Gid),1);
-diffsStd(idx2mask(nonzeros(Gid)))  = temp(logical(Gid),2);
-clear temp; 
+% Mean and std of `diffs` and `dists` within each bin
+% These are the x vals, y vals, and errorbars needed
+[x,y,e] = deal(nan(max(Gid),1)); % ensure that outputs have nans
+outmask = idx2mask(nonzeros(Gid));
+[x(outmask),y(outmask),e(outmask)] = splitapply(...
+    @(x,y) deal(mean(x), mean(y), std(y)), dists(nanmask), diffs(nanmask), G);
 
 % Plot
-x = (distsEdges(2:end) + distsEdges(1:end-1))/2;
-y = diffsMean; 
-e = diffsStd; 
-eb = errorbar(x, y, e);  
+if nargout == 0; errorbar(x, y, e); end
 
 
 end
+
 

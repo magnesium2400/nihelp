@@ -52,22 +52,22 @@ if ignoreRepeats;   [u,~,uc] = unique(template); nRand = length(u);
 else;               nRand = numel(template); end
 
 
-switch noise
-    case {'gaussian', 'normal'} % generate noise with specified mean and SD
-        sortedNoise = sort( randn(nRand, 1)*beta + alpha );
-    case {'uniform'} % generate noise with specified max and min
-        sortedNoise = sort( rand(nRand, 1)*(beta-alpha) + alpha );
-    case {'integers'}
-        sortedNoise = sort( randi([alpha, beta], nRand, 1) );
-
-    otherwise
-        if isnumeric(noise) % user has input their own noise
-            assert(numel(noise) == nRand, ...
-                "Noise should contain the same number of elements as input map");
-            sortedNoise = sort(noise(:));
-        else
+if isnumeric(noise) % user has input their own noise
+    assert(numel(noise) == nRand, ...
+        "Noise should contain the same number of elements as input map");
+    sortedNoise = sort(noise(:));
+else
+    switch noise
+        case {'gaussian', 'normal'} % generate noise with specified mean and SD
+            sortedNoise = sort( randn(nRand, 1)*beta + alpha );
+        case {'uniform'} % generate noise with specified max and min
+            sortedNoise = sort( rand(nRand, 1)*(beta-alpha) + alpha );
+        case {'integers'}
+            sortedNoise = sort( randi([alpha, beta], nRand, 1) );
+            
+        otherwise
             error("Noise input not valid");
-        end
+    end
 end
 
 

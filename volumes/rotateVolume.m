@@ -1,4 +1,4 @@
-function V = rotateVolume(V, srcOrientation, tgtOrientation)
+function [V,t,f] = rotateVolume(V, srcOrientation, tgtOrientation)
 %% ROTATEVOLUME Rotate 3-D volume in anatomical space 
 %% Syntax 
 %  V = rotateVolume(V, srcOrientation, tgtOrientation)
@@ -39,6 +39,10 @@ function V = rotateVolume(V, srcOrientation, tgtOrientation)
 %% Output Arguments 
 %  V - Rotated volume (3-D array)
 % 
+%  t - Permutation order
+% 
+%  f - Flip flag for each dimension (after permutatation)
+% 
 % 
 %% See also 
 %  PERMUTE, FLIP, VOLSHOW, PLOTVOLUME, ROTATEVOLUMETRIC
@@ -72,7 +76,7 @@ pFlips = mod(sum(f), 2); % parity of number of flips
 
 
 if xor(pFlips, pSwaps) % if total parity of flips and swaps is odd
-    warning('nihelp:rotateVolumeOdd', 'Odd number of swaps/flips'); 
+    warning('nihelp:rotateVolume:OddChanges', 'Odd number of swaps/flips'); 
 end
 
 end

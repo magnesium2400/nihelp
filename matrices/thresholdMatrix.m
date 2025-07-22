@@ -1,4 +1,25 @@
 function inp = thresholdMatrix(inp, varargin)
+%% THRESHOLDMATRIX Threshold matrix according to density, nnx, max, or min
+%% Examples
+%   thresholdMatrix(magic(4), 'nnz', 5)      % keep the 5 largest non-zero terms
+%   thresholdMatrix(magic(4), 'density', .5) % keep the largest terms s.t density is .5
+%   thresholdMatrix(hilb(3), 'density', .5) 
+%   thresholdMatrix(hilb(3), 'density', .5, 'inclusive', false)
+%   thresholdMatrix(hilb(3), 'max', .5)
+%   thresholdMatrix(hilb(3), 'max', .5, 'inclusive', false)
+%   thresholdMatrix(hilb(3), 'min', .5)
+%   thresholdMatrix(hilb(3), 'min', .5, 'newValue', 0)
+%   thresholdMatrix(hilb(3), 'max', .5, 'min', 0.3)
+% 
+% 
+%% TODO
+% * docs
+% 
+% 
+%% Authors
+% Mehul Gajwani, Monash University, 2024
+% 
+% 
 
 
 %% Prelims
@@ -7,6 +28,7 @@ addRequired(ip, 'inp', @isnumeric);
 addParameter(ip, 'max', [], @isnumeric);
 addParameter(ip, 'min', [], @isnumeric);
 addParameter(ip, 'nnz', [], @isnumeric);
+addParameter(ip, 'density', [], @isnumeric);
 
 addParameter(ip, 'inclusive', true, @islogical);
 addParameter(ip, 'newValue', nan);
@@ -20,17 +42,21 @@ iud = @(x) any(contains(ip.UsingDefaults, x)); %isUsingDefault
 
 
 %% Thresholding
+if ~iud('density')
+    inp = thresholdMatrix(inp, 'nnz', round(ip.Results.density * numel(inp)), ...
+        'inclusive', inc, 'newValue', nv); 
+    return; 
+end
+
 if ~iud('nnz')
     nn = ip.Results.nnz;
     if numel(inp) < nn
-        warning('nihelp:thresholdMatrix:insufficientElements', ...
+        error('nihelp:thresholdMatrix:insufficientElements', ...
             'The supplied matrix has fewer than the desired number of elements');
-        return;
     end
     if nnz(inp) < nn
-        warning('nihelp:thresholdMatrix:insufficientNonzeroElements', ...
+        error('nihelp:thresholdMatrix:insufficientNonzeroElements', ...
             'The supplied matrix has fewer than the desired number of nonzero elements');
-        return;
     end
     if nnz(inp) == nn; return; end
 

@@ -10,8 +10,9 @@ for ii = 1:max(parc)
         'removeUnconnected', true, 'overrideAssertions', true); 
     surf = calc_geometric_eigenmode(struct('vertices', v, 'faces', f), k, sigma, lump); 
 
-    V(mask,:) = surf.evecs; 
-    D(:,ii) = surf.evals; 
+    w = min(k, nnz(mask));  % in case number of verts is less than nModes
+    V(mask,1:w) = surf.evecs; 
+    D(1:w,ii) = surf.evals; 
     % try making this faster by saving the edges and values here
     % and saving as sparse matrix at the end
     M(mask, mask) = surf.mass; 

@@ -5,7 +5,7 @@ data = sin(2*pi*sum(verts,2)) + 0.5*randn(height(verts), 1);
 
 figure; 
 nexttile; patchvfc(verts, faces, data); axis equal tight off; colorbar; 
-nexttile; eb = meshVariogram(verts, faces, data); axis square; 
+nexttile; meshVariogram(verts, faces, data); axis square; 
 
 
 %% Test 2: Test using mesh eigenmodes

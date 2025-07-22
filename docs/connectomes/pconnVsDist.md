@@ -1,7 +1,7 @@
 ---
 layout: default
 title: pconnVsDist
-checksum: 13a560a12a1e3b9e27ca0ca106159a18
+checksum: 5ff0827dcd695d8ea52c8b76666e8d7c
 parent: connectomes
 ---
 
@@ -21,3 +21,23 @@ D - matrix of edge lengths (square matrix)
 ```matlab
 bins - nbins or binedges to use (positive integer | vector)
 ```
+ 
+# Output Arguments
+```matlab
+out - results of function applied to edges in each distance bin (vector)
+```
+ 
+# See Also
+```matlab
+HISTCOUNTS, SPLITAPPLY0
+```
+ 
+# Authors
+
+Mehul Gajwani, Monash University, 2024
+
+ 
+# TODO
+-  docs 
+ 
+# ENDPUBLISH

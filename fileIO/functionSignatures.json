@@ -1,0 +1,92 @@
+{
+  "read_vtk": {
+    "inputs": [
+      {
+      "name": "filename",
+      "kind": "required",
+      "type": "file=*.vtk",
+      "repeating": false
+      }
+    ]
+  },
+  "fetch_atlas": {
+    "inputs": [
+      {
+        "name": "atlas",
+        "kind": "required",
+        "type": [
+          "string",
+          "char",
+          "choices={'fsaverage','fsLR'}"
+        ],
+        "repeating": false
+      },
+      {
+        "name": "density",
+        "kind": "required",
+        "type": [
+          "string",
+          "char",
+          "choices={'3k','4k','8k','10k','32k','41k','164k'}"
+        ],
+        "repeating": false
+      },
+      {
+        "name": "hemi",
+        "kind": "required",
+        "type": [
+          "string",
+          "char",
+          "choices={'L','R'}"
+        ],
+        "repeating": false
+      },
+      {
+        "name": "key",
+        "kind": "required",
+        "type": [
+          "string",
+          "char",
+          "choices={'inflated','midthickness','pial','white','sphere','veryinflated'}"
+        ],
+        "repeating": false
+      },
+      {
+        "name": "desc",
+        "kind": "namevalue",
+        "type": [
+          "string",
+          "char",
+          "choices={'vaavg','sulc','nomedialwall'}"
+        ],
+        "repeating": false
+      },
+      {
+        "name": "space",
+        "kind": "namevalue",
+        "type": [
+          "string",
+          "char",
+          "choices={'fsaverage'}"
+        ],
+        "repeating": false
+      }
+    ]
+  },
+  "makeFunctionSignaturesJSON": {
+    "inputs": [
+      {
+        "name": "filename",
+        "kind": "ordered",
+        "type": "file",
+        "repeating": false
+      },
+      {
+        "name": "outputDir",
+        "kind": "namevalue",
+        "type": "folder",
+        "repeating": false
+      }
+    ]
+  }
+}

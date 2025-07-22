@@ -1,8 +1,8 @@
-function xyzlabel(xl,yl,zl)
-
-if nargin < 1; xlabel('x'); else; xlabel(xl); end
-if nargin < 2; ylabel('y'); else; ylabel(yl); end
-if nargin < 3; zlabel('z'); else; zlabel(zl); end
-
+function xyzlabel(varargin)
+[ax, args, nargs] = axescheck(varargin{:});
+if isempty(ax); ax = gca(); end
+if nargs < 1; xlabel(ax,'x'); else; xlabel(ax,args{1}); end
+if nargs < 2; ylabel(ax,'y'); else; ylabel(ax,args{2}); end
+if nargs < 3; zlabel(ax,'z'); else; zlabel(ax,args{3}); end
 end
 

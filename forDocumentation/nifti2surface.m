@@ -40,13 +40,14 @@ ainfo = niftiinfo(filename);
 
 if nargin < 2 || isempty(isParcellation); isParcellation = true; end
 if ~isParcellation; a = +logical(a); end
+if ndims(a) == 4;   a = a(:,:,:,1);  end
 
 
 %% alphaShape and surface for each ROI
 for ii = nonzeros(unique(a))'
     % vertices in current ROI
     b = a==ii;
-    v = affineVerts(vol2xyz(b,b), ainfo.Transform.T, 1);
+    v = affineVerts(vol2xyz(b,b)-1, ainfo.Transform.T, 1); % shift by 1 as niftis are 0-indexed
 
     % alpha shape
     c = alphaShape(v);

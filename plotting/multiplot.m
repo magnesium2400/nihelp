@@ -104,7 +104,7 @@ ip.addParameter('dim', ndims(data));
 ip.addParameter('n', []); 
 ip.addParameter('nPlots', []); 
 ip.addParameter('spacing', []); 
-ip.addParameter('Parent', gcf); 
+ip.addParameter('Parent', gcf()); 
 
 ip.parse(data, varargin{:});
 data                = ip.Results.data;
@@ -121,7 +121,7 @@ if isempty(n)
     s = sz(data,dim); 
     if ~isempty(nPlots);        n = round(linspace(1, s, nPlots)); 
     elseif ~isempty(spacing);   n = 1:spacing:s; 
-    else                        n = 1:s; 
+    else;                       n = 1:s; 
     end
     % if iscell(data);    n = 1:numel(data); 
     % else;               n = 1:size(data, dim); end

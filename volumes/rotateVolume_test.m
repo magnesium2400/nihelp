@@ -1,7 +1,7 @@
 % Shared variables
 V = (1:10).'+(1:5)+permute(1:20,[1,3,2])-2;
-% D = ((loadmri)+(1:128).').*logical(loadmri);
-warning('off', 'nihelp:rotateVolumeOdd');
+D = ((loadmri)+(1:128).').*logical(loadmri);
+warning('off', 'nihelp:rotateVolume:OddChanges');
 
 %% Test 1: Test inversions
 assert(isequal(V, rotateVolume(V, 'pir', 'pir')));
@@ -17,9 +17,9 @@ assert(isequal(permute(V, [3 1 2]), rotateVolume(V, 'ali', 'ial')));
 
 %% Test 4: Figures (for manual inspection)
 src = 'ras'; tgt = {'rsa', 'pir', 'ilp'};
-figure; nexttile(); plotVolume(V); title(src);
+figure; nexttile(); plotVolume(D); title(src);
 for ii = 1:length(tgt)
-    nexttile(); plotVolume(rotateVolume(V,src,tgt{ii})); title(tgt{ii});
+    nexttile(); plotVolume(rotateVolume(D,src,tgt{ii})); title(tgt{ii});
 end
 
-warning('on', 'nihelp:rotateVolumeOdd');
+warning('on', 'nihelp:rotateVolume:OddChanges');
