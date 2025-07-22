@@ -7,7 +7,7 @@ ip.addParameter('verticesName', 'vertices', @(x) ischar(x) || isStringScalar(x))
 ip.addParameter('facesName', 'faces', @(x) ischar(x) || isStringScalar(x)); 
 ip.addParameter('evecsName', 'evecs', @(x) ischar(x) || isStringScalar(x)); 
 ip.addParameter('evalsName', 'evals', @(x) ischar(x) || isStringScalar(x)); 
-ip.addParameter('Parent', []); 
+ip.addParameter('Parent', gcf()); 
 ip.parse(varargin{:});
 
 verts = s.(ip.Results.verticesName);   

@@ -1,8 +1,9 @@
-function out = unrotateVolumeIdx(tgtV, srcOrientation, tgtOrientation)
+function out = unrotateVolumeIdx(tgtV, srcOrientation, tgtOrientation, mask)
 %% UNROTATEVOLUMEIDX Given a volume V in tgtOrientation, find the permutation of voxels to get there from srcOrientation
 
-srcV = rotateVolume(+tgtV, tgtOrientation, srcOrientation); 
-srcV(logical(srcV)) = 1:nnz(srcV); 
-out = nonzeros(rotateVolume(srcV, srcOrientation, tgtOrientation)); 
+if nargin<4; mask = []; end; mask = processMask(tgtV, mask);
+srcV = rotateVolume(double(tgtV), tgtOrientation, srcOrientation);
+srcV(mask) = 1:nnz(mask);
+out = nonzeros(rotateVolume(srcV, srcOrientation, tgtOrientation));
 
 end

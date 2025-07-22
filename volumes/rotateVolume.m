@@ -1,4 +1,4 @@
-function V = rotateVolume(V, srcOrientation, tgtOrientation)
+function [V,t,f] = rotateVolume(V, srcOrientation, tgtOrientation)
 %% ROTATEVOLUME Rotate 3-D volume in anatomical space 
 %% Syntax 
 %  V = rotateVolume(V, srcOrientation, tgtOrientation)
@@ -38,6 +38,10 @@ function V = rotateVolume(V, srcOrientation, tgtOrientation)
 % 
 %% Output Arguments 
 %  V - Rotated volume (3-D array)
+% 
+%  t - Permutation order
+% 
+%  f - Flip flag for each dimension (after permutatation)
 % 
 % 
 %% See also 
