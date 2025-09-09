@@ -1,9 +1,9 @@
 function s = surfsc(varargin)
-%% SURFSC Similar to `imagesc`, but with true and scaled colour
+%% SURFSC Similar to `imagesc`, but with true and scaled colour and hidden values
 %% Examples
 % Simple
 %   figure; surfsc(magic(5)); 
-%   figure; nexttile; surfsc(magic(5)); axis('tight'); nexttile; imagesc(magic(5));
+%   figure; nexttile; surfsc(magic(5)); axis('tight'); set(gca(), 'YDir', 'reverse', 'View', [0 90]); nexttile; imagesc(magic(5));
 %
 % Shift position
 %   figure; surfsc(magic(5), 'XData', 3); 
@@ -64,7 +64,6 @@ C = ip.Results.CData;   % data for plotting
 c = ip.Results.c;       % colors for plotting
 
 
-
 %% Reformat x y z data
 
 X = ip.Results.XData; 
@@ -99,10 +98,10 @@ if isa(mask, 'function_handle'); mask = mask(C);
 elseif isnumeric(mask);          mask = logical(mask); end
 
 
-
 %% Create color matrix (true or scaled) and plot
 
 if isempty(c)
+    mask = repmat(mask, size(C,1:3)./size(mask,1:3)); 
     cToPlot = nan(size(C)); 
     cToPlot(mask) = C(mask); 
 else
@@ -117,5 +116,3 @@ s = surf(ax, x, y, z, +cToPlot, ip.Results.surfOptions{:});
 
 
 end
-
-
