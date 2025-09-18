@@ -40,6 +40,7 @@ else
     set(t, 'String', sprintf('%s | %s', num2str(panelLabel), t.String));
 end
 
+t.Position = t.Position.*[0 1 1]; 
 ax.TitleHorizontalAlignment = 'left';
 
 
