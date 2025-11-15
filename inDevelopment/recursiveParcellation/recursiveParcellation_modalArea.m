@@ -1,38 +1,28 @@
 function out = recursiveParcellation_modalArea(split, params, mask)
 
 if nargin < 3 || isempty(mask)
-    mask = true(height(params.verts), 1); 
+    mask = true(height(params.vertices), 1); 
 else
     mask = logical(mask); 
 end
 
-[verts, faces, ~, ~] = ...
-    trimExcludedRois(params.verts, params.faces, mask, 'removeUnconnected', false); 
-assert(height(verts)==nnz(mask))
-s = calc_geometric_eigenmode(struct('vertices', verts, 'faces', faces), 2); 
+[vertices, faces, ~, ~] = ...
+    trimExcludedRois(params.vertices, params.faces, mask, 'removeUnconnected', false); 
+assert(height(vertices)==nnz(mask))
+s = calc_geometric_eigenmode(struct('vertices', vertices, 'faces', faces), 2); 
+vertexAreas = params.vertexAreas(mask); 
 
 scores = s.evecs(:,2); 
-
 [scoresOrdered,idx] = sort(scores, 'ascend');
+areasOrdered = cumsum(vertexAreas(idx));
 
-vertAreas = params.vertAreas(mask); 
-% vertAreas = faces2verts(faces, calcFaceArea(verts, faces));
-areasOrdered = cumsum(vertAreas(idx));
-
-
-THR = interp1(areasOrdered, scoresOrdered, ...
-    areasOrdered(end) * (1:split-1)/split);
-THR = [scoresOrdered(1), THR, scoresOrdered(end)];
-thr = THR;
-
-
+thr = interp1(areasOrdered, scoresOrdered, areasOrdered(end) * (1:split-1)/split);
+thr = [scoresOrdered(1), thr, scoresOrdered(end)];
 [~,~,bin] = histcounts(scores, thr);
-OUT = bin;      % correct for off-by-one error at the end
-out = OUT;
+out = bin - 1;
 
-out = out - 1;
-[v,f] = trimExcludedRois(params.verts, params.faces, mask); 
-out = fixDanglingVertices(verts, faces, out); 
+% [v,f] = trimExcludedRois(params.vertices, params.faces, mask); 
+out = fixDanglingVertices(vertices, faces, out, 5); 
 
 
 end

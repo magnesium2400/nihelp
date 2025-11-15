@@ -14,5 +14,5 @@ function out = verts2faces(faces, vertData)
 % 
 
 
-out = mean(vertData(faces), 2);
+out = colfunc(@(x) mean(x(faces), 2), vertData);
 end

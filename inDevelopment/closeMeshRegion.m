@@ -3,7 +3,8 @@ function out = closeMeshRegion(verts, faces, rois, tgt, n)
 tmp = dilateMeshRegion(verts, faces, rois, tgt, n); 
 
 if length(unique(tmp)) ~= length(unique(rois))
-    warning('Dilation of region %i has removed other regions', tgt); 
+    warning('nihelp:closeMeshRegion:DilationRemoval', ...
+        'Dilation of region %i has removed other regions', tgt); 
 end
 
 out = erodeMeshRegion(verts, faces, tmp, tgt, n); 
@@ -14,7 +15,5 @@ out(out~=tgt) = rois(out~=tgt);
 assert(all( out(rois==tgt) == tgt ))
 % everything NOW outside the region should have been outside originally
 assert(all( rois(out~=tgt) ~= tgt ))
-
-
 
 end

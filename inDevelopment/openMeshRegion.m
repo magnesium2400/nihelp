@@ -3,7 +3,8 @@ function out = openMeshRegion(verts, faces, rois, tgt, n)
 tmp = erodeMeshRegion(verts, faces, rois, tgt, n); 
 
 if ~any(tmp==tgt)
-    warning('Erosion has removed region %i', tgt); 
+    warning('nihelp:openMeshRegion:ErosionRemoval', ...
+        'Erosion has removed region %i', tgt); 
 end
 
 out = dilateMeshRegion(verts, faces, tmp, tgt, n); 

@@ -18,7 +18,8 @@ function out = calcVertexArea(verts, faces)
 
 
 fa = calcFaceArea(verts, faces);
-out = arrayfun( @(ii) sum(fa(any(faces==ii,2))) , ...
-    (1:max(faces, [], "all")).' ) / 3;
+out = faces2verts(faces, fa); 
+% out = arrayfun( @(ii) sum(fa(any(faces==ii,2))) , ...
+%     (1:max(faces, [], "all")).' ) / 3;
 end
 

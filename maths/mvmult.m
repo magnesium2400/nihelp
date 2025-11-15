@@ -30,7 +30,7 @@ end
 
 if printInfo
     t1 = toc(t1); 
-    t2 = tic; mn = mat^n; out = mn*vec; t2 = toc(t2); 
+    t2 = tic; mn = mat^n; tmp = mn*vec; t2 = toc(t2); %#ok<NASGU>
     fprintf('Repeated matrix multiplication took %f seconds.\n', t1); 
     fprintf('Matrix power evaluation took %f seconds.\n', t2); 
 end

@@ -1,20 +1,20 @@
 function out = recursiveParcellation_modalLine(split, params, mask)
 
-assert(split == 2); 
+assert(split == 2, 'split must be 2 when using modal line parcellation. Consider using modal range.'); 
 if nargin < 3 || isempty(mask)
-    mask = true(height(params.verts), 1); 
+    mask = true(height(params.vertices), 1); 
 else
     mask = logical(mask); 
 end
 
-[verts, faces, ~, ~] = ...
-    trimExcludedRois(params.verts, params.faces, mask, 'removeUnconnected', false); 
+[vertices, faces, ~, ~] = ...
+    trimExcludedRois(params.vertices, params.faces, mask, 'removeUnconnected', false); 
 
-assert(height(verts)==nnz(mask))
-s = calc_geometric_eigenmode(struct('vertices', verts, 'faces', faces), 2); 
+assert(height(vertices)==nnz(mask))
+s = calc_geometric_eigenmode(struct('vertices', vertices, 'faces', faces), 2); 
 out = +(s.evecs(:,2)>0); 
 
-out = fixDanglingVertices(verts, faces, out); 
+out = fixDanglingVertices(vertices, faces, out, 5); 
 
 end
 

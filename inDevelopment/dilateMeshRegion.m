@@ -1,9 +1,9 @@
 function newRois = dilateMeshRegion(verts, faces, rois, regionToDilate, numberOfDilations)
 
-A = triangulation2adjacency(faces); 
-m = rois == regionToDilate; 
-x = mvmult(A, m, numberOfDilations); 
-newRois = rois; 
-newRois(logical(x)) = regionToDilate; 
+m = rois == regionToDilate;
+A = logical(triangulation2adjacency(faces));
+for ii = 1:numberOfDilations; m = A*m | m; end
+newRois = rois;
+newRois(m) = regionToDilate;
 
 end

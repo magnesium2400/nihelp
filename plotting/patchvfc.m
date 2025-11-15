@@ -1,4 +1,4 @@
-function p = patchvfc(verts, faces, cdata, varargin)
+function p = patchvfc(verts, faces, varargin)
 %% PATCHVFC Wrapper to plot vertices, faces, and color
 %% Examples
 %   v = rand(100,2); f = delaunay(v); figure; patchvfc(v,f); 
@@ -25,11 +25,17 @@ function p = patchvfc(verts, faces, cdata, varargin)
 % 
 % 
 
-[ax, args, ~] = axescheck(verts, faces, cdata, varargin{:}); 
+[ax, args, nargs] = axescheck(verts, faces, varargin{:}); 
 if isempty(ax); ax = gca; end
 verts = args{1}; 
 faces = args{2}; 
-try cdata = args{3}; a = args(4:end); catch; end
+if nargs >= 3
+    cdata = args{3}; 
+    a = args(4:end); 
+else
+    cdata = []; 
+    a = {};
+end
 
 % a = varargin;  
 

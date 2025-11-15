@@ -1,4 +1,4 @@
-function l = lims(l)
+function l = lims(varargin)
 %% LIMS Set or query x-axis, y-axis, and z-axis limits
 %% Examples
 %   figure; scatter(1:10,1:10, 1:10); lims
@@ -14,10 +14,13 @@ function l = lims(l)
 % 
 % 
 
-if nargin == 0
-    l = struct('xlim', xlim, 'ylim', ylim, 'zlim', zlim);
+[ax,args,nargs] = axescheck(varargin{:}); 
+if isempty(ax); ax = gca(); end
+
+if nargs == 0
+    l = struct('xlim', xlim(ax), 'ylim', ylim(ax), 'zlim', zlim(ax));
 else
-    xlim(l.xlim); ylim(l.ylim); zlim(l.zlim);
+    xlim(ax, args{1}.xlim); ylim(ax, args{1}.ylim); zlim(ax, args{1}.zlim);
 end
 
 end

@@ -23,7 +23,7 @@ if nargin < 3 || isempty(flag); flag = 'none'; end
 tlc = findobj(tl.Children, 'type', 'Axes');
 for ii = 1:length(tlc)
     
-    ax = tlc(ii); 
+    ax = nexttile(tl, ii); 
 
     switch flag
         case 'none'

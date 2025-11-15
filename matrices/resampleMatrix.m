@@ -40,7 +40,7 @@ noise               = ip.Results.noise;
 seed                = ip.Results.seed;
 alpha               = ip.Results.randParams(1); % mean or min of rand distribution
 beta                = ip.Results.randParams(2); % SD   or max of rand distribution
-ignoreRepeats       = ip.Results.ignoreRepeats; if strcmp(ignoreRepeats, 'false'); ignoreRepeats = false; end
+ignoreRepeats       = ip.Results.ignoreRepeats;
 
 if ~isempty(seed); rng(seed); end % set seed if specified by user
 
