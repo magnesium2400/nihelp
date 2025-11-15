@@ -39,7 +39,7 @@ end
 
 % a = varargin;  
 
-if nargin < 3 || isempty(cdata)
+if nargs < 3 || isempty(cdata)
     a = [{'FaceColor', 'none', 'EdgeColor', 'k'}, a{:}];
 elseif strcmpi(cdata, 'area')
     a = [{'FaceColor', 'flat', 'FaceVertexCData', calcFaceArea(verts,faces), 'EdgeColor', 'none'}, a{:}];
