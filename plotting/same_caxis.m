@@ -21,6 +21,10 @@ function new_caxis = same_caxis(axesArray)
 %
 %       same_caxis(h1,h2);
 
+warning('`same_caxis` is deprecated. Please use `synclim(⋅, @clim)` instead.')
+new_caxis = synclim(axesArray, @clim); 
+return; 
+
 if nargin < 1 || isempty(axesArray); axesArray = gcf; end
 
 if ~strcmp(get(axesArray, 'type'), 'axes')
