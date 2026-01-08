@@ -7,6 +7,7 @@ function out = headings2toc(mfile, addToFile)
 % 
 %% TODO
 % * docs
+% * add support for nested headings?
 % 
 % 
 %% Authors
@@ -24,12 +25,20 @@ mfile = which(mfile);
 S = readlines(mfile); 
 h = regexp(S, '(?<=^\s*%%\s+)\w*');
 m = find(~cellfun(@isempty, h)); 
-out = arrayfun(@(x) sprintf("%% %2i. %s",x,extractAfter(S{m(x)},h{m(x)}-1)), ...
+n = strlength(string(numel(m))); 
+out = arrayfun(@(x) sprintf("%% %"+n+"i. %s",x,extractAfter(S{m(x)},h{m(x)}-1)), ...
     (1:numel(m))');
 
 %% Add to file if desired
 if addToFile
     writelines([out;S], mfile); 
+end
+
+%% 
+if nargout == 0
+    tmp = mat2cell(out, onesz(out))';
+    tmp(2,:) = repmat({"\n"}, 1, numel(tmp)); 
+    fprintf(strrep(append(tmp{:}), '%', '%%')); 
 end
 
 
