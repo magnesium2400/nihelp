@@ -18,8 +18,9 @@ function out = randsym(n,density,seed)
 if nargin < 2 || isempty(density); density = 0.5; end
 if nargin > 2 && ~isempty(seed); rng(seed); end
 
-out = rand(n);
-out = out.*(out<density)/density; 
-out = tril(out,-1) + tril(out,-1)';
+out = full(sprandsym(n, density)); 
+% out = rand(n);
+% out = out.*(out<density)/density; 
+% out = tril(out,-1) + tril(out,-1)';
 
 end

@@ -8,6 +8,7 @@ function inp = thresholdMatrix(inp, varargin)
 %   thresholdMatrix(hilb(3), 'max', .5)
 %   thresholdMatrix(hilb(3), 'max', .5, 'inclusive', false)
 %   thresholdMatrix(hilb(3), 'min', .5)
+%   thresholdMatrix(hilb(3), 'min', .5, 'inclusive', false)
 %   thresholdMatrix(hilb(3), 'min', .5, 'newValue', 0)
 %   thresholdMatrix(hilb(3), 'max', .5, 'min', 0.3)
 % 
@@ -32,6 +33,7 @@ addParameter(ip, 'density', [], @isnumeric);
 
 addParameter(ip, 'inclusive', true, @islogical);
 addParameter(ip, 'newValue', nan);
+addParameter(ip, 'overrideAssertions', false); 
 
 ip.parse(inp, varargin{:});
 inp = ip.Results.inp;
@@ -50,24 +52,24 @@ end
 
 if ~iud('nnz')
     nn = ip.Results.nnz;
-    if numel(inp) < nn
+    if numel(inp) < nn && ~ip.Results.overrideAssertions
         error('nihelp:thresholdMatrix:insufficientElements', ...
             'The supplied matrix has fewer than the desired number of elements');
     end
-    if nnz(inp) < nn
+    if nnz(inp) < nn && ~ip.Results.overrideAssertions
         error('nihelp:thresholdMatrix:insufficientNonzeroElements', ...
             'The supplied matrix has fewer than the desired number of nonzero elements');
     end
     if nnz(inp) == nn; return; end
 
+    q1 = 1-(nn-1)/numel(inp)-1/(2*numel(inp)); % this gives the nth term in the data
+    q2 = 1-(nn+0)/numel(inp)-1/(2*numel(inp)); % this gives the (n+1)th term
+    thrs = quantile(inp, [q1,q2], 'all');
 
-    temp = sort(inp(:), 'descend');
-    thr = temp(nn);
-
-    if temp(nn) == temp(nn+1) && ~inc
-        inp(inp<=thr) = nv;
-    else % if temp(nn) ~= temp(nn+1) || inc
-        inp(inp<thr) = nv;
+    if ~inc && ismembertol(thrs(1),thrs(2)) % if thrs are the same (default to 1e-12 for double prec data)
+        inp(inp<=thrs(1)) = nv;
+    else
+        inp(inp<thrs(1)) = nv;
     end
 
     return;
