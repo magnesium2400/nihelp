@@ -1,4 +1,4 @@
-function out = smoothmap(verts, faces, nModes, seed)
+function [out,s] = smoothmap(verts, faces, nModes, seed)
 %% SMOOTHMAP Generates a smooth scalar function on a surface using its eigenmodes
 %% Examples
 %   [v,f] = sphereMesh; c = smoothmap(v,f,20); 

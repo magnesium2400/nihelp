@@ -1,4 +1,4 @@
-function [v,f] = torusMesh(n,R,r,H)
+function [v,f,v0,f0] = torusMesh(n,R,r,H)
 %% TORUSMESH Generate vertices and faces of toroidal mesh
 %% Examples
 %   v = torusMesh; figure; scatter3(v(:,1), v(:,2), v(:,3)); 
@@ -34,20 +34,22 @@ x=c*cos(theta)+d*cos(phi).*cos(theta);
 y=c*sin(theta)+d*cos(phi).*sin(theta);
 z=H*sin(phi);
 v=[x(:),y(:),z(:)];
+v0 = [thetaOrig(:), phi(:)];
 
 if nargout < 2; return; end
 
 
 %% Make faces
 % Start with delaunay in parameter space
-f = delaunay(thetaOrig(:),phi(:)); %#ok<*AGROW>
+f0 = delaunay(v0); %#ok<*AGROW>
 
-f = [ f; ((1:n)'+[-1,ceil(n/2)+1,0])          *n+[1,0,1] ]; % upper triangles in horiz strip
-f = [ f; ((1:n)'+[-1,ceil(n/2)  ,ceil(n/2)+1])*n+[1,0,0] ]; % lower triangles in horiz strip
+f1 = [ ((1:n)'+[-1,ceil(n/2)+1,0])          *n+[1,0,1] ]; % upper triangles in horiz strip
+f2 = [ ((1:n)'+[-1,ceil(n/2)  ,ceil(n/2)+1])*n+[1,0,0] ]; % lower triangles in horiz strip
 
-f = [ f; (1:n-1)'+[0,1,n*(n-1)+1] ];         % upper triangles in vert strip
-f = [ f; (1:n-1)'+[0,  n*(n-1)+1,n*(n-1)] ]; % lower triangles in vert strip
+f3 = [ (1:n-1)'+[0,1,n*(n-1)+1] ];         % upper triangles in vert strip
+f4 = [ (1:n-1)'+[0,  n*(n-1)+1,n*(n-1)] ]; % lower triangles in vert strip
 
+f = [f0; f1; f2; f3; f4];
 f = mod(f-1,n^2)+1;
 
 
