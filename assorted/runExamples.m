@@ -29,19 +29,19 @@ docstringText = filetext(commentStart:commentEnd);
 
 
 %% Parse "%% Examples" section
-removeEmpty = @(x) ~cellfun('isempty', x);
+removeEmpty = @(x) ~cellfun(@isempty, x);
 
-examplesStart = removeEmpty( regexpi(docstringText, "^%% Examples?") );
+examplesStart = removeEmpty( regexpi(docstringText, "^%% Examples?", 'forceCellOutput') );
 examplesStart = find(examplesStart, 1); 
 if isempty(examplesStart); warning('No examples found'); return; end
 
-h1 = removeEmpty( regexp(docstringText, "^%%\s+[^%]") );
+h1 = removeEmpty( regexp(docstringText, "^%%\s+[^%]", 'forceCellOutput') );
 examplesEnd = find(h1(examplesStart+1:end), 1) + examplesStart - 1;
 if isempty(examplesEnd); examplesEnd = length(docstringText); end
 
 examples = docstringText(examplesStart+1:examplesEnd);
 % ensure there are 3 spaces (2 spaces are pseudocode) 
-validExamples = find( removeEmpty( regexpi(examples, "^%   [^\s\%]") ) ).';
+validExamples = find( removeEmpty( regexpi(examples, "^%   [^\s\%]", 'forceCellOutput') ) ).';
 
 if verbosity > 0
     fprintf('%i lines of "%% Examples" text found\n', length(examples));
