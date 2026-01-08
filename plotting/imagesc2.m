@@ -1,5 +1,11 @@
-function [s1,s2] = imagesc2(C1, C2, offset)
-%% IMAGESC2 Plots two matrices similar to IMAGESC (upper and lower triangles)
+function [s1,s2] = imagesc2(Clower, Cupper, varargin)
+%% IMAGESC2 Plots two matrices with a gap, similar to IMAGESC (upper and lower triangles)
+%% Syntax
+%  imagesc2(Clower, Cupper); 
+%  imagesc2(Clower, Cupper, offset); 
+%  imagesc2(ax, ___); 
+%  
+%  
 %% Examples
 %   figure; imagesc2(1./pascal(5), hilb(5)        ); 
 %   figure; imagesc2(1./pascal(5), hilb(5),  1    ); 
@@ -9,14 +15,27 @@ function [s1,s2] = imagesc2(C1, C2, offset)
 %
 %
 
-if ~issymmetric(C1);            warning('First matrix is not symmetric');   end
-if ~issymmetric(C2);            warning('Second matrix is not symmetric');  end
-if ~all(size(C1)==size(C2));    warning('Matrices are not the same size');  end
-if nargin < 3 || isempty(offset); offset = 0; end
+%% Prelims
+[ax, args, nargs] = axescheck(Clower, Cupper, varargin{:}); 
+if isempty(ax); ax = gca(); end
 
-s1 = surfsc(C1, 'mask', tril(true(size(C1)),-1), 'XData', 1-offset(1));
+% Required args
+Clower = args{1}; 
+Cupper = args{2}; 
+if ~allclosen(Clower,Clower');          warning('First matrix is not symmetric');   end
+if ~allclosen(Cupper,Cupper');          warning('Second matrix is not symmetric');  end
+if ~all(size(Clower)==size(Cupper));    warning('Matrices are not the same size');  end
+
+% Optional (offset)
+if nargs < 3 || isempty(args{3}); offset = 0; 
+else; offset = args{3}; end
+
+
+%% Plot
+s1 = surfsc(Clower, 'mask', tril(true(size(Clower)),-1), 'XData', 1-offset(1));
 hold on; 
-s2 = surfsc(C2, 'mask', triu(true(size(C2)),+1), 'YData', 1-offset(end));
+s2 = surfsc(Cupper, 'mask', triu(true(size(Cupper)),+1), 'YData', 1-offset(end));
+set(ax, 'YDir', 'reverse', 'View', [0 90], 'Layer', 'bottom'); 
 
 end
 

@@ -39,7 +39,12 @@ end
 
 function out = squareformClose(X)
 if isvector(X); out = squareform(X); return; end
-if all(abs(diag(X))<1e-9); out = squareform(X-diag(diag(X))); end
+if allclose(diag(X), 0, [], 'omitnan')
+    X(1:length(X)+1:end) = 0; % to take care of nans
+    out = squareform(X); 
+else
+    error('The distance matrix must be square with 0 or 1 along the diagonal'); 
+end
 end
 
 

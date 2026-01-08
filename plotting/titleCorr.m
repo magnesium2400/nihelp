@@ -30,7 +30,8 @@ r = corr( ...
     reshape(scatterPlot.YData(m),[],1), ...
     'type', corrType, 'Rows', 'pairwise');
 
-addTitle(ax, sprintf("%s correlation = %.4f", corrType, r))
+addTitle(ax, sprintf("%s correlation = %.4f", corrType, r)); 
+if ~nargout; clear('r'); end
 
 end
 
