@@ -36,16 +36,17 @@ diffs = (data - data.').^2 ./ (1+useSemivariogram);
 
 %% Main
 % Discretise distance i.e. put into bins
-[~,~,distsBinned] = histcounts(dists);
-nanmask = ~isnan(dists(:));
-[G, Gid] = findgroups(distsBinned(nanmask)); % Gid := unique(distsBinned);
+nanzeromask = ~isnan(dists(:));
+nanzeromask(logical(nanzeromask)) = logical(dists(nanzeromask)); 
+[~,~,distsBinned] = histcounts(dists(nanzeromask));
+[G, Gid] = findgroups(distsBinned); % Gid := unique(distsBinned);
 
 % Mean and std of `diffs` and `dists` within each bin
 % These are the x vals, y vals, and errorbars needed
 [x,y,e] = deal(nan(max(Gid),1)); % ensure that outputs have nans
 outmask = idx2mask(nonzeros(Gid));
 [x(outmask),y(outmask),e(outmask)] = splitapply(...
-    @(x,y) deal(mean(x), mean(y), std(y)), dists(nanmask), diffs(nanmask), G);
+    @(x,y) deal(mean(x), mean(y), std(y)), dists(nanzeromask), diffs(nanzeromask), G);
 
 % Plot
 if nargout == 0; errorbar(x, y, e); end
