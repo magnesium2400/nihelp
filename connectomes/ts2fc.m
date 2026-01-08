@@ -14,8 +14,9 @@ function out = ts2fc(ts)
 % 
 % 
 
-out = 1-squareform(pdist(ts, 'correlation')); 
-out(out>1) = 1; 
-out(out<-1) = -1; 
+% out = 1-squareform(pdist(ts, 'correlation')); 
+% out(abs(out)>1) = sign(out(abs(out)>1)); 
+out = corr(ts'); % even after transposing this appears faster
+
 
 end
