@@ -51,6 +51,8 @@ verts       = ipr.vertices;
 assert(sum(cellfun(@isempty, {distance, neighbor, area}) ~= 2), ...
     'Please specify exactly one constraint (distance, neighbor, or area)');
 
+%%% `area` option can appect different area constraints for each roi
+%%% need to change other options to be the same
 if ~isempty(distance)
     validateattributes(distance, {'numeric'}, {'vector', 'numel', 2});
     assert(distance(1) <= distance(2), 'Distance constraint must be ascending [min max]');
@@ -64,8 +66,11 @@ elseif ~isempty(triangle)
     assert(triangle(1) <= triangle(2), 'Triangle constraint must be ascending [min max]');
     assert(~isempty(verts), 'Vertices is required for triangle constraint');
 elseif ~isempty(area)
-    validateattributes(area, {'numeric'}, {'vector', 'numel', 2});
-    assert(area(1) <= area(2), 'Area constraint must be ascending [min max]');
+    if isvector(area)
+        area = area(:).*ones(2,nr); 
+    end
+    validateattributes(area, {'numeric'}, {'size', [2,nr]});
+    assert(all(diff(area)>0), 'Area constraint must be ascending [min max]');
     assert(~isempty(va), 'VertexAreas is required for area constraint');
 end
 
@@ -97,7 +102,7 @@ elseif ~isempty(triangle)
  elseif ~isempty(area)
     [~,I] = sort(d(:,idx), 1, 'ascend');
     vacs = cumsum(va(I),1); % vertex area cumulative sum
-    mask = (area(1)<=vacs & vacs<=area(2));
+    mask = (area(1,:)<=vacs & vacs<=area(2,:));
     y = arrayfun(@(ii) I(mask(:,ii),ii),        (1:nr)', 'Uni', 0);
     x = arrayfun(@(n)  repmat(n, size(y{n})),   (1:nr)', 'Uni', 0);
     out = full(sparse(cell2mat(y), cell2mat(x), 1, nv, nr));
