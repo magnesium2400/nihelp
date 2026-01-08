@@ -1,4 +1,5 @@
 function varargout = synclim(axs, varargin)
+%% SYNCLIM Set the x/y/z/c limits to be the consistent across an array of axes
 %% Examples
 %   figure; for ii = 1:4; ax(ii) = nexttile; plot(ii:ii+3); end; synclim(ax, @ylim)
 %   figure; for ii = 1:4; ax(ii) = nexttile; imagesc(magic(10*ii)); axis('image'); colorbar; end; synclim(ax, @clim);  

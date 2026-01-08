@@ -1,5 +1,5 @@
 function l = symlim(varargin)
-%% SYMLIM Symmetrise axes limits
+%% SYMLIM Set the x/y/z/c axes limits to be symmetric about 0
 %% Examples
 %   figure; scatter(-5:10, -5:10); symlim(@xlim); 
 %   figure; scatter(-5:10, -5:10); symlim(@ylim); 
