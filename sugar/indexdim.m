@@ -6,7 +6,7 @@ function out = indexdim(mat, dim)
 %   
 %   
 
-
+if nargin<2||isempty(dim); dim=1; end
 vecs = arrayfun(@(x) 1:x, size(mat), 'Uni', 0); 
 out = ndgridn(dim, vecs{:});
 end
