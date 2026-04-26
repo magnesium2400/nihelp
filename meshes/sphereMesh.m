@@ -46,7 +46,7 @@ if nargin > 1 && strcmpi(seed, 'fib')
     f = convhull(v); 
     return;
 
-elseif nargin > 1
+elseif nargin > 1 && ~isempty(seed)
     %% Or random points on sphere
     n = n*(n-1) + 2; 
     rng(seed); 

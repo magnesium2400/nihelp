@@ -24,7 +24,7 @@ try % if seed is specified/is appropriate, generate irregular mesh
     x = [t;o;o-t+1;z]; y = [z;t;o;o-t+1];
     verts = [ x,y ; rand((n-2)^2,2)*(n-1)+1 ];
 catch % otherwise (or by default), generate regular mesh
-    [x,y] = meshgrid(1:n); 
+    [x,y] = meshgrid(1:n(1), 1:n(end)); 
     verts = [x(:), y(:)];
 end
 

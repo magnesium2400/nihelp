@@ -1,4 +1,4 @@
-function out = rowfunc(func, data)
+function out = rowfunc(func, A)
 %% ROWFUNC Evaluates function on each row in a matrix
 %% Examples
 %   rowfunc( @(x) [max(x), min(x)] , magic(3))
@@ -13,5 +13,10 @@ function out = rowfunc(func, data)
 % 
 % 
 
-out = colfunc(func, data.').';
+% out = colfunc(func, data.').';
+
+try out = arrayfun( @(x) func(A(x,:)) , (1:size(A,1))' ); 
+catch; out = cell2mat(arrayfun( @(x) func(A(x,:)) , (1:size(A,1))', 'UniformOutput', false)); end
+% catch; out = cell2mat(arrayfun( @(x) reshape(func(A(x,:)), 1, []) , (1:size(A,1))', 'UniformOutput', false)); end
+
 end

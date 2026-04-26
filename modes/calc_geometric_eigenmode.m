@@ -18,7 +18,7 @@ function [surface, V, D, M, S] = calc_geometric_eigenmode(surface, k, sigma, lum
 %                       [00 | 01 | 10 | 11]
 %                       00 - no changes
 %                       01 - flip modes' sign st first non-zero term is positive
-%                       10 - fix first mode to be constant
+%                       10 - fix first mode to be constant and first eval to 0
 %                       11 - 01 AND 10
 %
 % Outputs: surface : surface structure with fields 'evecs', 'evals', 'mass', and 'stiffness'
@@ -51,6 +51,7 @@ if mod(standardize,10) >= 1
 	V = V.*arrayfun(@(ii) sign(V(find(V(:,ii),1),ii)), 1:width(V)); 
 end
 if mod(standardize,100) >= 10
+    D(1) = 0; 
 	V(:,1) = 1/sqrt(sum(M,'all')); 
 end
 
